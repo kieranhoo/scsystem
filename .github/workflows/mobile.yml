@@ -28,7 +28,8 @@ jobs:
       
         - name: 📦 Install dependencies
           run: yarn install
-      
+          working-directory: ./mobile
+
         - name: 🚀 Build Android
           run: eas build --platform android
           working-directory: ./mobile
@@ -53,6 +54,7 @@ jobs:
       
         - name: 📦 Install dependencies
           run: yarn install
+          working-directory: ./mobile
       
         - name: 🚀 Build Android
           run: eas build --platform ios
