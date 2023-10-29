@@ -4,7 +4,6 @@ on:
   push:
     branches:
       - master
-      - api-basic
       - dev/mobile
 
 jobs:
