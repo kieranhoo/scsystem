@@ -4,7 +4,7 @@ go 1.20
 
 require (
 	github.com/RichardKnop/machinery v1.10.6
-	github.com/charmbracelet/lipgloss v0.8.0
+	github.com/charmbracelet/lipgloss v0.9.1
 	github.com/charmbracelet/log v0.2.5
 	github.com/getsentry/sentry-go v0.25.0
 	github.com/go-playground/validator/v10 v10.15.5
