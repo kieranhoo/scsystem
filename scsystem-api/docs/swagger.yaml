@@ -1,0 +1,305 @@
+definitions:
+  schema.DataResponse:
+    properties:
+      data: {}
+      success:
+        type: boolean
+    required:
+    - data
+    - success
+    type: object
+  schema.RegistrationLabRequest:
+    properties:
+      email:
+        type: string
+      end_day:
+        type: string
+      first_name:
+        type: string
+      last_name:
+        type: string
+      phone_number:
+        type: string
+      registration_time:
+        type: string
+      room_id:
+        type: string
+      start_day:
+        type: string
+      student_id:
+        type: string
+      supervisor:
+        type: string
+    required:
+    - email
+    - end_day
+    - first_name
+    - last_name
+    - phone_number
+    - registration_time
+    - room_id
+    - start_day
+    - student_id
+    - supervisor
+    type: object
+  schema.Response:
+    properties:
+      msg:
+        type: string
+      success:
+        type: boolean
+    required:
+    - msg
+    - success
+    type: object
+  schema.SignInRequest:
+    properties:
+      email:
+        type: string
+      password:
+        type: string
+    required:
+    - email
+    - password
+    type: object
+  schema.SignInResponse:
+    properties:
+      email:
+        type: string
+      success:
+        type: boolean
+      token:
+        type: string
+    required:
+    - email
+    - success
+    - token
+    type: object
+  schema.SignUpRequest:
+    properties:
+      email:
+        type: string
+      first_name:
+        type: string
+      id:
+        type: string
+      last_name:
+        type: string
+      password:
+        type: string
+      phone_number:
+        type: string
+    required:
+    - email
+    - first_name
+    - id
+    - last_name
+    - password
+    - phone_number
+    type: object
+  schema.SignUpResponse:
+    properties:
+      msg:
+        type: string
+      success:
+        type: boolean
+    required:
+    - msg
+    - success
+    type: object
+host: localhost:8000
+info:
+  contact: {}
+  description: This is a documentation for the Student Checkin System API
+  title: Student Checkin System
+  version: 1.0.0
+paths:
+  /api/v1/auth/signin:
+    post:
+      consumes:
+      - application/json
+      description: Sign in account for admin.
+      parameters:
+      - description: Sign In
+        in: body
+        name: sign_in
+        required: true
+        schema:
+          $ref: '#/definitions/schema.SignInRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/schema.SignInResponse'
+      tags:
+      - auth
+  /api/v1/auth/signup:
+    post:
+      consumes:
+      - application/json
+      description: Register account for admin.
+      parameters:
+      - description: Sign Up
+        in: body
+        name: sign_up
+        required: true
+        schema:
+          $ref: '#/definitions/schema.SignUpRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/schema.SignUpResponse'
+      tags:
+      - auth
+  /api/v1/lab/activity:
+    post:
+      consumes:
+      - application/json
+      description: Save activity type in/out.
+      parameters:
+      - description: limit records
+        in: query
+        name: limit
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/schema.Response'
+      tags:
+      - lab
+  /api/v1/lab/history:
+    get:
+      consumes:
+      - application/json
+      description: Get History.
+      parameters:
+      - description: limit records
+        in: query
+        name: limit
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/schema.DataResponse'
+      tags:
+      - lab
+  /api/v1/lab/register:
+    post:
+      consumes:
+      - application/json
+      description: Register lab.
+      parameters:
+      - description: RegisterLab
+        in: body
+        name: sign_in
+        required: true
+        schema:
+          $ref: '#/definitions/schema.RegistrationLabRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/schema.Response'
+      tags:
+      - lab
+  /api/v1/lab/user:
+    get:
+      consumes:
+      - application/json
+      description: Get User for checkin.
+      parameters:
+      - description: student id
+        in: query
+        name: sid
+        required: true
+        type: string
+      - description: student id
+        in: query
+        name: room
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/schema.DataResponse'
+      tags:
+      - lab
+  /common/capture:
+    get:
+      consumes:
+      - application/json
+      description: test sentry.io capture.
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+      tags:
+      - common
+  /common/email:
+    get:
+      consumes:
+      - application/json
+      description: test email.
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+      tags:
+      - common
+  /common/healthcheck:
+    get:
+      consumes:
+      - application/json
+      description: health check api server.
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+      tags:
+      - common
+  /common/sentry:
+    get:
+      consumes:
+      - application/json
+      description: test sentry.io.
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+      tags:
+      - common
+  /common/workercheck:
+    get:
+      consumes:
+      - application/json
+      description: health check worker.
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+      tags:
+      - common
+swagger: "2.0"

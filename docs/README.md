@@ -1,15 +1,6 @@
-# How to Use Go API template
+# What is SCSYSTEM?
 
-
-## Requirements
-
-To run Go API, you need the following:
-
-- Golang 1.16 or higher
-- Running Redis environment
-- Running mysql environment
-
-## Installation
+# Getting Started
 
 1. Clone the source code from the repository:
 
