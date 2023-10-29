@@ -1,7 +1,7 @@
 package tasks
 
 import (
-	worker2 "qrcheckin/pkg/x/worker"
+	"qrcheckin/pkg/x/worker"
 )
 
 const (
@@ -13,12 +13,12 @@ const (
 	WorkerSaveActivityType string = "Worker.SaveActivityType"
 )
 
-func Setting(broker, resultBackend string) *worker2.Config {
-	return &worker2.Config{
+func Setting(broker, resultBackend string) *worker.Config {
+	return &worker.Config{
 		Broker:        broker,
 		ResultBackend: resultBackend,
-		Tasks: worker2.Tasks{
-			DefaultQueue: worker2.Task{
+		Tasks: worker.Tasks{
+			DefaultQueue: worker.Task{
 				WorkerHealthCheck:      HealthCheck,
 				WorkerSignUp:           SignUp,
 				WorkerSaveUser:         SaveUser,
@@ -29,8 +29,8 @@ func Setting(broker, resultBackend string) *worker2.Config {
 	}
 }
 
-func Path() worker2.Path {
-	return worker2.Path{
+func Path() worker.Path {
+	return worker.Path{
 		WorkerHealthCheck:      HandleHealthCheck,
 		WorkerSaveActivityType: HandleSaveActivityType,
 		WorkerSaveRegistration: HandleSaveRegistration,

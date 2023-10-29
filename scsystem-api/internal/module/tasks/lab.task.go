@@ -3,10 +3,9 @@ package tasks
 import (
 	"context"
 	"encoding/json"
-	"qrcheckin/internal/module/model"
-	"qrcheckin/internal/module/types"
-
 	"github.com/hibiken/asynq"
+	"qrcheckin/internal/module/entity"
+	"qrcheckin/internal/module/model"
 )
 
 func SaveActivityType(registrationId, adminId, activityType string) error {
@@ -17,7 +16,7 @@ func SaveActivityType(registrationId, adminId, activityType string) error {
 	if _history.ActivityType == activityType {
 		return nil
 	}
-	return new(model.History).Insert(&types.History{
+	return new(model.History).Insert(&entity.History{
 		RegistrationId: registrationId,
 		ActivityType:   activityType,
 		AdminId:        adminId,
@@ -25,7 +24,7 @@ func SaveActivityType(registrationId, adminId, activityType string) error {
 }
 
 func HandleSaveActivityType(_ context.Context, task *asynq.Task) error {
-	var history types.History
+	var history entity.History
 	if err := json.Unmarshal(task.Payload(), &history); err != nil {
 		return err
 	}

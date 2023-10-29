@@ -10,7 +10,7 @@ import (
 	"qrcheckin/internal/module/service"
 	"qrcheckin/internal/module/tasks"
 	"qrcheckin/pkg/x/job"
-	worker2 "qrcheckin/pkg/x/worker"
+	"qrcheckin/pkg/x/worker"
 	"syscall"
 	"time"
 )
@@ -51,12 +51,12 @@ func Server() {
 // Deprecated
 func WorkerLaunch(queueName, consume string, concurrency int) error {
 	wcf := tasks.Setting(config.BrokerUrl, config.ResultBackend)
-	cnf := worker2.NewWorker(queueName, wcf)
-	return worker2.Launch(cnf, consume, concurrency)
+	cnf := worker.NewWorker(queueName, wcf)
+	return worker.Launch(cnf, consume, concurrency)
 }
 
 func AsyncWorker(concurrency int) error {
-	w := worker2.NewServer(concurrency, worker2.Queue{
+	w := worker.NewServer(concurrency, worker.Queue{
 		config.CriticalQueue: 6, // processed 60% of the time
 		config.DefaultQueue:  3, // processed 30% of the time
 		config.LowQueue:      1, // processed 10% of the time

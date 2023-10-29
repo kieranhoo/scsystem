@@ -1,12 +1,11 @@
 package model
 
 import (
-	"qrcheckin/internal/module/types"
-
 	"gorm.io/gorm"
+	"qrcheckin/internal/module/entity"
 )
 
 type Room struct {
-	_ *types.Room
+	_ *entity.Room
 	_ *gorm.DB
 }

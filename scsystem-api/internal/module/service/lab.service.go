@@ -2,19 +2,20 @@ package service
 
 import (
 	"qrcheckin/internal/config"
+	"qrcheckin/internal/module/entity"
+	"qrcheckin/internal/module/interfaces"
 	"qrcheckin/internal/module/model"
 	"qrcheckin/internal/module/schema"
 	"qrcheckin/internal/module/tasks"
-	"qrcheckin/internal/module/types"
 	"qrcheckin/pkg/database"
 	"qrcheckin/pkg/x/worker"
 )
 
 type Registration struct {
-	repo types.IRegistration
+	repo interfaces.IRegistration
 }
 
-func NewLab() types.ILabService {
+func NewLab() interfaces.ILabService {
 	return &Registration{
 		repo: model.NewRegistration(),
 	}
@@ -38,7 +39,7 @@ func (regis *Registration) RegisterLab(req *schema.RegistrationLabRequest) error
 			// }
 			if err := worker.Exec(config.CriticalQueue, worker.NewTask(
 				tasks.WorkerSaveUser,
-				types.Users{
+				entity.Users{
 					Id:          req.StudentId,
 					FirstName:   req.FirstName,
 					LastName:    req.LastName,
@@ -65,7 +66,7 @@ func (regis *Registration) RegisterLab(req *schema.RegistrationLabRequest) error
 
 	return worker.Exec(config.CriticalQueue, worker.NewTask(
 		tasks.WorkerSaveRegistration,
-		types.Registration{
+		entity.Registration{
 			RegistrationTime: req.RegistrationTime,
 			Supervisor:       req.Supervisor,
 			StartDay:         req.StartDay,
@@ -128,7 +129,7 @@ func (regis *Registration) SaveActivityType(req *schema.CheckInRequest) error {
 	// )
 	return worker.Exec(config.CriticalQueue, worker.NewTask(
 		tasks.WorkerSaveActivityType,
-		types.History{
+		entity.History{
 			RegistrationId: req.RegistrationId,
 			AdminId:        req.AdminId,
 			ActivityType:   req.ActivityType,
@@ -136,7 +137,7 @@ func (regis *Registration) SaveActivityType(req *schema.CheckInRequest) error {
 	))
 }
 
-func (regis *Registration) GetHistories(limit string) ([]types.History, error) {
+func (regis *Registration) GetHistories(limit string) ([]entity.History, error) {
 	return model.NewHistory().GetList(limit)
 }
 
