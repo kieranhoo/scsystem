@@ -12,14 +12,14 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Checkout code
-      uses: actions/checkout@v2
+      - name: Checkout code
+        uses: actions/checkout@v2
 
-    - name: Set up Go
-      uses: actions/setup-go@v2
-      with:
-        go-version: 1.21
+      - name: Set up Go
+        uses: actions/setup-go@v2
+        with:
+          go-version: 1.21
 
-    - name: Build the Go application
-      run: go build -ldflags="-s -w" -o ./bin/exe ./cmd/cli
-      working-directory: ./scsystem-api
+      - name: Build the Go application
+        run: go build -ldflags="-s -w" -o ./bin/exe ./cmd
+        working-directory: ./scsystem-api
