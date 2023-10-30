@@ -1,8 +1,8 @@
 package routes
 
 import (
-	"qrcheckin/api/controller"
-	"qrcheckin/api/middleware"
+	"qrcheckin/internal/api/controller"
+	"qrcheckin/internal/api/middleware"
 
 	"github.com/gofiber/fiber/v2"
 )

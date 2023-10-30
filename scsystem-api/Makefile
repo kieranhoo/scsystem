@@ -1,5 +1,5 @@
 build:
-	go build -ldflags="-s -w" -o ./bin/exe ./cmd/cli
+	go build -ldflags="-s -w" -o ./bin/exe ./cmd
 
 s:
 	go run cmd/cli/main.go s
