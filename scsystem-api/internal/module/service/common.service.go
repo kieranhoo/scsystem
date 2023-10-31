@@ -1,6 +1,7 @@
 package service
 
 import (
+	"qrcheckin/internal/config"
 	"qrcheckin/internal/module/tasks"
 	"qrcheckin/pkg/x/mailers"
 	"qrcheckin/pkg/x/worker"
@@ -12,7 +13,13 @@ func Ping() {
 }
 
 func HealthCheck() error {
-	return worker.Execute("default_queue", "Worker.HealthCheck", tasks.HealthCheck, int64(1))
+	return worker.Exec(
+		config.CriticalQueue,
+		worker.NewTask(
+			tasks.WorkerHealthCheck,
+			1,
+		),
+	)
 }
 
 func Email() (string, error) {
