@@ -28,8 +28,8 @@ func init() {
 // @title Student Checkin System
 // @version 1.0.0
 // @description This is a documentation for the Student Checkin System API
-// @host localhost:8000
-// @BasePath
+// @host
+// @basePath /
 func main() {
 	sigChan := make(chan os.Signal, 1)
 	signal.Notify(sigChan, os.Interrupt, syscall.SIGTERM)

@@ -1,3 +1,4 @@
+basePath: /
 definitions:
   schema.DataResponse:
     properties:
@@ -107,7 +108,6 @@ definitions:
     - msg
     - success
     type: object
-host: localhost:8000
 info:
   contact: {}
   description: This is a documentation for the Student Checkin System API
