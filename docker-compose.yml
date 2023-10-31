@@ -32,7 +32,7 @@ services:
       - STAGE_STATUS=prod
       - HOST=0.0.0.0
       - PORT=8000
-      - SERVER_READ_TIMEOUT=${SERVER_READ_TIMEOUT}
+      - SERVER_READ_TIMEOUT=60
       - JWT_SECRET_KEY=${JWT_SECRET_KEY}
       - JWT_COST=${JWT_COST}
       - DB_HOST=${DB_HOST}
