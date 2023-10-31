@@ -3,10 +3,10 @@ services:
   api-server:
     image: duchungho/scsystem:latest
     environment:
-      - STAGE_STATUS=${STAGE_STATUS}
-      - HOST=${HOST}
-      - PORT=${PORT}
-      - SERVER_READ_TIMEOUT=${SERVER_READ_TIMEOUT}
+      - STAGE_STATUS=prod
+      - HOST=0.0.0.0
+      - PORT=8000
+      - SERVER_READ_TIMEOUT=60
       - JWT_SECRET_KEY=${JWT_SECRET_KEY}
       - JWT_COST=${JWT_COST}
       - DB_HOST=${DB_HOST}
@@ -15,9 +15,9 @@ services:
       - DB_PASSWORD=${DB_PASSWORD}
       - DB_NAME=${DB_NAME}
       - DB_SSL_MODE=${DB_SSL_MODE}
-      - REDIS_HOST=${REDIS_HOST}
-      - REDIS_PORT=${REDIS_PORT}
-      - REDIS_PASSWORD=${REDIS_PASSWORD}
+      - REDIS_HOST=redis
+      - REDIS_PORT=6379
+      - REDIS_PASSWORD=password
       - SENTRY_DSN=${SENTRY_DSN}
       - EMAIL_APP_PASSWORD=${EMAIL_APP_PASSWORD}
       - EMAIL=${EMAIL}
@@ -29,9 +29,9 @@ services:
   worker:
     image: duchungho/scsystem:latest
     environment:
-      - STAGE_STATUS=${STAGE_STATUS}
-      - HOST=${HOST}
-      - PORT=${PORT}
+      - STAGE_STATUS=prod
+      - HOST=0.0.0.0
+      - PORT=8000
       - SERVER_READ_TIMEOUT=${SERVER_READ_TIMEOUT}
       - JWT_SECRET_KEY=${JWT_SECRET_KEY}
       - JWT_COST=${JWT_COST}
@@ -41,9 +41,9 @@ services:
       - DB_PASSWORD=${DB_PASSWORD}
       - DB_NAME=${DB_NAME}
       - DB_SSL_MODE=${DB_SSL_MODE}
-      - REDIS_HOST=${REDIS_HOST}
-      - REDIS_PORT=${REDIS_PORT}
-      - REDIS_PASSWORD=${REDIS_PASSWORD}
+      - REDIS_HOST=redis
+      - REDIS_PORT=6379
+      - REDIS_PASSWORD=password
       - SENTRY_DSN=${SENTRY_DSN}
       - EMAIL_APP_PASSWORD=${EMAIL_APP_PASSWORD}
       - EMAIL=${EMAIL}
