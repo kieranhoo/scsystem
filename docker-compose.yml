@@ -1,0 +1,69 @@
+version: '3.1'
+services:
+  api-server:
+    image: scsystem:latest
+    environment:
+      - STAGE_STATUS=${STAGE_STATUS}
+      - HOST=${HOST}
+      - PORT=${PORT}
+      - SERVER_READ_TIMEOUT=${SERVER_READ_TIMEOUT}
+      - JWT_SECRET_KEY=${JWT_SECRET_KEY}
+      - JWT_COST=${JWT_COST}
+      - DB_HOST=${DB_HOST}
+      - DB_PORT=${DB_PORT}
+      - DB_USER=${DB_USER}
+      - DB_PASSWORD=${DB_PASSWORD}
+      - DB_NAME=${DB_NAME}
+      - DB_SSL_MODE=${DB_SSL_MODE}
+      - REDIS_HOST=${REDIS_HOST}
+      - REDIS_PORT=${REDIS_PORT}
+      - REDIS_PASSWORD=${REDIS_PASSWORD}
+      - SENTRY_DSN=${SENTRY_DSN}
+      - EMAIL_APP_PASSWORD=${EMAIL_APP_PASSWORD}
+      - EMAIL=${EMAIL}
+    restart: always
+    command: "./bin/exe s"
+    ports:
+      - 8000:8000
+
+  worker:
+    image: scsystem:latest
+    build:
+      context: .
+      dockerfile: Dockerfile
+    environment:
+      - STAGE_STATUS=${STAGE_STATUS}
+      - HOST=${HOST}
+      - PORT=${PORT}
+      - SERVER_READ_TIMEOUT=${SERVER_READ_TIMEOUT}
+      - JWT_SECRET_KEY=${JWT_SECRET_KEY}
+      - JWT_COST=${JWT_COST}
+      - DB_HOST=${DB_HOST}
+      - DB_PORT=${DB_PORT}
+      - DB_USER=${DB_USER}
+      - DB_PASSWORD=${DB_PASSWORD}
+      - DB_NAME=${DB_NAME}
+      - DB_SSL_MODE=${DB_SSL_MODE}
+      - REDIS_HOST=${REDIS_HOST}
+      - REDIS_PORT=${REDIS_PORT}
+      - REDIS_PASSWORD=${REDIS_PASSWORD}
+      - SENTRY_DSN=${SENTRY_DSN}
+      - EMAIL_APP_PASSWORD=${EMAIL_APP_PASSWORD}
+      - EMAIL=${EMAIL}
+    restart: always
+    command: "./bin/exe w"
+
+  redis:
+    image: redis
+    ports:
+      - 6379:6379
+    command: /bin/sh -c "redis-server --requirepass password"
+    environment:
+      - REDIS_HOST_PASSWORD=password
+    volumes:
+      - ./data/redis:/data
+
+networks:
+  scsystem_api_network:
+volumes:
+  data:
