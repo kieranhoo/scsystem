@@ -1,7 +1,7 @@
 version: '3.1'
 services:
   api-server:
-    image: scsystem:latest
+    image: duchungho/scsystem:latest
     environment:
       - STAGE_STATUS=${STAGE_STATUS}
       - HOST=${HOST}
@@ -27,10 +27,7 @@ services:
       - 8000:8000
 
   worker:
-    image: scsystem:latest
-    build:
-      context: .
-      dockerfile: Dockerfile
+    image: duchungho/scsystem:latest
     environment:
       - STAGE_STATUS=${STAGE_STATUS}
       - HOST=${HOST}
