@@ -12,7 +12,7 @@ import (
 	"qrcheckin/internal/api/middleware"
 	"qrcheckin/internal/api/routes"
 	"qrcheckin/internal/config"
-	"qrcheckin/internal/module/tasks"
+	"qrcheckin/internal/mod/tasks"
 	"qrcheckin/pkg/sentry"
 	"qrcheckin/pkg/x/mailers"
 	"qrcheckin/pkg/x/worker"

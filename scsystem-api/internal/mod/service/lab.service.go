@@ -2,11 +2,11 @@ package service
 
 import (
 	"qrcheckin/internal/config"
-	"qrcheckin/internal/module/entity"
-	"qrcheckin/internal/module/interfaces"
-	"qrcheckin/internal/module/model"
-	"qrcheckin/internal/module/schema"
-	"qrcheckin/internal/module/tasks"
+	"qrcheckin/internal/mod/model"
+	"qrcheckin/internal/mod/schema"
+	"qrcheckin/internal/mod/tasks"
+	"qrcheckin/internal/types/entity"
+	"qrcheckin/internal/types/interfaces"
 	"qrcheckin/pkg/database"
 	"qrcheckin/pkg/x/worker"
 )

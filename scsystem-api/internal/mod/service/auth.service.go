@@ -2,10 +2,10 @@ package service
 
 import (
 	"errors"
-	"qrcheckin/internal/module/entity"
-	"qrcheckin/internal/module/interfaces"
-	"qrcheckin/internal/module/model"
-	"qrcheckin/internal/module/schema"
+	"qrcheckin/internal/mod/schema"
+	"qrcheckin/internal/mod/model"
+	"qrcheckin/internal/types/entity"
+	"qrcheckin/internal/types/interfaces"
 	"qrcheckin/pkg/utils"
 )
 

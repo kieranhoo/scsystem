@@ -1,8 +1,8 @@
 package interfaces
 
 import (
-	"qrcheckin/internal/module/entity"
-	"qrcheckin/internal/module/schema"
+	"qrcheckin/internal/mod/schema"
+	"qrcheckin/internal/types/entity"
 )
 
 type IAuthService interface {

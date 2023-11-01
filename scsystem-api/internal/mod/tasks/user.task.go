@@ -4,9 +4,10 @@ import (
 	"context"
 	"encoding/json"
 	"errors"
+	"qrcheckin/internal/mod/model"
+	"qrcheckin/internal/types/entity"
+
 	"github.com/hibiken/asynq"
-	"qrcheckin/internal/module/entity"
-	"qrcheckin/internal/module/model"
 )
 
 func SignUp(id, firstName, lastName, phoneNumber, email, password string) error {

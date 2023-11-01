@@ -3,9 +3,10 @@ package tasks
 import (
 	"context"
 	"encoding/json"
+	"qrcheckin/internal/mod/model"
+	"qrcheckin/internal/types/entity"
+
 	"github.com/hibiken/asynq"
-	"qrcheckin/internal/module/entity"
-	"qrcheckin/internal/module/model"
 )
 
 func SaveActivityType(registrationId, adminId, activityType string) error {

@@ -1,6 +1,8 @@
 package interfaces
 
-import "qrcheckin/internal/module/entity"
+import (
+	"qrcheckin/internal/types/entity"
+)
 
 type IUsers interface {
 	GetByEmail(email string) (*entity.Users, error)

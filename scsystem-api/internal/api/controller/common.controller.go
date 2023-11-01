@@ -1,7 +1,7 @@
 package controller
 
 import (
-	"qrcheckin/internal/module/service"
+	"qrcheckin/internal/mod/service"
 	"qrcheckin/pkg/sentry"
 
 	"github.com/gofiber/fiber/v2"

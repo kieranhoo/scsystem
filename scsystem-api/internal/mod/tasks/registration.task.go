@@ -4,8 +4,8 @@ import (
 	"context"
 	"encoding/json"
 	"github.com/hibiken/asynq"
-	"qrcheckin/internal/module/entity"
-	"qrcheckin/internal/module/model"
+	"qrcheckin/internal/mod/model"
+	"qrcheckin/internal/types/entity"
 )
 
 func SaveRegistration(registrationTime, supervisor, startDay, endDay, userId, roomId string) error {

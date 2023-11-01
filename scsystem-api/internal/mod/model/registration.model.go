@@ -2,8 +2,8 @@ package model
 
 import (
 	"gorm.io/gorm"
-	"qrcheckin/internal/module/entity"
-	"qrcheckin/internal/module/interfaces"
+	"qrcheckin/internal/types/entity"
+	"qrcheckin/internal/types/interfaces"
 	"qrcheckin/pkg/database"
 )
 

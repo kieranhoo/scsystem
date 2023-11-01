@@ -2,7 +2,7 @@ package model
 
 import (
 	"gorm.io/gorm"
-	"qrcheckin/internal/module/entity"
+	"qrcheckin/internal/types/entity"
 )
 
 type Office struct {
