@@ -15,7 +15,26 @@ const docTemplate = `{
     "host": "{{.Host}}",
     "basePath": "{{.BasePath}}",
     "paths": {
-        "/api/v1/auth/signin": {
+        "/common/healthcheck": {
+            "get": {
+                "description": "health check api server.",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "common"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    }
+                }
+            }
+        },
+        "/v1/auth/signin": {
             "post": {
                 "description": "Sign in account for admin.",
                 "consumes": [
@@ -48,7 +67,7 @@ const docTemplate = `{
                 }
             }
         },
-        "/api/v1/auth/signup": {
+        "/v1/auth/signup": {
             "post": {
                 "description": "Register account for admin.",
                 "consumes": [
@@ -81,7 +100,7 @@ const docTemplate = `{
                 }
             }
         },
-        "/api/v1/lab/activity": {
+        "/v1/lab/activity": {
             "post": {
                 "description": "Save activity type in/out.",
                 "consumes": [
@@ -112,7 +131,7 @@ const docTemplate = `{
                 }
             }
         },
-        "/api/v1/lab/history": {
+        "/v1/lab/history": {
             "get": {
                 "description": "Get History.",
                 "consumes": [
@@ -143,7 +162,7 @@ const docTemplate = `{
                 }
             }
         },
-        "/api/v1/lab/register": {
+        "/v1/lab/register": {
             "post": {
                 "description": "Register lab.",
                 "consumes": [
@@ -176,7 +195,7 @@ const docTemplate = `{
                 }
             }
         },
-        "/api/v1/lab/user": {
+        "/v1/lab/user": {
             "get": {
                 "description": "Get User for checkin.",
                 "consumes": [
@@ -210,101 +229,6 @@ const docTemplate = `{
                         "schema": {
                             "$ref": "#/definitions/schema.DataResponse"
                         }
-                    }
-                }
-            }
-        },
-        "/common/capture": {
-            "get": {
-                "description": "test sentry.io capture.",
-                "consumes": [
-                    "application/json"
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "common"
-                ],
-                "responses": {
-                    "200": {
-                        "description": "OK"
-                    }
-                }
-            }
-        },
-        "/common/email": {
-            "get": {
-                "description": "test email.",
-                "consumes": [
-                    "application/json"
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "common"
-                ],
-                "responses": {
-                    "200": {
-                        "description": "OK"
-                    }
-                }
-            }
-        },
-        "/common/healthcheck": {
-            "get": {
-                "description": "health check api server.",
-                "consumes": [
-                    "application/json"
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "common"
-                ],
-                "responses": {
-                    "200": {
-                        "description": "OK"
-                    }
-                }
-            }
-        },
-        "/common/sentry": {
-            "get": {
-                "description": "test sentry.io.",
-                "consumes": [
-                    "application/json"
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "common"
-                ],
-                "responses": {
-                    "200": {
-                        "description": "OK"
-                    }
-                }
-            }
-        },
-        "/common/workercheck": {
-            "get": {
-                "description": "health check worker.",
-                "consumes": [
-                    "application/json"
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "common"
-                ],
-                "responses": {
-                    "200": {
-                        "description": "OK"
                     }
                 }
             }

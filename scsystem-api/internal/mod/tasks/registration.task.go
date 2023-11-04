@@ -5,11 +5,11 @@ import (
 	"encoding/json"
 	"github.com/hibiken/asynq"
 	"qrcheckin/internal/mod/model"
-	"qrcheckin/internal/types/entity"
+	"qrcheckin/internal/types"
 )
 
 func SaveRegistration(registrationTime, supervisor, startDay, endDay, userId, roomId string) error {
-	return model.NewRegistration().Insert(&entity.Registration{
+	return model.NewRegistration().Insert(&types.Registration{
 		RegistrationTime: registrationTime,
 		Supervisor:       supervisor,
 		RoomId:           roomId,
@@ -20,7 +20,7 @@ func SaveRegistration(registrationTime, supervisor, startDay, endDay, userId, ro
 }
 
 func HandleSaveRegistration(_ context.Context, t *asynq.Task) error {
-	var registration entity.Registration
+	var registration types.Registration
 	if err := json.Unmarshal(t.Payload(), &registration); err != nil {
 		return err
 	}

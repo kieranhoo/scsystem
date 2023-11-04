@@ -1,4 +1,4 @@
-package entity
+package types
 
 type Users struct {
 	Id          string `json:"id" gorm:"column:id"`

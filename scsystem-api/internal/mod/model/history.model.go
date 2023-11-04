@@ -1,8 +1,7 @@
 package model
 
 import (
-	"qrcheckin/internal/types/entity"
-	"qrcheckin/internal/types/interfaces"
+	"qrcheckin/internal/types"
 	"qrcheckin/pkg/database"
 	"time"
 
@@ -10,22 +9,22 @@ import (
 )
 
 type History struct {
-	data *entity.History
+	data *types.History
 	conn *gorm.DB
 }
 
-func NewHistory() interfaces.IHistory {
+func NewHistory() types.IHistory {
 	conn, err := database.Connection()
 	if err != nil {
 		panic(err)
 	}
 	return &History{
-		data: &entity.History{},
+		data: &types.History{},
 		conn: conn,
 	}
 }
 
-func (his *History) Insert(_his *entity.History) error {
+func (his *History) Insert(_his *types.History) error {
 	_time := time.Now().UTC().Format(time.DateTime)
 	if err := his.conn.Exec(
 		"INSERT INTO history (registration_id, activity_type, time, admin_id) VALUES (?, ?, ?, ?);",
@@ -35,7 +34,7 @@ func (his *History) Insert(_his *entity.History) error {
 	return nil
 }
 
-func (his *History) Latest(registrationId string) (*entity.History, error) {
+func (his *History) Latest(registrationId string) (*types.History, error) {
 	if err := his.conn.Raw(
 		"SELECT * FROM history WHERE registration_id = ? ORDER BY id DESC LIMIT 1;",
 		registrationId,
@@ -49,8 +48,8 @@ func (his *History) Empty() bool {
 	return his.data.ActivityType == ""
 }
 
-func (his *History) GetList(limit string) ([]entity.History, error) {
-	var histories []entity.History
+func (his *History) GetList(limit string) ([]types.History, error) {
+	var histories []types.History
 	if err := his.conn.Raw(
 		"SELECT * FROM history ORDER BY id DESC LIMIT ?;",
 		limit,
