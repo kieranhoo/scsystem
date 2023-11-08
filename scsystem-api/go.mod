@@ -5,7 +5,7 @@ go 1.20
 require (
 	github.com/RichardKnop/machinery v1.10.6
 	github.com/charmbracelet/lipgloss v0.9.1
-	github.com/charmbracelet/log v0.2.5
+	github.com/charmbracelet/log v0.3.0
 	github.com/getsentry/sentry-go v0.25.0
 	github.com/go-playground/validator/v10 v10.15.5
 	github.com/gofiber/contrib/fibersentry v1.0.4
@@ -91,6 +91,7 @@ require (
 	go.opentelemetry.io/otel v0.17.0 // indirect
 	go.opentelemetry.io/otel/metric v0.17.0 // indirect
 	go.opentelemetry.io/otel/trace v0.17.0 // indirect
+	golang.org/x/exp v0.0.0-20231006140011-7918f672742d // indirect
 	golang.org/x/lint v0.0.0-20201208152925-83fdc39ff7b5 // indirect
 	golang.org/x/mod v0.13.0 // indirect
 	golang.org/x/net v0.17.0 // indirect
