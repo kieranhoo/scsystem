@@ -4,8 +4,8 @@ import (
 	"os"
 	"os/signal"
 	"qrcheckin/api"
-	middleware2 "qrcheckin/api/middleware"
-	routes2 "qrcheckin/api/routes"
+	"qrcheckin/api/middleware"
+	"qrcheckin/api/routes"
 	"qrcheckin/internal/config"
 	"qrcheckin/internal/service"
 	"qrcheckin/internal/tasks"
@@ -35,13 +35,13 @@ func Server() {
 	coreAPI.BackgroundTask(JobLaunch)
 	coreAPI.Worker(tasks.Setting(config.BrokerUrl, config.ResultBackend))
 	coreAPI.Middleware(
-		middleware2.FiberMiddleware,
-		middleware2.SentryMiddleware,
+		middleware.FiberMiddleware,
+		middleware.SentryMiddleware,
 	)
 
 	coreAPI.Route(
-		routes2.Gateway,
-		routes2.NotFoundRoute,
+		routes.Gateway,
+		routes.NotFoundRoute,
 	)
 
 	coreAPI.Run()
