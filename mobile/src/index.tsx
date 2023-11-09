@@ -1,6 +1,6 @@
 import React from "react";
 import * as Localization from "expo-localization";
-import { useCallback } from 'react';
+import { useCallback } from "react";
 import { i18n, Language } from "@/Localization";
 import { NativeBaseProvider } from "native-base";
 import { store, persistor } from "@/Store";
@@ -9,7 +9,7 @@ import { PersistGate } from "redux-persist/integration/react";
 import { ApplicationNavigator } from "./Navigation";
 import { View, Text } from "react-native";
 import { useFonts } from "expo-font";
-import * as SplashScreen from 'expo-splash-screen';
+import * as SplashScreen from "expo-splash-screen";
 import {
   Poppins_100Thin,
   Poppins_100Thin_Italic,
@@ -29,7 +29,7 @@ import {
   Poppins_800ExtraBold_Italic,
   Poppins_900Black,
   Poppins_900Black_Italic,
-} from '@expo-google-fonts/poppins';
+} from "@expo-google-fonts/poppins";
 
 i18n.locale = Localization.locale;
 i18n.enableFallback = true;
@@ -61,17 +61,16 @@ export default function App() {
       <View>
         <Text>Dang load</Text>
       </View>
-    )
-  }
-  else {
+    );
+  } else {
     return (
-      <NativeBaseProvider>
-        <Provider store={store}>
-          <PersistGate loading={null} persistor={persistor}>
-            <ApplicationNavigator />
-          </PersistGate>
-        </Provider>
-      </NativeBaseProvider>
+        <NativeBaseProvider>
+          <Provider store={store}>
+            <PersistGate loading={null} persistor={persistor}>
+              <ApplicationNavigator />
+            </PersistGate>
+          </Provider>
+        </NativeBaseProvider>
     );
   }
 }
