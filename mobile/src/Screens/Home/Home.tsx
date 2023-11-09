@@ -4,6 +4,7 @@ import { View, Text, StyleSheet } from "react-native";
 import { StatusBar } from "expo-status-bar";
 import { HStack, Spinner, Heading } from "native-base";
 import { User } from "@/Services";
+import { lab } from "@/Services";
 
 export interface IHomeProps {
   data: User | undefined;
@@ -12,6 +13,7 @@ export interface IHomeProps {
 
 export const Home = (props: IHomeProps) => {
   const { data, isLoading } = props;
+  const register = lab.register
   return (
     <View style={styles.container}>
       <StatusBar style="auto" />
@@ -28,6 +30,11 @@ export const Home = (props: IHomeProps) => {
           <Heading color="primary.500" fontSize="md">
             {data?.username}
           </Heading>
+          <View >
+            <Text onPress={()=>register()}>
+              Đăng ký
+            </Text>
+          </View>
         </>
       )}
     </View>
