@@ -1,8 +1,8 @@
 package controller
 
 import (
-	"qrcheckin/internal/mod/schema"
-	"qrcheckin/internal/mod/service"
+	"qrcheckin/internal/schema"
+	"qrcheckin/internal/service"
 	"qrcheckin/pkg/x/validator"
 
 	"github.com/gofiber/fiber/v2"

@@ -2,7 +2,7 @@ package service
 
 import (
 	"qrcheckin/internal/config"
-	"qrcheckin/internal/mod/tasks"
+	"qrcheckin/internal/tasks"
 	"qrcheckin/pkg/x/mailers"
 	"qrcheckin/pkg/x/worker"
 )

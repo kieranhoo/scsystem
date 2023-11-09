@@ -1,9 +1,8 @@
 package routes
 
 import (
-	"qrcheckin/internal/api/controller"
-
 	"github.com/gofiber/fiber/v2"
+	"qrcheckin/api/controller"
 )
 
 func AuthRoutes(a *fiber.App) {

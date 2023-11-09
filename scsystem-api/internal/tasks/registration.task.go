@@ -4,7 +4,7 @@ import (
 	"context"
 	"encoding/json"
 	"github.com/hibiken/asynq"
-	"qrcheckin/internal/mod/model"
+	"qrcheckin/internal/model"
 	"qrcheckin/internal/types"
 )
 

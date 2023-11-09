@@ -1,7 +1,7 @@
 package types
 
 import (
-	"qrcheckin/internal/mod/schema"
+	"qrcheckin/internal/schema"
 )
 
 type IAuthService interface {

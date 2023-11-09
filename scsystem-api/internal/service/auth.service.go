@@ -2,8 +2,8 @@ package service
 
 import (
 	"errors"
-	"qrcheckin/internal/mod/model"
-	"qrcheckin/internal/mod/schema"
+	"qrcheckin/internal/schema"
+	"qrcheckin/internal/model"
 	"qrcheckin/internal/types"
 	"qrcheckin/pkg/utils"
 )

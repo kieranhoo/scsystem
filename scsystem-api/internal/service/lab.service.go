@@ -2,9 +2,9 @@ package service
 
 import (
 	"qrcheckin/internal/config"
-	"qrcheckin/internal/mod/model"
-	"qrcheckin/internal/mod/schema"
-	"qrcheckin/internal/mod/tasks"
+	"qrcheckin/internal/schema"
+	"qrcheckin/internal/model"
+	"qrcheckin/internal/tasks"
 	"qrcheckin/internal/types"
 	"qrcheckin/pkg/database"
 	"qrcheckin/pkg/x/worker"

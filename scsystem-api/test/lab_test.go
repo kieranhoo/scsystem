@@ -3,9 +3,9 @@ package test
 import (
 	"fmt"
 	"log"
-	"qrcheckin/internal/mod/model"
-	"qrcheckin/internal/mod/service"
-	"qrcheckin/internal/mod/tasks"
+	"qrcheckin/internal/model"
+	"qrcheckin/internal/service"
+	"qrcheckin/internal/tasks"
 	"testing"
 )
 

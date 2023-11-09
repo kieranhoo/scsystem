@@ -1,10 +1,9 @@
 package routes
 
 import (
-	"qrcheckin/internal/api/controller"
-	"qrcheckin/internal/api/middleware"
-
 	"github.com/gofiber/fiber/v2"
+	"qrcheckin/api/controller"
+	"qrcheckin/api/middleware"
 )
 
 func LabRoutes(a *fiber.App) {

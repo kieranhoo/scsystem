@@ -1,7 +1,7 @@
 package middleware
 
 import (
-	"qrcheckin/internal/mod/schema"
+	"qrcheckin/internal/schema"
 	"qrcheckin/pkg/x/validator"
 
 	"github.com/gofiber/fiber/v2"

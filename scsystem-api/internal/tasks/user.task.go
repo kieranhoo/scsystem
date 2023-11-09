@@ -5,7 +5,7 @@ import (
 	"encoding/json"
 	"errors"
 	"github.com/hibiken/asynq"
-	"qrcheckin/internal/mod/model"
+	"qrcheckin/internal/model"
 	"qrcheckin/internal/types"
 )
 
