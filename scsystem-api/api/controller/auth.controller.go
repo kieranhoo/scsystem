@@ -1,8 +1,8 @@
 package controller
 
 import (
-	"qrcheckin/internal/module/schema"
-	"qrcheckin/internal/module/service"
+	"qrcheckin/internal/schema"
+	"qrcheckin/internal/service"
 	"qrcheckin/pkg/x/validator"
 
 	"github.com/gofiber/fiber/v2"
@@ -17,7 +17,7 @@ var authService = service.NewAuth()
 // @Produce json
 // @Param sign_up body schema.SignUpRequest true "Sign Up"
 // @Success 200 {object} schema.SignUpResponse
-// @Router /api/v1/auth/signup [POST]
+// @Router /v1/auth/signup [POST]
 func SignUp(c *fiber.Ctx) error {
 	var req schema.SignUpRequest
 	if err := c.BodyParser(&req); err != nil {
@@ -51,7 +51,7 @@ func SignUp(c *fiber.Ctx) error {
 // @Produce json
 // @Param sign_in body schema.SignInRequest true "Sign In"
 // @Success 200 {object} schema.SignInResponse
-// @Router /api/v1/auth/signin [POST]
+// @Router /v1/auth/signin [POST]
 func SignIn(c *fiber.Ctx) error {
 	var req schema.SignInRequest
 	if err := c.BodyParser(&req); err != nil {

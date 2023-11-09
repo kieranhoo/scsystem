@@ -1,8 +1,8 @@
 package controller
 
 import (
-	"qrcheckin/internal/module/schema"
-	"qrcheckin/internal/module/service"
+	"qrcheckin/internal/schema"
+	"qrcheckin/internal/service"
 	"qrcheckin/pkg/x/validator"
 
 	"github.com/gofiber/fiber/v2"
@@ -17,7 +17,7 @@ var labService = service.NewLab()
 // @Produce json
 // @Param sign_in body schema.RegistrationLabRequest true "RegisterLab"
 // @Success 200 {object} schema.Response
-// @Router /api/v1/lab/register [POST]
+// @Router /v1/lab/register [POST]
 func RegisterLab(c *fiber.Ctx) error {
 	var req schema.RegistrationLabRequest
 	if err := c.BodyParser(&req); err != nil {
@@ -51,7 +51,7 @@ func RegisterLab(c *fiber.Ctx) error {
 // @Param sid query string true "student id"
 // @Param room query string true "student id"
 // @Success 200 {object} schema.DataResponse
-// @Router /api/v1/lab/user [GET]
+// @Router /v1/lab/user [GET]
 func GetUser(c *fiber.Ctx) error {
 	sid := c.Query("sid", "")
 	if sid == "" {
@@ -93,7 +93,7 @@ func GetUser(c *fiber.Ctx) error {
 // @Produce json
 // @Param limit query string true "limit records"
 // @Success 200 {object} schema.DataResponse
-// @Router /api/v1/lab/history [GET]
+// @Router /v1/lab/history [GET]
 func Histories(c *fiber.Ctx) error {
 	limit := c.Query("limit", "")
 	if limit == "" {
@@ -122,7 +122,7 @@ func Histories(c *fiber.Ctx) error {
 // @Produce json
 // @Param limit query string true "limit records"
 // @Success 200 {object} schema.Response
-// @Router /api/v1/lab/activity [POST]
+// @Router /v1/lab/activity [POST]
 func SaveActivityType(c *fiber.Ctx) error {
 	var req schema.CheckInRequest
 	if err := c.BodyParser(&req); err != nil {

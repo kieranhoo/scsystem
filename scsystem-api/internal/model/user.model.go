@@ -1,37 +1,36 @@
 package model
 
 import (
-	"qrcheckin/internal/module/entity"
-	"qrcheckin/internal/module/interfaces"
+	"qrcheckin/internal/types"
 	"qrcheckin/pkg/database"
 
 	"gorm.io/gorm"
 )
 
 type Users struct {
-	data *entity.Users
+	data *types.Users
 	conn *gorm.DB
 }
 
-func NewUser() interfaces.IUsers {
+func NewUser() types.IUsers {
 	conn, err := database.Connection()
 	if err != nil {
 		panic(err)
 	}
 	return &Users{
-		data: &entity.Users{},
+		data: &types.Users{},
 		conn: conn,
 	}
 }
 
-func (user *Users) GetByEmail(email string) (*entity.Users, error) {
+func (user *Users) GetByEmail(email string) (*types.Users, error) {
 	if err := user.conn.Raw("SELECT * FROM users WHERE email = ?", email).Scan(user.data).Error; err != nil {
 		return nil, err
 	}
 	return user.data, nil
 }
 
-func (user *Users) GetByID(Id string) (*entity.Users, error) {
+func (user *Users) GetByID(Id string) (*types.Users, error) {
 	// if err := conn.Raw("SELECT * FROM users WHERE id = ?", Id).Scan(_user).Error; err != nil {
 	// 	return nil, err
 	// }
@@ -41,7 +40,7 @@ func (user *Users) GetByID(Id string) (*entity.Users, error) {
 	return user.data, nil
 }
 
-func (user *Users) Insert(_user *entity.Users) error {
+func (user *Users) Insert(_user *types.Users) error {
 	if err := user.conn.Exec(
 		"INSERT INTO users (id, first_name, last_name, email, phone_number, role, title, password) VALUES (?, ?, ?, ?, ?, ?, ?, ?);",
 		_user.Id, _user.FirstName, _user.LastName, _user.Email, _user.PhoneNumber, _user.Role, _user.Title, _user.Password).Error; err != nil {

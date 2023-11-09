@@ -1,8 +1,7 @@
-package interfaces
+package types
 
 import (
-	"qrcheckin/internal/module/entity"
-	"qrcheckin/internal/module/schema"
+	"qrcheckin/internal/schema"
 )
 
 type IAuthService interface {
@@ -14,6 +13,6 @@ type ILabService interface {
 	RegisterLab(req *schema.RegistrationLabRequest) error
 	RegistrationLatest(studentId, roomId string) (*schema.UserLabData, error)
 	SaveActivityType(req *schema.CheckInRequest) error
-	GetHistories(limit string) ([]entity.History, error)
+	GetHistories(limit string) ([]History, error)
 	GetHistoriesData(limit string) ([]schema.HistoryData, error)
 }

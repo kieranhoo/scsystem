@@ -5,14 +5,14 @@ import (
 	"encoding/json"
 	"errors"
 	"github.com/hibiken/asynq"
-	"qrcheckin/internal/module/entity"
-	"qrcheckin/internal/module/model"
+	"qrcheckin/internal/model"
+	"qrcheckin/internal/types"
 )
 
 func SignUp(id, firstName, lastName, phoneNumber, email, password string) error {
 	_user, err := model.NewUser().GetByID(id)
 	if err != nil || _user.Email == "" {
-		return model.NewUser().Insert(&entity.Users{
+		return model.NewUser().Insert(&types.Users{
 			Id:          id,
 			FirstName:   firstName,
 			LastName:    lastName,
@@ -28,7 +28,7 @@ func SignUp(id, firstName, lastName, phoneNumber, email, password string) error 
 }
 
 func SaveUser(id, firstName, lastName, phoneNumber, email string) error {
-	return new(model.Users).Insert(&entity.Users{
+	return new(model.Users).Insert(&types.Users{
 		Id:          id,
 		FirstName:   firstName,
 		LastName:    lastName,
@@ -38,7 +38,7 @@ func SaveUser(id, firstName, lastName, phoneNumber, email string) error {
 }
 
 func HandleSaveUser(_ context.Context, task *asynq.Task) error {
-	var user entity.Users
+	var user types.Users
 	if err := json.Unmarshal(task.Payload(), &user); err != nil {
 		return err
 	}

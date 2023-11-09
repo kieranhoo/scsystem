@@ -7,12 +7,12 @@ import (
 	"os"
 	"os/signal"
 	"qrcheckin/api"
-	"qrcheckin/api/middleware"
-	"qrcheckin/api/routes"
-	"qrcheckin/cmd/cli/app"
+	middleware2 "qrcheckin/api/middleware"
+	routes2 "qrcheckin/api/routes"
+	"qrcheckin/cmd/app"
 	_ "qrcheckin/docs"
 	"qrcheckin/internal/config"
-	"qrcheckin/internal/module/tasks"
+	"qrcheckin/internal/tasks"
 	"qrcheckin/pkg/sentry"
 	"qrcheckin/pkg/x/mailers"
 	"qrcheckin/pkg/x/worker"
@@ -28,8 +28,8 @@ func init() {
 // @title Student Checkin System
 // @version 1.0.0
 // @description This is a documentation for the Student Checkin System API
-// @host localhost:8000
-// @BasePath
+// @host
+// @basePath /
 func main() {
 	sigChan := make(chan os.Signal, 1)
 	signal.Notify(sigChan, os.Interrupt, syscall.SIGTERM)
@@ -37,12 +37,12 @@ func main() {
 	coreAPI.BackgroundTask(app.JobLaunch)
 	coreAPI.Worker(tasks.Setting(config.BrokerUrl, config.ResultBackend))
 	coreAPI.Middleware(
-		middleware.FiberMiddleware,
-		middleware.SentryMiddleware,
+		middleware2.FiberMiddleware,
+		middleware2.SentryMiddleware,
 	)
 	coreAPI.Route(
-		routes.Gateway,
-		routes.NotFoundRoute,
+		routes2.Gateway,
+		routes2.NotFoundRoute,
 	)
 	coreAPI.Run()
 }

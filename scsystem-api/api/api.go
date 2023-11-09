@@ -6,7 +6,7 @@ import (
 	"os"
 	"qrcheckin/internal/config"
 	"qrcheckin/pkg/utils"
-	worker2 "qrcheckin/pkg/x/worker"
+	"qrcheckin/pkg/x/worker"
 
 	"github.com/gofiber/fiber/v2"
 )
@@ -16,7 +16,7 @@ type _App struct {
 }
 
 type IApp interface {
-	Worker(*worker2.Config) IApp
+	Worker(*worker.Config) IApp
 	Middleware(...middleware) IApp
 	Route(...route) IApp
 	Run() IApp
@@ -43,8 +43,8 @@ func (app *_App) BackgroundTask(tasks ...backgroundTask) IApp {
 
 // Worker
 // Deprecated
-func (app *_App) Worker(wcf *worker2.Config) IApp {
-	worker2.Conf = wcf
+func (app *_App) Worker(wcf *worker.Config) IApp {
+	worker.Conf = wcf
 	return app
 }
 

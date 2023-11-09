@@ -7,7 +7,7 @@ package main
 import (
 	"log"
 	"os"
-	"qrcheckin/cmd/cli/app"
+	"qrcheckin/cmd/app"
 	"qrcheckin/internal/config"
 	"qrcheckin/pkg/sentry"
 	"qrcheckin/pkg/x/mailers"

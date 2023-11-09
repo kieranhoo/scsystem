@@ -2,18 +2,17 @@ package service
 
 import (
 	"errors"
-	"qrcheckin/internal/module/entity"
-	"qrcheckin/internal/module/interfaces"
-	"qrcheckin/internal/module/model"
-	"qrcheckin/internal/module/schema"
+	"qrcheckin/internal/schema"
+	"qrcheckin/internal/model"
+	"qrcheckin/internal/types"
 	"qrcheckin/pkg/utils"
 )
 
 type Auth struct {
-	repo interfaces.IUsers
+	repo types.IUsers
 }
 
-func NewAuth() interfaces.IAuthService {
+func NewAuth() types.IAuthService {
 	return &Auth{
 		repo: model.NewUser(),
 	}
@@ -26,7 +25,7 @@ func (auth *Auth) SignUp(req schema.SignUpRequest) error {
 	}
 	_user, err := auth.repo.GetByID(req.Id)
 	if err != nil || _user == nil {
-		return auth.repo.Insert(&entity.Users{
+		return auth.repo.Insert(&types.Users{
 			Id:          req.Id,
 			FirstName:   req.FirstName,
 			LastName:    req.LastName,
