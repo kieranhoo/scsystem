@@ -28,7 +28,7 @@
     "expo-updates": "~0.16.4",
     "i18n-js": "^4.1.1",
     "lottie-react-native": "5.1.4",
-    "native-base": "^3.4.15",
+    "native-base": "^3.4.28",
     "react": "18.2.0",
     "react-dom": "18.2.0",
     "react-native": "0.71.14",
