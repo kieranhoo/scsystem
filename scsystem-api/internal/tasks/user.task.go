@@ -6,13 +6,13 @@ import (
 	"errors"
 	"github.com/hibiken/asynq"
 	"qrcheckin/internal/model"
-	"qrcheckin/internal/types"
+	"qrcheckin/internal/repo"
 )
 
 func SignUp(id, firstName, lastName, phoneNumber, email, password string) error {
-	_user, err := model.NewUser().GetByID(id)
+	_user, err := repo.NewUser().GetByID(id)
 	if err != nil || _user.Email == "" {
-		return model.NewUser().Insert(&types.Users{
+		return repo.NewUser().Insert(&model.Users{
 			Id:          id,
 			FirstName:   firstName,
 			LastName:    lastName,
@@ -22,13 +22,13 @@ func SignUp(id, firstName, lastName, phoneNumber, email, password string) error 
 		})
 	}
 	if _user.Password == "" {
-		return model.NewUser().PromoteAdmin(id, "admin", password, email, phoneNumber)
+		return repo.NewUser().PromoteAdmin(id, "admin", password, email, phoneNumber)
 	}
 	return errors.New("user already exists")
 }
 
 func SaveUser(id, firstName, lastName, phoneNumber, email string) error {
-	return new(model.Users).Insert(&types.Users{
+	return new(repo.Users).Insert(&model.Users{
 		Id:          id,
 		FirstName:   firstName,
 		LastName:    lastName,
@@ -38,9 +38,9 @@ func SaveUser(id, firstName, lastName, phoneNumber, email string) error {
 }
 
 func HandleSaveUser(_ context.Context, task *asynq.Task) error {
-	var user types.Users
+	var user model.Users
 	if err := json.Unmarshal(task.Payload(), &user); err != nil {
 		return err
 	}
-	return model.NewUser().Insert(&user)
+	return repo.NewUser().Insert(&user)
 }

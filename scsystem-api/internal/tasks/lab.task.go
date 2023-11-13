@@ -5,18 +5,18 @@ import (
 	"encoding/json"
 	"github.com/hibiken/asynq"
 	"qrcheckin/internal/model"
-	"qrcheckin/internal/types"
+	"qrcheckin/internal/repo"
 )
 
 func SaveActivityType(registrationId, adminId, activityType string) error {
-	_history, err := model.NewHistory().Latest(registrationId)
+	_history, err := repo.NewHistory().Latest(registrationId)
 	if err != nil {
 		return err
 	}
 	if _history.ActivityType == activityType {
 		return nil
 	}
-	return new(model.History).Insert(&types.History{
+	return new(repo.History).Insert(&model.History{
 		RegistrationId: registrationId,
 		ActivityType:   activityType,
 		AdminId:        adminId,
@@ -24,10 +24,10 @@ func SaveActivityType(registrationId, adminId, activityType string) error {
 }
 
 func HandleSaveActivityType(_ context.Context, task *asynq.Task) error {
-	var history types.History
+	var history model.History
 	if err := json.Unmarshal(task.Payload(), &history); err != nil {
 		return err
 	}
 	// fmt.Println(history)
-	return model.NewHistory().Insert(&history)
+	return repo.NewHistory().Insert(&history)
 }

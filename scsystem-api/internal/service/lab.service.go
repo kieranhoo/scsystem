@@ -2,26 +2,26 @@ package service
 
 import (
 	"qrcheckin/internal/config"
-	"qrcheckin/internal/schema"
 	"qrcheckin/internal/model"
+	"qrcheckin/internal/repo"
+	"qrcheckin/internal/schema"
 	"qrcheckin/internal/tasks"
-	"qrcheckin/internal/types"
 	"qrcheckin/pkg/database"
 	"qrcheckin/pkg/x/worker"
 )
 
 type Registration struct {
-	repo types.IRegistration
+	repo repo.IRegistration
 }
 
-func NewLab() types.ILabService {
+func NewLab() ILabService {
 	return &Registration{
-		repo: model.NewRegistration(),
+		repo: repo.NewRegistration(),
 	}
 }
 
 func (regis *Registration) RegisterLab(req *schema.RegistrationLabRequest) error {
-	_user, err := model.NewUser().GetByID(req.StudentId)
+	_user, err := repo.NewUser().GetByID(req.StudentId)
 	if err != nil || _user == nil {
 		go func() {
 			// if err := worker.Execute(
@@ -38,7 +38,7 @@ func (regis *Registration) RegisterLab(req *schema.RegistrationLabRequest) error
 			// }
 			if err := worker.Exec(config.CriticalQueue, worker.NewTask(
 				tasks.WorkerSaveUser,
-				types.Users{
+				model.Users{
 					Id:          req.StudentId,
 					FirstName:   req.FirstName,
 					LastName:    req.LastName,
@@ -65,7 +65,7 @@ func (regis *Registration) RegisterLab(req *schema.RegistrationLabRequest) error
 
 	return worker.Exec(config.CriticalQueue, worker.NewTask(
 		tasks.WorkerSaveRegistration,
-		types.Registration{
+		model.Registration{
 			RegistrationTime: req.RegistrationTime,
 			Supervisor:       req.Supervisor,
 			StartDay:         req.StartDay,
@@ -96,7 +96,7 @@ func (regis *Registration) RegistrationLatest(studentId, roomId string) (*schema
 	ORDER BY registration.id DESC LIMIT 1;`, studentId, roomId).Scan(labData).Error; err != nil {
 		return nil, err
 	}
-	history, err := model.NewHistory().Latest(labData.Id)
+	history, err := repo.NewHistory().Latest(labData.Id)
 	if err != nil {
 		return nil, err
 	}
@@ -128,7 +128,7 @@ func (regis *Registration) SaveActivityType(req *schema.CheckInRequest) error {
 	// )
 	return worker.Exec(config.CriticalQueue, worker.NewTask(
 		tasks.WorkerSaveActivityType,
-		types.History{
+		model.History{
 			RegistrationId: req.RegistrationId,
 			AdminId:        req.AdminId,
 			ActivityType:   req.ActivityType,
@@ -136,8 +136,8 @@ func (regis *Registration) SaveActivityType(req *schema.CheckInRequest) error {
 	))
 }
 
-func (regis *Registration) GetHistories(limit string) ([]types.History, error) {
-	return model.NewHistory().GetList(limit)
+func (regis *Registration) GetHistories(limit string) ([]model.History, error) {
+	return repo.NewHistory().GetList(limit)
 }
 
 func (regis *Registration) GetHistoriesData(limit string) ([]schema.HistoryData, error) {

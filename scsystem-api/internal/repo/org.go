@@ -1,11 +1,11 @@
-package model
+package repo
 
 import (
 	"gorm.io/gorm"
-	"qrcheckin/internal/types"
+	"qrcheckin/internal/model"
 )
 
 type Organization struct {
-	_ *types.Organization
+	_ *model.Organization
 	_ *gorm.DB
 }
