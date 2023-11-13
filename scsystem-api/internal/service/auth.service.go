@@ -2,19 +2,19 @@ package service
 
 import (
 	"errors"
-	"qrcheckin/internal/schema"
 	"qrcheckin/internal/model"
-	"qrcheckin/internal/types"
+	"qrcheckin/internal/repo"
+	"qrcheckin/internal/schema"
 	"qrcheckin/pkg/utils"
 )
 
 type Auth struct {
-	repo types.IUsers
+	repo repo.IUsers
 }
 
-func NewAuth() types.IAuthService {
+func NewAuth() IAuthService {
 	return &Auth{
-		repo: model.NewUser(),
+		repo: repo.NewUser(),
 	}
 }
 
@@ -25,7 +25,7 @@ func (auth *Auth) SignUp(req schema.SignUpRequest) error {
 	}
 	_user, err := auth.repo.GetByID(req.Id)
 	if err != nil || _user == nil {
-		return auth.repo.Insert(&types.Users{
+		return auth.repo.Insert(&model.Users{
 			Id:          req.Id,
 			FirstName:   req.FirstName,
 			LastName:    req.LastName,
@@ -35,7 +35,7 @@ func (auth *Auth) SignUp(req schema.SignUpRequest) error {
 		})
 	}
 	if _user.Password == "" {
-		return model.NewUser().PromoteAdmin(req.Id, "admin", string(_pass), req.Email, req.PhoneNumber)
+		return repo.NewUser().PromoteAdmin(req.Id, "admin", string(_pass), req.Email, req.PhoneNumber)
 	}
 	return errors.New("user already exists")
 }

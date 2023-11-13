@@ -3,7 +3,7 @@ package test
 import (
 	"fmt"
 	"log"
-	"qrcheckin/internal/model"
+	"qrcheckin/internal/repo"
 	"qrcheckin/internal/service"
 	"qrcheckin/internal/tasks"
 	"testing"
@@ -22,5 +22,5 @@ func TestUpdate(t *testing.T) {
 }
 
 func TestUser(t *testing.T) {
-	log.Println(new(model.Users).GetByID("2013384"))
+	log.Println(new(repo.Users).GetByID("2013384"))
 }
