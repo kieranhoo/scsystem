@@ -39,12 +39,13 @@ func StartServerWithGracefulShutdown(a *fiber.App) {
 }
 
 // StartServer func for starting a simple server.
-func StartServer(a *fiber.App) {
+func StartServer(a *fiber.App) error {
 	// Build Fiber connection URL.
 	fiberConnURL, _ := ConnectionURLBuilder("fiber")
 
 	// Run server.
-	if err := a.Listen(fiberConnURL); err != nil {
-		log.Printf("Oops... Server is not running! Reason: %v", err)
-	}
+	// if err := a.Listen(fiberConnURL); err != nil {
+	// 	log.Printf("Oops... Server is not running! Reason: %v", err)
+	// }
+	return a.Listen(fiberConnURL)
 }

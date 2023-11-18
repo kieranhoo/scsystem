@@ -1,8 +1,8 @@
 package repo
 
 import (
-	"qrcheckin/internal/model"
-	"qrcheckin/pkg/database"
+	"scsystem/internal/model"
+	"scsystem/pkg/database"
 
 	"gorm.io/gorm"
 )

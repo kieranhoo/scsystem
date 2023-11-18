@@ -3,9 +3,9 @@ package test
 import (
 	"fmt"
 	"log"
-	"qrcheckin/internal/repo"
-	"qrcheckin/internal/service"
-	"qrcheckin/internal/tasks"
+	"scsystem/internal/repo"
+	"scsystem/internal/service"
+	"scsystem/internal/tasks"
 	"testing"
 )
 

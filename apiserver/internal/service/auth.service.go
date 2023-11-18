@@ -2,10 +2,10 @@ package service
 
 import (
 	"errors"
-	"qrcheckin/internal/model"
-	"qrcheckin/internal/repo"
-	"qrcheckin/internal/schema"
-	"qrcheckin/pkg/utils"
+	"scsystem/internal/model"
+	"scsystem/internal/repo"
+	"scsystem/internal/schema"
+	"scsystem/pkg/utils"
 )
 
 type Auth struct {

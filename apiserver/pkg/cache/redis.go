@@ -3,7 +3,7 @@ package cache
 import (
 	"context"
 	"fmt"
-	"qrcheckin/internal/config"
+	"scsystem/internal/config"
 
 	"github.com/redis/go-redis/v9"
 )

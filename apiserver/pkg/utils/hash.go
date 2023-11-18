@@ -1,7 +1,7 @@
 package utils
 
 import (
-	"qrcheckin/internal/config"
+	"scsystem/internal/config"
 	"strconv"
 
 	"golang.org/x/crypto/bcrypt"

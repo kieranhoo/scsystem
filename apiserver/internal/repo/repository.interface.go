@@ -1,7 +1,7 @@
 package repo
 
 import (
-	"qrcheckin/internal/model"
+	"scsystem/internal/model"
 )
 
 type IUsers interface {

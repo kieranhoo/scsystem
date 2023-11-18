@@ -1,13 +1,12 @@
 package service
 
 import (
-	"qrcheckin/internal/config"
-	"qrcheckin/internal/model"
-	"qrcheckin/internal/repo"
-	"qrcheckin/internal/schema"
-	"qrcheckin/internal/tasks"
-	"qrcheckin/pkg/database"
-	"qrcheckin/pkg/x/worker"
+	"scsystem/internal/model"
+	"scsystem/internal/repo"
+	"scsystem/internal/schema"
+	"scsystem/internal/tasks"
+	"scsystem/pkg/database"
+	"scsystem/pkg/x/worker"
 )
 
 type Registration struct {
@@ -36,7 +35,7 @@ func (regis *Registration) RegisterLab(req *schema.RegistrationLabRequest) error
 			// ); err != nil {
 			// 	panic(err.Error())
 			// }
-			if err := worker.Exec(config.CriticalQueue, worker.NewTask(
+			if err := worker.Exec(tasks.CriticalQueue, worker.NewTask(
 				tasks.WorkerSaveUser,
 				model.Users{
 					Id:          req.StudentId,
@@ -63,7 +62,7 @@ func (regis *Registration) RegisterLab(req *schema.RegistrationLabRequest) error
 	// 	req.RoomId,
 	// )
 
-	return worker.Exec(config.CriticalQueue, worker.NewTask(
+	return worker.Exec(tasks.CriticalQueue, worker.NewTask(
 		tasks.WorkerSaveRegistration,
 		model.Registration{
 			RegistrationTime: req.RegistrationTime,
@@ -126,7 +125,7 @@ func (regis *Registration) SaveActivityType(req *schema.CheckInRequest) error {
 	// 	req.AdminId,
 	// 	req.ActivityType,
 	// )
-	return worker.Exec(config.CriticalQueue, worker.NewTask(
+	return worker.Exec(tasks.CriticalQueue, worker.NewTask(
 		tasks.WorkerSaveActivityType,
 		model.History{
 			RegistrationId: req.RegistrationId,

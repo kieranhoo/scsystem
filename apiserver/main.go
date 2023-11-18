@@ -4,26 +4,13 @@
 package main
 
 import (
+	"log"
 	"os"
 	"os/signal"
-	"qrcheckin/api"
-	middleware2 "qrcheckin/api/middleware"
-	routes2 "qrcheckin/api/routes"
-	"qrcheckin/cmd/app"
-	_ "qrcheckin/docs"
-	"qrcheckin/internal/config"
-	"qrcheckin/internal/tasks"
-	"qrcheckin/pkg/sentry"
-	"qrcheckin/pkg/x/mailers"
-	"qrcheckin/pkg/x/worker"
+	"scsystem/api"
+	_ "scsystem/docs"
 	"syscall"
 )
-
-func init() {
-	sentry.Init()
-	mailers.Config(config.Email, config.EmailAppPassword)
-	worker.SetBroker(config.RedisHost, config.RedisPort, config.RedisPassword)
-}
 
 // @title Student Checkin System
 // @version 1.0.0
@@ -33,16 +20,9 @@ func init() {
 func main() {
 	sigChan := make(chan os.Signal, 1)
 	signal.Notify(sigChan, os.Interrupt, syscall.SIGTERM)
+
 	coreAPI := api.New().Shutdown(sigChan)
-	coreAPI.BackgroundTask(app.JobLaunch)
-	coreAPI.Worker(tasks.Setting(config.BrokerUrl, config.ResultBackend))
-	coreAPI.Middleware(
-		middleware2.FiberMiddleware,
-		middleware2.SentryMiddleware,
-	)
-	coreAPI.Route(
-		routes2.Gateway,
-		routes2.NotFoundRoute,
-	)
-	coreAPI.Run()
+	if err := coreAPI.Run(); err != nil {
+		log.Fatalf("Oops... Server is not running! Reason: %v", err)
+	}
 }

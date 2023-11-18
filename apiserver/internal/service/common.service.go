@@ -1,10 +1,9 @@
 package service
 
 import (
-	"qrcheckin/internal/config"
-	"qrcheckin/internal/tasks"
-	"qrcheckin/pkg/x/mailers"
-	"qrcheckin/pkg/x/worker"
+	"scsystem/internal/tasks"
+	"scsystem/pkg/x/mailers"
+	"scsystem/pkg/x/worker"
 )
 
 func Ping() {
@@ -14,7 +13,7 @@ func Ping() {
 
 func HealthCheck() error {
 	return worker.Exec(
-		config.CriticalQueue,
+		tasks.CriticalQueue,
 		worker.NewTask(
 			tasks.WorkerHealthCheck,
 			1,

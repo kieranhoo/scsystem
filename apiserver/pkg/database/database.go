@@ -1,7 +1,7 @@
 package database
 
 import (
-	"qrcheckin/pkg/utils"
+	"scsystem/pkg/utils"
 
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
