@@ -3,7 +3,6 @@ name: Build Mobile Application
 on:
   push:
     branches:
-      - master
       - dev/mobile
 
 jobs:

@@ -4,7 +4,6 @@ on:
   push:
     branches:
       - master
-      - api-basic
 
 jobs:
   build:
@@ -22,14 +21,14 @@ jobs:
 
       - name: Build the Go application
         run: go build -ldflags="-s -w" -o ./bin/exe ./cmd
-        working-directory: ./scsystem-api
+        working-directory: ./apiserver
 
       - name: Login to Docker Hub
         run: docker login -u ${{ secrets.DOCKERHUB_USERNAME }} -p ${{ secrets.DOCKERHUB_PASSWORD }}
 
       - name: Build Docker image
         run: docker build -t ${{ secrets.DOCKERHUB_USERNAME }}/${{ secrets.DOCKERHUB_REPOSITORY }}:latest .
-        working-directory: ./scsystem-api
+        working-directory: ./apiserver
 
       - name: Push Docker image
         run: docker push ${{ secrets.DOCKERHUB_USERNAME }}/${{ secrets.DOCKERHUB_REPOSITORY }}:latest
