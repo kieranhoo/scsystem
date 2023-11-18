@@ -3,7 +3,7 @@ package utils
 import (
 	"errors"
 	"fmt"
-	"qrcheckin/internal/config"
+	"scsystem/internal/config"
 	"strings"
 	"time"
 

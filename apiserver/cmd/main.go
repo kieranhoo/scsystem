@@ -7,23 +7,13 @@ package main
 import (
 	"log"
 	"os"
-	"qrcheckin/cmd/app"
-	"qrcheckin/internal/config"
-	"qrcheckin/pkg/sentry"
-	"qrcheckin/pkg/x/mailers"
-	"qrcheckin/pkg/x/worker"
+	"scsystem/cmd/app"
 	"sort"
 
 	"github.com/urfave/cli/v2"
 
-	_ "qrcheckin/docs"
+	_ "scsystem/docs"
 )
-
-func init() {
-	sentry.Init()
-	mailers.Config(config.Email, config.EmailAppPassword)
-	worker.SetBroker(config.RedisHost, config.RedisPort, config.RedisPassword)
-}
 
 func NewClient() *cli.App {
 	_app := &cli.App{
@@ -32,7 +22,6 @@ func NewClient() *cli.App {
 		Version:     "0.0.1",
 		Description: "API server",
 		Commands:    app.Command,
-		// Flags:       module.Flag,
 	}
 
 	sort.Sort(cli.FlagsByName(_app.Flags))

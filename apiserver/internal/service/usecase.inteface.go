@@ -1,8 +1,8 @@
 package service
 
 import (
-	"qrcheckin/internal/model"
-	"qrcheckin/internal/schema"
+	"scsystem/internal/model"
+	"scsystem/internal/schema"
 )
 
 type IAuthService interface {

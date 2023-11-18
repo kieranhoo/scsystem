@@ -2,7 +2,7 @@ package utils
 
 import (
 	"fmt"
-	"qrcheckin/internal/config"
+	"scsystem/internal/config"
 )
 
 // ConnectionURLBuilder func for building URL connection.

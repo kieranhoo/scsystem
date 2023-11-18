@@ -4,9 +4,9 @@ import (
 	"fmt"
 	"log"
 	"os"
-	"qrcheckin/internal/config"
-	"qrcheckin/pkg/utils"
-	"qrcheckin/pkg/x/worker"
+	"scsystem/internal/config"
+	"scsystem/internal/tasks"
+	"scsystem/pkg/x/worker"
 
 	"github.com/gofiber/fiber/v2"
 )
@@ -16,17 +16,12 @@ type _App struct {
 }
 
 type IApp interface {
-	Worker(*worker.Config) IApp
-	Middleware(...middleware) IApp
-	Route(...route) IApp
-	Run() IApp
+	Middleware(...func(*fiber.App)) IApp
+	Route(...func(*fiber.App)) IApp
+	Run() error
 	Shutdown(<-chan os.Signal) IApp
-	BackgroundTask(...backgroundTask) IApp
+	BackgroundTask(...func()) IApp
 }
-
-type middleware func(*fiber.App)
-type route func(*fiber.App)
-type backgroundTask func()
 
 func New() IApp {
 	return &_App{
@@ -34,28 +29,21 @@ func New() IApp {
 	}
 }
 
-func (app *_App) BackgroundTask(tasks ...backgroundTask) IApp {
+func (app *_App) BackgroundTask(tasks ...func()) IApp {
 	for _, task := range tasks {
 		go task()
 	}
 	return app
 }
 
-// Worker
-// Deprecated
-func (app *_App) Worker(wcf *worker.Config) IApp {
-	worker.Conf = wcf
-	return app
-}
-
-func (app *_App) Middleware(middlewares ...middleware) IApp {
+func (app *_App) Middleware(middlewares ...func(*fiber.App)) IApp {
 	for _, middleware := range middlewares {
 		middleware(app.engine)
 	}
 	return app
 }
 
-func (app *_App) Route(routes ...route) IApp {
+func (app *_App) Route(routes ...func(*fiber.App)) IApp {
 	for _, route := range routes {
 		route(app.engine)
 	}
@@ -79,7 +67,12 @@ func (app *_App) Shutdown(sig <-chan os.Signal) IApp {
 	return app
 }
 
-func (app *_App) Run() IApp {
-	utils.StartServer(app.engine)
-	return app
+type Worker struct {
+	engine *worker.Engine
+}
+
+func NewWorker(concurrency int) *Worker {
+	return &Worker{
+		engine: worker.NewServer(concurrency, tasks.Queue()),
+	}
 }

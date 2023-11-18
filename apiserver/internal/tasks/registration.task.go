@@ -3,9 +3,10 @@ package tasks
 import (
 	"context"
 	"encoding/json"
+	"scsystem/internal/model"
+	"scsystem/internal/repo"
+
 	"github.com/hibiken/asynq"
-	"qrcheckin/internal/model"
-	"qrcheckin/internal/repo"
 )
 
 func SaveRegistration(registrationTime, supervisor, startDay, endDay, userId, roomId string) error {

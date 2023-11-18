@@ -1,8 +1,9 @@
 package repo
 
 import (
+	"scsystem/internal/model"
+
 	"gorm.io/gorm"
-	"qrcheckin/internal/model"
 )
 
 type Office struct {

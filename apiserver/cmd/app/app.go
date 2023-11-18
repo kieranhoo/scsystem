@@ -3,16 +3,8 @@ package app
 import (
 	"os"
 	"os/signal"
-	"qrcheckin/api"
-	"qrcheckin/api/middleware"
-	"qrcheckin/api/routes"
-	"qrcheckin/internal/config"
-	"qrcheckin/internal/service"
-	"qrcheckin/internal/tasks"
-	"qrcheckin/pkg/x/job"
-	"qrcheckin/pkg/x/worker"
+	"scsystem/api"
 	"syscall"
-	"time"
 )
 
 // Server
@@ -26,51 +18,14 @@ import (
 // @license.url http://www.apache.org/licenses/LICENSE-2.0.html
 // @host
 // @basePath /
-func Server() {
+func Server() error {
 	sigChan := make(chan os.Signal, 1)
 	signal.Notify(sigChan, os.Interrupt, syscall.SIGTERM)
-
 	coreAPI := api.New().Shutdown(sigChan)
-
-	coreAPI.BackgroundTask(JobLaunch)
-	coreAPI.Worker(tasks.Setting(config.BrokerUrl, config.ResultBackend))
-	coreAPI.Middleware(
-		middleware.FiberMiddleware,
-		middleware.SentryMiddleware,
-	)
-
-	coreAPI.Route(
-		routes.Gateway,
-		routes.NotFoundRoute,
-	)
-
-	coreAPI.Run()
-}
-
-// WorkerLaunch
-// Deprecated
-func WorkerLaunch(queueName, consume string, concurrency int) error {
-	wcf := tasks.Setting(config.BrokerUrl, config.ResultBackend)
-	cnf := worker.NewWorker(queueName, wcf)
-	return worker.Launch(cnf, consume, concurrency)
+	return coreAPI.Run()
 }
 
 func AsyncWorker(concurrency int) error {
-	w := worker.NewServer(concurrency, worker.Queue{
-		config.CriticalQueue: 6, // processed 60% of the time
-		config.DefaultQueue:  3, // processed 30% of the time
-		config.LowQueue:      1, // processed 10% of the time
-	})
-	w.HandleFunctions(tasks.Path())
+	w := api.NewWorker(10)
 	return w.Run()
-}
-
-func JobLaunch() {
-	j := job.New()
-	if err := j.Scheduler(service.Ping, 5*time.Second); err != nil {
-		panic(err)
-	}
-	if err := j.Launch(); err != nil {
-		panic(err)
-	}
 }

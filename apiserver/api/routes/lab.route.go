@@ -1,9 +1,10 @@
 package routes
 
 import (
+	"scsystem/api/controller"
+	"scsystem/api/middleware"
+
 	"github.com/gofiber/fiber/v2"
-	"qrcheckin/api/controller"
-	"qrcheckin/api/middleware"
 )
 
 func LabRoutes(a *fiber.App) {

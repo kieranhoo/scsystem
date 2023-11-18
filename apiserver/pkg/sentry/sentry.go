@@ -2,7 +2,7 @@ package sentry
 
 import (
 	"fmt"
-	"qrcheckin/internal/config"
+	"scsystem/internal/config"
 
 	"github.com/getsentry/sentry-go"
 	"github.com/gofiber/contrib/fibersentry"

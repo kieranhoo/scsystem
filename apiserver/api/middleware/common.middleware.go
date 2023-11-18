@@ -1,8 +1,8 @@
 package middleware
 
 import (
-	"qrcheckin/internal/schema"
-	"qrcheckin/pkg/x/validator"
+	"scsystem/internal/schema"
+	"scsystem/pkg/x/validator"
 
 	"github.com/gofiber/fiber/v2"
 )

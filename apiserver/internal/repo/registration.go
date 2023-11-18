@@ -1,9 +1,10 @@
 package repo
 
 import (
+	"scsystem/internal/model"
+	"scsystem/pkg/database"
+
 	"gorm.io/gorm"
-	"qrcheckin/internal/model"
-	"qrcheckin/pkg/database"
 )
 
 type Registration struct {

@@ -1,8 +1,9 @@
 package routes
 
 import (
+	"scsystem/api/controller"
+
 	"github.com/gofiber/fiber/v2"
-	"qrcheckin/api/controller"
 )
 
 func HealthCheck(a *fiber.App) {

@@ -1,11 +1,25 @@
 package tasks
 
 import (
-	"qrcheckin/pkg/x/worker"
+	"scsystem/internal/config"
+	"scsystem/pkg/x/worker"
 )
 
+var (
+	CriticalQueue = "critical"
+	DefaultQueue  = "default"
+	LowQueue      = "low"
+)
+
+func init() {
+	if config.StageStatus != "prod" {
+		CriticalQueue = "critical_dev"
+		DefaultQueue = "default_dev"
+		LowQueue = "low_dev"
+	}
+}
+
 const (
-	DefaultQueue           string = "default_queue"
 	WorkerHealthCheck      string = "Worker.HealthCheck"
 	WorkerSignUp           string = "Worker.SignUp"
 	WorkerSaveUser         string = "Worker.SaveUser"
@@ -13,27 +27,19 @@ const (
 	WorkerSaveActivityType string = "Worker.SaveActivityType"
 )
 
-func Setting(broker, resultBackend string) *worker.Config {
-	return &worker.Config{
-		Broker:        broker,
-		ResultBackend: resultBackend,
-		Tasks: worker.Tasks{
-			DefaultQueue: worker.Task{
-				WorkerHealthCheck:      HealthCheck,
-				WorkerSignUp:           SignUp,
-				WorkerSaveUser:         SaveUser,
-				WorkerSaveRegistration: SaveRegistration,
-				WorkerSaveActivityType: SaveActivityType,
-			},
-		},
-	}
-}
-
 func Path() worker.Path {
 	return worker.Path{
 		WorkerHealthCheck:      HandleHealthCheck,
 		WorkerSaveActivityType: HandleSaveActivityType,
 		WorkerSaveRegistration: HandleSaveRegistration,
 		WorkerSaveUser:         HandleSaveUser,
+	}
+}
+
+func Queue() worker.Queue {
+	return worker.Queue{
+		CriticalQueue: 6, // processed 60% of the time
+		DefaultQueue:  3, // processed 30% of the time
+		LowQueue:      1, // processed 10% of the time
 	}
 }
