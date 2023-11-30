@@ -3,7 +3,7 @@ module scsystem
 go 1.20
 
 require (
-	github.com/charmbracelet/log v0.3.0
+	github.com/charmbracelet/log v0.3.1
 	github.com/getsentry/sentry-go v0.25.0
 	github.com/go-playground/validator/v10 v10.16.0
 	github.com/gofiber/contrib/fibersentry v1.0.4
