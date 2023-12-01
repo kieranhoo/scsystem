@@ -35,6 +35,7 @@
     "plugins": [],
     "extra": {
       "eas": {
+        "projectId": "39e53493-c48e-4dfe-b7a3-8ccc13382ecb"
       }
     },
     "runtimeVersion": {

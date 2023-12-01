@@ -4178,6 +4178,13 @@
     "path-browserify" "^1.0.0"
     "url-parse" "^1.5.9"
 
+"expo-barcode-scanner@^12.7.0":
+  "integrity" "sha512-HTy5mRHRtOM/3xrVXN9wUBIQGXLdvqGgHkrSxgvJzqLQBjafq+uEiUxTPRyvNofWt3gMZXcy8ZqqW7gaD3xXDg=="
+  "resolved" "https://registry.npmjs.org/expo-barcode-scanner/-/expo-barcode-scanner-12.7.0.tgz"
+  "version" "12.7.0"
+  dependencies:
+    "expo-image-loader" "~4.4.0"
+
 "expo-camera@~13.2.1":
   "integrity" "sha512-fZdRyF402jJGGmLVlumrLcr5Em9+Y2SO1MIlxLBtHXnybyHbTRMRAbzVapKX1Aryfujqadh+Kl+sdsWYkMuJjg=="
   "resolved" "https://registry.npmjs.org/expo-camera/-/expo-camera-13.2.1.tgz"
@@ -4224,6 +4231,11 @@
   "integrity" "sha512-ciEHVokU0f6w0eTxdRxLCio6tskMsjxWIoV92+/ZD37qePUJYMfEphPhu1sruyvMBNR8/j5iyOvPFVGTfO8oxA=="
   "resolved" "https://registry.npmjs.org/expo-image-loader/-/expo-image-loader-4.1.1.tgz"
   "version" "4.1.1"
+
+"expo-image-loader@~4.4.0":
+  "integrity" "sha512-dq88tiRB8aB1U+O/oJI7IY4VU9Nu2iDjEwR8QDfLtD4xWd5lNGoyic5Vh7911E1qNJFqNMSVIVzOD5l1SQ3A6g=="
+  "resolved" "https://registry.npmjs.org/expo-image-loader/-/expo-image-loader-4.4.0.tgz"
+  "version" "4.4.0"
 
 "expo-image-picker@~14.1.1":
   "integrity" "sha512-SvWtnkLW7jp5Ntvk3lVcRQmhFYja8psmiR7O6P/+7S6f4llt3vaFwb4I3+pUXqJxxpi7BHc2+95qOLf0SFOIag=="

@@ -1,4 +1,3 @@
-import { i18n, LocalizationKey } from "@/Localization";
 import React from "react";
 import {
   Dimensions,
@@ -11,8 +10,6 @@ import {
   FlatList,
 } from "react-native";
 import { StatusBar } from "expo-status-bar";
-import { HStack, Spinner, Heading } from "native-base";
-import { User } from "@/Services";
 import { Colors } from "../../Theme/Variables";
 import { RootScreens } from "..";
 
