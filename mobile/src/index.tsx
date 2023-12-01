@@ -10,6 +10,8 @@ import { ApplicationNavigator } from "./Navigation";
 import { View, Text } from "react-native";
 import { useFonts } from "expo-font";
 import * as SplashScreen from "expo-splash-screen";
+import { SafeAreaView } from 'react-native-safe-area-context';
+
 import {
   Poppins_100Thin,
   Poppins_100Thin_Italic,
@@ -64,13 +66,18 @@ export default function App() {
     );
   } else {
     return (
-        <NativeBaseProvider>
-          <Provider store={store}>
-            <PersistGate loading={null} persistor={persistor}>
-              <ApplicationNavigator />
-            </PersistGate>
-          </Provider>
-        </NativeBaseProvider>
+      <NativeBaseProvider>
+        <Provider store={store}>
+          <PersistGate loading={null} persistor={persistor}>
+            <SafeAreaView
+              style={{ flex: 1}}
+              edges={["right", "top", "left"]}
+            >
+              < ApplicationNavigator />
+            </SafeAreaView>
+          </PersistGate>
+        </Provider>
+      </NativeBaseProvider>
     );
   }
 }

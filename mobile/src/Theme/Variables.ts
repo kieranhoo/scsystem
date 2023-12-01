@@ -17,7 +17,7 @@ export enum Colors {
   TEXT = "#212529",
   DISPLAY = "#2B84C6",
   HIDE = "#E0E5E9",
-  PRIMARY = "#E14032",
+  PRIMARY = "rgba(27, 97, 181, 0.89)",
   SUCCESS = "#28a745",
   ERROR = "#dc3545",
 }
