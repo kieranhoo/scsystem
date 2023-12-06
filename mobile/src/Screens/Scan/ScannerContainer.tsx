@@ -10,13 +10,7 @@ type ScannerScreenNavigatorProps = NativeStackScreenProps<
     RootScreens.SCANNER
 >;
 
-export const ScannerContainer = ({
-    navigation,
-}: ScannerScreenNavigatorProps) => {
-    const onNavigate = (screen: RootScreens) => {
-        navigation.navigate(screen);
-    };
-
-    return <Scanner onNavigate={onNavigate} />;
+export const ScannerContainer = () => {
+    return <Scanner />;
 }
 
