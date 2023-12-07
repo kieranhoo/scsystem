@@ -120,7 +120,7 @@ func Histories(c *fiber.Ctx) error {
 // @Tags room
 // @Accept json
 // @Produce json
-// @Param limit query string true "limit records"
+// @Param activity_param body schema.CheckInRequest true "CheckInRequest"
 // @Success 200 {object} schema.Response
 // @Router /v1/room/activity [POST]
 func SaveActivityType(c *fiber.Ctx) error {

@@ -114,11 +114,13 @@ const docTemplate = `{
                 ],
                 "parameters": [
                     {
-                        "type": "string",
-                        "description": "limit records",
-                        "name": "limit",
-                        "in": "query",
-                        "required": true
+                        "description": "CheckInRequest",
+                        "name": "activity_param",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/schema.CheckInRequest"
+                        }
                     }
                 ],
                 "responses": {
@@ -235,6 +237,25 @@ const docTemplate = `{
         }
     },
     "definitions": {
+        "schema.CheckInRequest": {
+            "type": "object",
+            "required": [
+                "activity_type",
+                "admin_id",
+                "registration_id"
+            ],
+            "properties": {
+                "activity_type": {
+                    "type": "string"
+                },
+                "admin_id": {
+                    "type": "string"
+                },
+                "registration_id": {
+                    "type": "string"
+                }
+            }
+        },
         "schema.DataResponse": {
             "type": "object",
             "required": [
