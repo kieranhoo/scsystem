@@ -16,4 +16,5 @@ type IRoomService interface {
 	SaveActivityType(req *schema.CheckInRequest) error
 	GetHistories(limit string) ([]model.History, error)
 	GetHistoriesData(limit string) ([]schema.HistoryData, error)
+	GetRoom() ([]schema.RoomData, error)
 }

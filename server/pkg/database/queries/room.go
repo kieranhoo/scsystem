@@ -15,7 +15,7 @@ const (
 	`
 
 	RegistrationLatest string = `
-	SELECT registration.id AS id,  registration_time, user_id AS student_id, start_day, end_day, first_name, last_name, email, phone_number, org_name, office_name, room_name, supervisor
+	SELECT registration.id AS registration_id,  registration_time, user_id AS student_id, start_day, end_day, first_name, last_name, email, phone_number, org_name, office_name, room_name, supervisor
 	FROM registration 
 		JOIN users ON users.id = registration.user_id
     	JOIN (
@@ -26,5 +26,15 @@ const (
 		) AS rooms ON rooms.id = registration.room_id
 	WHERE user_id = ? AND room_id = ?
 	ORDER BY registration.id DESC LIMIT 1;
+	`
+
+	RoomData string = `
+	SELECT
+		room.id AS room_id, office_id, description, 
+		organization_id, office.name AS office_name, organization.name AS organization_name, room.name AS room_name, 
+		address, email, head, website, manager, office.phone_number
+	FROM room
+	JOIN office ON office.id = office_id
+    JOIN organization ON organization.id = organization_id;
 	`
 )

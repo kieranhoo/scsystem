@@ -181,6 +181,20 @@ paths:
             $ref: '#/definitions/schema.SignUpResponse'
       tags:
       - auth
+  /v1/room:
+    get:
+      consumes:
+      - application/json
+      description: Save activity type in/out.
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/schema.DataResponse'
+      tags:
+      - room
   /v1/room/activity:
     post:
       consumes:

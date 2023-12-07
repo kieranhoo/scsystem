@@ -100,6 +100,28 @@ const docTemplate = `{
                 }
             }
         },
+        "/v1/room": {
+            "get": {
+                "description": "Save activity type in/out.",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "room"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/schema.DataResponse"
+                        }
+                    }
+                }
+            }
+        },
         "/v1/room/activity": {
             "post": {
                 "description": "Save activity type in/out.",
