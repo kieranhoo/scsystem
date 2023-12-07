@@ -49,7 +49,7 @@ func RegisterRoom(c *fiber.Ctx) error {
 // @Accept json
 // @Produce json
 // @Param sid query string true "student id"
-// @Param room query string true "student id"
+// @Param room query string true "room id"
 // @Success 200 {object} schema.DataResponse
 // @Router /v1/room/user [GET]
 func GetUser(c *fiber.Ctx) error {
