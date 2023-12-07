@@ -33,7 +33,7 @@ func SendHTML(tempPath, to string) error {
 	mail.SetHeader("From", _email)
 	mail.SetHeader("To", to)
 	// mail.SetAddressHeader("Cc", "dan@example.com", "Dan")
-	mail.SetHeader("Subject", "Thư xác nhận sử dụng phòng Lab")
+	mail.SetHeader("Subject", "Thư xác nhận sử dụng phòng")
 	mail.SetBody("text/html", body.String())
 	// mail.Attach("/home/Alex/lolcat.jpg")
 

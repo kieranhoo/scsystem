@@ -1,6 +1,6 @@
 package schema
 
-type RegistrationLabRequest struct {
+type RegistrationRoomRequest struct {
 	RegistrationTime string `json:"registration_time" validate:"required"`
 	Supervisor       string `json:"supervisor" validate:"required"`
 	RoomId           string `json:"room_id" validate:"required"`
@@ -18,7 +18,7 @@ type DataResponse struct {
 	Data    interface{} `json:"data" validate:"required"`
 }
 
-type UserLabData struct {
+type UserRoomData struct {
 	Id               string `json:"id" validate:"required"`
 	RegistrationTime string `json:"registration_time" validate:"required"`
 	Supervisor       string `json:"supervisor" validate:"required"`
