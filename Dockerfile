@@ -1,6 +1,6 @@
 FROM golang:1.21-alpine AS builder
 
-COPY scsys-api src
+COPY /scsys-api /src
 WORKDIR /src
 
 RUN go mod download
