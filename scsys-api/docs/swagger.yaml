@@ -1,5 +1,18 @@
 basePath: /
 definitions:
+  schema.CheckInRequest:
+    properties:
+      activity_type:
+        type: string
+      admin_id:
+        type: string
+      registration_id:
+        type: string
+    required:
+    - activity_type
+    - admin_id
+    - registration_id
+    type: object
   schema.DataResponse:
     properties:
       data: {}
@@ -174,11 +187,12 @@ paths:
       - application/json
       description: Save activity type in/out.
       parameters:
-      - description: limit records
-        in: query
-        name: limit
+      - description: CheckInRequest
+        in: body
+        name: activity_param
         required: true
-        type: string
+        schema:
+          $ref: '#/definitions/schema.CheckInRequest'
       produces:
       - application/json
       responses:
