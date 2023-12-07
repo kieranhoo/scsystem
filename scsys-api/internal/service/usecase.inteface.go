@@ -10,9 +10,9 @@ type IAuthService interface {
 	SignIn(req schema.SignInRequest) (string, error)
 }
 
-type ILabService interface {
-	RegisterLab(req *schema.RegistrationLabRequest) error
-	RegistrationLatest(studentId, roomId string) (*schema.UserLabData, error)
+type IRoomService interface {
+	RegisterRoom(req *schema.RegistrationRoomRequest) error
+	RegistrationLatest(studentId, roomId string) (*schema.UserRoomData, error)
 	SaveActivityType(req *schema.CheckInRequest) error
 	GetHistories(limit string) ([]model.History, error)
 	GetHistoriesData(limit string) ([]schema.HistoryData, error)

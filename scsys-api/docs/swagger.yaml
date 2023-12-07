@@ -9,7 +9,7 @@ definitions:
     - data
     - success
     type: object
-  schema.RegistrationLabRequest:
+  schema.RegistrationRoomRequest:
     properties:
       email:
         type: string
@@ -168,7 +168,7 @@ paths:
             $ref: '#/definitions/schema.SignUpResponse'
       tags:
       - auth
-  /v1/lab/activity:
+  /v1/room/activity:
     post:
       consumes:
       - application/json
@@ -187,8 +187,8 @@ paths:
           schema:
             $ref: '#/definitions/schema.Response'
       tags:
-      - lab
-  /v1/lab/history:
+      - room
+  /v1/room/history:
     get:
       consumes:
       - application/json
@@ -207,19 +207,19 @@ paths:
           schema:
             $ref: '#/definitions/schema.DataResponse'
       tags:
-      - lab
-  /v1/lab/register:
+      - room
+  /v1/room/register:
     post:
       consumes:
       - application/json
-      description: Register lab.
+      description: Register Room.
       parameters:
-      - description: RegisterLab
+      - description: RegisterRoom
         in: body
         name: sign_in
         required: true
         schema:
-          $ref: '#/definitions/schema.RegistrationLabRequest'
+          $ref: '#/definitions/schema.RegistrationRoomRequest'
       produces:
       - application/json
       responses:
@@ -228,8 +228,8 @@ paths:
           schema:
             $ref: '#/definitions/schema.Response'
       tags:
-      - lab
-  /v1/lab/user:
+      - room
+  /v1/room/user:
     get:
       consumes:
       - application/json
@@ -253,5 +253,5 @@ paths:
           schema:
             $ref: '#/definitions/schema.DataResponse'
       tags:
-      - lab
+      - room
 swagger: "2.0"

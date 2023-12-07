@@ -6,5 +6,5 @@ func Gateway(a *fiber.App) {
 	AuthRoutes(a)
 	HealthCheck(a)
 	Swagger(a)
-	LabRoutes(a)
+	RoomRoutes(a)
 }

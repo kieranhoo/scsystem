@@ -100,7 +100,7 @@ const docTemplate = `{
                 }
             }
         },
-        "/v1/lab/activity": {
+        "/v1/room/activity": {
             "post": {
                 "description": "Save activity type in/out.",
                 "consumes": [
@@ -110,7 +110,7 @@ const docTemplate = `{
                     "application/json"
                 ],
                 "tags": [
-                    "lab"
+                    "room"
                 ],
                 "parameters": [
                     {
@@ -131,7 +131,7 @@ const docTemplate = `{
                 }
             }
         },
-        "/v1/lab/history": {
+        "/v1/room/history": {
             "get": {
                 "description": "Get History.",
                 "consumes": [
@@ -141,7 +141,7 @@ const docTemplate = `{
                     "application/json"
                 ],
                 "tags": [
-                    "lab"
+                    "room"
                 ],
                 "parameters": [
                     {
@@ -162,9 +162,9 @@ const docTemplate = `{
                 }
             }
         },
-        "/v1/lab/register": {
+        "/v1/room/register": {
             "post": {
-                "description": "Register lab.",
+                "description": "Register Room.",
                 "consumes": [
                     "application/json"
                 ],
@@ -172,16 +172,16 @@ const docTemplate = `{
                     "application/json"
                 ],
                 "tags": [
-                    "lab"
+                    "room"
                 ],
                 "parameters": [
                     {
-                        "description": "RegisterLab",
+                        "description": "RegisterRoom",
                         "name": "sign_in",
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/schema.RegistrationLabRequest"
+                            "$ref": "#/definitions/schema.RegistrationRoomRequest"
                         }
                     }
                 ],
@@ -195,7 +195,7 @@ const docTemplate = `{
                 }
             }
         },
-        "/v1/lab/user": {
+        "/v1/room/user": {
             "get": {
                 "description": "Get User for checkin.",
                 "consumes": [
@@ -205,7 +205,7 @@ const docTemplate = `{
                     "application/json"
                 ],
                 "tags": [
-                    "lab"
+                    "room"
                 ],
                 "parameters": [
                     {
@@ -248,7 +248,7 @@ const docTemplate = `{
                 }
             }
         },
-        "schema.RegistrationLabRequest": {
+        "schema.RegistrationRoomRequest": {
             "type": "object",
             "required": [
                 "email",
