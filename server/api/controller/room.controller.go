@@ -77,7 +77,7 @@ func GetUser(c *fiber.Ctx) error {
 	if _RoomUser.Id == "" {
 		return c.Status(fiber.StatusBadRequest).JSON(schema.Error{
 			Success: false,
-			Msg:     "no data avaiRoomle",
+			Msg:     "no data available",
 		})
 	}
 	return c.JSON(schema.DataResponse{

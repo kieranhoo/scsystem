@@ -1,0 +1,131 @@
+{
+	"info": {
+		"_postman_id": "62806354-6f71-4f36-92e5-482a096469de",
+		"name": "scsystem",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "23388230"
+	},
+	"item": [
+		{
+			"name": "room",
+			"item": [
+				{
+					"name": "history",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{host}}/v1/room/history?limit=10",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"v1",
+								"room",
+								"history"
+							],
+							"query": [
+								{
+									"key": "limit",
+									"value": "10"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "user",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{host}}/v1/room/user?sid=2013&room=1",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"v1",
+								"room",
+								"user"
+							],
+							"query": [
+								{
+									"key": "sid",
+									"value": "2013"
+								},
+								{
+									"key": "room",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "activity",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"activity_type\": \"string\",\r\n  \"admin_id\": \"string\",\r\n  \"registration_id\": \"string\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/v1/room/activity",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"v1",
+								"room",
+								"activity"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "register",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"email\": \"string\",\r\n  \"end_day\": \"string\",\r\n  \"first_name\": \"string\",\r\n  \"last_name\": \"string\",\r\n  \"phone_number\": \"string\",\r\n  \"registration_time\": \"string\",\r\n  \"room_id\": \"string\",\r\n  \"start_day\": \"string\",\r\n  \"student_id\": \"string\",\r\n  \"supervisor\": \"string\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/v1/room/register",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"v1",
+								"room",
+								"register"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"variable": [
+		{
+			"key": "host",
+			"value": "https://api-server-ikierans.cloud.okteto.net/"
+		}
+	]
+}
