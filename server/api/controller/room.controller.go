@@ -74,7 +74,7 @@ func GetUser(c *fiber.Ctx) error {
 			Msg:     err.Error(),
 		})
 	}
-	if _RoomUser.Id == "" {
+	if _RoomUser.RegistrationId == "" {
 		return c.Status(fiber.StatusBadRequest).JSON(schema.Error{
 			Success: false,
 			Msg:     "no data available",
@@ -145,5 +145,26 @@ func SaveActivityType(c *fiber.Ctx) error {
 	return c.JSON(schema.Response{
 		Success: true,
 		Msg:     "successfully",
+	})
+}
+
+// Room
+// @Description Save activity type in/out.
+// @Tags room
+// @Accept json
+// @Produce json
+// @Success 200 {object} schema.DataResponse
+// @Router /v1/room [GET]
+func Room(c *fiber.Ctx) error {
+	data, err := RoomService.GetRoom()
+	if err != nil {
+		return c.Status(fiber.StatusBadRequest).JSON(schema.Error{
+			Success: false,
+			Msg:     err.Error(),
+		})
+	}
+	return c.JSON(schema.DataResponse{
+		Success: true,
+		Data:    data,
 	})
 }

@@ -8,6 +8,7 @@ import (
 
 func RoomRoutes(a *fiber.App) {
 	r := a.Group("/v1/room")
+	r.Get("/", controller.Room)
 	r.Post("/register", controller.RegisterRoom)
 	r.Get("/user", controller.GetUser)
 	r.Get("/history", controller.Histories)

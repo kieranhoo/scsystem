@@ -75,7 +75,7 @@ func (regis *Registration) RegistrationLatest(studentId, roomId string) (*schema
 	if err := conn.Raw(queries.RegistrationLatest, studentId, roomId).Scan(RoomData).Error; err != nil {
 		return nil, err
 	}
-	history, err := repo.NewHistory().Latest(RoomData.Id)
+	history, err := repo.NewHistory().Latest(RoomData.RegistrationId)
 	if err != nil {
 		return nil, err
 	}
@@ -122,4 +122,16 @@ func (regis *Registration) GetHistoriesData(limit string) ([]schema.HistoryData,
 		return nil, err
 	}
 	return historyData, nil
+}
+
+func (regis *Registration) GetRoom() ([]schema.RoomData, error) {
+	conn, err := database.Connection()
+	if err != nil {
+		return nil, err
+	}
+	var roomData []schema.RoomData
+	if err := conn.Raw(queries.RoomData).Scan(&roomData).Error; err != nil {
+		return nil, err
+	}
+	return roomData, nil
 }
