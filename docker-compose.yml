@@ -4,7 +4,7 @@ services:
     # image: duchungho/scsystem:latest
     build:
       context: .
-      dockerfile: ./scsys-api/Dockerfile
+      dockerfile: Dockerfile
     environment:
       - STAGE_STATUS=prod
       - HOST=0.0.0.0
