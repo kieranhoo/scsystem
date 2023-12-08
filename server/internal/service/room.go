@@ -81,11 +81,11 @@ func (regis *Registration) RegistrationLatest(studentId, roomId string) (*schema
 	}
 	switch history.ActivityType {
 	case "":
-		RoomData.ActivityType = "in"
+		RoomData.ActivityType = "no access"
 	case "out":
-		RoomData.ActivityType = "in"
-	case "in":
 		RoomData.ActivityType = "out"
+	case "in":
+		RoomData.ActivityType = "in"
 	default:
 		panic("unknown activity type")
 	}
