@@ -102,7 +102,7 @@ const docTemplate = `{
         },
         "/v1/room": {
             "get": {
-                "description": "Save activity type in/out.",
+                "description": "Get Room information from database",
                 "consumes": [
                     "application/json"
                 ],
@@ -241,7 +241,7 @@ const docTemplate = `{
                     },
                     {
                         "type": "string",
-                        "description": "student id",
+                        "description": "room id",
                         "name": "room",
                         "in": "query",
                         "required": true
@@ -252,6 +252,37 @@ const docTemplate = `{
                         "description": "OK",
                         "schema": {
                             "$ref": "#/definitions/schema.DataResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/v1/user": {
+            "get": {
+                "description": "Get information by student id",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "auth"
+                ],
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "student id",
+                        "name": "sid",
+                        "in": "query",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/schema.SignInResponse"
                         }
                     }
                 }

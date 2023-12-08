@@ -54,3 +54,16 @@ func (auth *Auth) SignIn(req schema.SignInRequest) (string, error) {
 	}
 	return token, nil
 }
+func (auth *Auth) GetMe(id string) (*schema.UserResponse, error) {
+	users, err := auth.repo.GetByID(id)
+	if err != nil {
+		return nil, err
+	}
+	return &schema.UserResponse{
+		Id:          users.Id,
+		FirstName:   users.FirstName,
+		LastName:    users.LastName,
+		Email:       users.Email,
+		PhoneNumber: users.PhoneNumber,
+	}, nil
+}

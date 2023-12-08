@@ -185,7 +185,7 @@ paths:
     get:
       consumes:
       - application/json
-      description: Save activity type in/out.
+      description: Get Room information from database
       produces:
       - application/json
       responses:
@@ -268,7 +268,7 @@ paths:
         name: sid
         required: true
         type: string
-      - description: student id
+      - description: room id
         in: query
         name: room
         required: true
@@ -282,4 +282,24 @@ paths:
             $ref: '#/definitions/schema.DataResponse'
       tags:
       - room
+  /v1/user:
+    get:
+      consumes:
+      - application/json
+      description: Get information by student id
+      parameters:
+      - description: student id
+        in: query
+        name: sid
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/schema.SignInResponse'
+      tags:
+      - auth
 swagger: "2.0"
