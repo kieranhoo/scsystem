@@ -82,7 +82,7 @@ func SignIn(c *fiber.Ctx) error {
 
 // GetMe
 // @Description Get information by student id
-// @Tags auth
+// @Tags user
 // @Accept json
 // @Produce json
 // @Param sid query string true "student id"
