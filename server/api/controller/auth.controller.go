@@ -79,3 +79,29 @@ func SignIn(c *fiber.Ctx) error {
 		Email:   req.Email,
 	})
 }
+
+// GetMe
+// @Description Get information by student id
+// @Tags auth
+// @Accept json
+// @Produce json
+// @Param sid query string true "student id"
+// @Success 200 {object} schema.SignInResponse
+// @Router /v1/user [GET]
+func GetMe(c *fiber.Ctx) error {
+	sid := c.Query("sid", "")
+	if sid == "" {
+		return c.Status(fiber.StatusBadRequest).JSON(schema.Error{
+			Success: false,
+			Msg:     "missing query params sid",
+		})
+	}
+	data, err := authService.GetMe(sid)
+	if err != nil {
+		return c.Status(fiber.StatusBadRequest).JSON(schema.Error{
+			Success: false,
+			Msg:     "student id invalid",
+		})
+	}
+	return c.JSON(data)
+}

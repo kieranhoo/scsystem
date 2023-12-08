@@ -52,7 +52,7 @@ func RegisterRoom(c *fiber.Ctx) error {
 // @Param room query string true "room id"
 // @Success 200 {object} schema.DataResponse
 // @Router /v1/room/user [GET]
-func GetUser(c *fiber.Ctx) error {
+func GetActivity(c *fiber.Ctx) error {
 	sid := c.Query("sid", "")
 	if sid == "" {
 		return c.Status(fiber.StatusBadRequest).JSON(schema.Error{
@@ -149,7 +149,7 @@ func SaveActivityType(c *fiber.Ctx) error {
 }
 
 // Room
-// @Description Save activity type in/out.
+// @Description Get Room information from database
 // @Tags room
 // @Accept json
 // @Produce json

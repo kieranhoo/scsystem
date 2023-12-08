@@ -98,7 +98,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n  \"email\": \"string\",\r\n  \"end_day\": \"string\",\r\n  \"first_name\": \"string\",\r\n  \"last_name\": \"string\",\r\n  \"phone_number\": \"string\",\r\n  \"registration_time\": \"string\",\r\n  \"room_id\": \"string\",\r\n  \"start_day\": \"string\",\r\n  \"student_id\": \"string\",\r\n  \"supervisor\": \"string\"\r\n}",
+							"raw": "{\r\n  \"email\": \"chinh@gmail.com\",\r\n  \"end_day\": \"2020-08-05 18:19:00\",\r\n  \"first_name\": \"Chinh\",\r\n  \"last_name\": \"Lâm Điền\",\r\n  \"phone_number\": \"0123456789\",\r\n  \"registration_time\": \"7h-9h\",\r\n  \"room_id\": \"1\",\r\n  \"start_day\": \"2020-08-05 18:19:00\",\r\n  \"student_id\": \"2012734\",\r\n  \"supervisor\": \"hoang le hai thanh\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -106,9 +106,9 @@
 							}
 						},
 						"url": {
-							"raw": "{{host}}/v1/room/register",
+							"raw": "{{host_dev}}/v1/room/register",
 							"host": [
-								"{{host}}"
+								"{{host_dev}}"
 							],
 							"path": [
 								"v1",
@@ -132,6 +132,35 @@
 							"path": [
 								"v1",
 								"room"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "user",
+			"item": [
+				{
+					"name": "get user info",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{host_dev}}/v1/user?sid=2012734",
+							"host": [
+								"{{host_dev}}"
+							],
+							"path": [
+								"v1",
+								"user"
+							],
+							"query": [
+								{
+									"key": "sid",
+									"value": "2012734"
+								}
 							]
 						}
 					},

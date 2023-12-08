@@ -7,4 +7,5 @@ func Gateway(a *fiber.App) {
 	HealthCheck(a)
 	Swagger(a)
 	RoomRoutes(a)
+	UserRoutes(a)
 }

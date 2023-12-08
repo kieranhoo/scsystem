@@ -8,6 +8,7 @@ import (
 type IAuthService interface {
 	SignUp(req schema.SignUpRequest) error
 	SignIn(req schema.SignInRequest) (string, error)
+	GetMe(id string) (*schema.UserResponse, error)
 }
 
 type IRoomService interface {
