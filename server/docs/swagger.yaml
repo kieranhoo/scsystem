@@ -196,6 +196,30 @@ paths:
       tags:
       - room
   /v1/room/activity:
+    get:
+      consumes:
+      - application/json
+      description: Get User Activity for checkin.
+      parameters:
+      - description: student id
+        in: query
+        name: sid
+        required: true
+        type: string
+      - description: room id
+        in: query
+        name: room
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/schema.DataResponse'
+      tags:
+      - room
     post:
       consumes:
       - application/json
@@ -257,31 +281,6 @@ paths:
             $ref: '#/definitions/schema.Response'
       tags:
       - room
-  /v1/room/user:
-    get:
-      consumes:
-      - application/json
-      description: Get User for checkin.
-      parameters:
-      - description: student id
-        in: query
-        name: sid
-        required: true
-        type: string
-      - description: room id
-        in: query
-        name: room
-        required: true
-        type: string
-      produces:
-      - application/json
-      responses:
-        "200":
-          description: OK
-          schema:
-            $ref: '#/definitions/schema.DataResponse'
-      tags:
-      - room
   /v1/user:
     get:
       consumes:
@@ -301,5 +300,5 @@ paths:
           schema:
             $ref: '#/definitions/schema.SignInResponse'
       tags:
-      - auth
+      - user
 swagger: "2.0"

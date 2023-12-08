@@ -123,6 +123,42 @@ const docTemplate = `{
             }
         },
         "/v1/room/activity": {
+            "get": {
+                "description": "Get User Activity for checkin.",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "room"
+                ],
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "student id",
+                        "name": "sid",
+                        "in": "query",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "room id",
+                        "name": "room",
+                        "in": "query",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/schema.DataResponse"
+                        }
+                    }
+                }
+            },
             "post": {
                 "description": "Save activity type in/out.",
                 "consumes": [
@@ -219,44 +255,6 @@ const docTemplate = `{
                 }
             }
         },
-        "/v1/room/user": {
-            "get": {
-                "description": "Get User for checkin.",
-                "consumes": [
-                    "application/json"
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "room"
-                ],
-                "parameters": [
-                    {
-                        "type": "string",
-                        "description": "student id",
-                        "name": "sid",
-                        "in": "query",
-                        "required": true
-                    },
-                    {
-                        "type": "string",
-                        "description": "room id",
-                        "name": "room",
-                        "in": "query",
-                        "required": true
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "schema": {
-                            "$ref": "#/definitions/schema.DataResponse"
-                        }
-                    }
-                }
-            }
-        },
         "/v1/user": {
             "get": {
                 "description": "Get information by student id",
@@ -267,7 +265,7 @@ const docTemplate = `{
                     "application/json"
                 ],
                 "tags": [
-                    "auth"
+                    "user"
                 ],
                 "parameters": [
                     {

@@ -35,19 +35,19 @@
 					"response": []
 				},
 				{
-					"name": "user",
+					"name": "activity",
 					"request": {
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{host_dev}}/v1/room/user?sid=12345678&room=1",
+							"raw": "{{host_dev}}/v1/room/activity?sid=12345678&room=1",
 							"host": [
 								"{{host_dev}}"
 							],
 							"path": [
 								"v1",
 								"room",
-								"user"
+								"activity"
 							],
 							"query": [
 								{
