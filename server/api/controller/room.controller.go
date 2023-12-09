@@ -3,7 +3,7 @@ package controller
 import (
 	"scsystem/internal/schema"
 	"scsystem/internal/service"
-	"scsystem/pkg/x/validator"
+	"scsystem/pkg/validator"
 
 	"github.com/gofiber/fiber/v2"
 )
