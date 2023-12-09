@@ -2,7 +2,7 @@ package tasks
 
 import (
 	"scsystem/internal/config"
-	"scsystem/pkg/x/worker"
+	"scsystem/pkg/worker"
 )
 
 var (

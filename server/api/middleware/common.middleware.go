@@ -2,7 +2,7 @@ package middleware
 
 import (
 	"scsystem/internal/schema"
-	"scsystem/pkg/x/validator"
+	"scsystem/pkg/validator"
 
 	"github.com/gofiber/fiber/v2"
 )

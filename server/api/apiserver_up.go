@@ -6,11 +6,11 @@ import (
 	"scsystem/internal/config"
 	"scsystem/internal/service"
 	"scsystem/internal/tasks"
+	"scsystem/pkg/job"
+	"scsystem/pkg/mailers"
 	"scsystem/pkg/sentry"
 	"scsystem/pkg/utils"
-	"scsystem/pkg/x/job"
-	"scsystem/pkg/x/mailers"
-	"scsystem/pkg/x/worker"
+	"scsystem/pkg/worker"
 	"time"
 )
 

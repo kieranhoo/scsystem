@@ -2,8 +2,8 @@ package service
 
 import (
 	"scsystem/internal/tasks"
-	"scsystem/pkg/x/mailers"
-	"scsystem/pkg/x/worker"
+	"scsystem/pkg/mailers"
+	"scsystem/pkg/worker"
 )
 
 func Ping() {

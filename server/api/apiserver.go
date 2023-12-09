@@ -6,7 +6,7 @@ import (
 	"os"
 	"scsystem/internal/config"
 	"scsystem/internal/tasks"
-	"scsystem/pkg/x/worker"
+	"scsystem/pkg/worker"
 
 	"github.com/gofiber/fiber/v2"
 )
