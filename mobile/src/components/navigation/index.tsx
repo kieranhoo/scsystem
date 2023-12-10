@@ -4,9 +4,9 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { NavigationContainer } from "@react-navigation/native";
 import { MainNavigator } from "./main";
 import { WelcomeContainer } from "@/screens/welcome";
-import { RootScreens } from "@/Screens";
+import { RootScreens } from "@/screens";
 import { OnboardingContainer } from "@/screens/onboarding";
-import { ScannerContainer } from "@/Screens/scan/scanner-container";
+import { ScannerContainer } from "@/screens/scan/scanner-container";
 
 export type RootStackParamList = {
   [RootScreens.MAIN]: undefined;
