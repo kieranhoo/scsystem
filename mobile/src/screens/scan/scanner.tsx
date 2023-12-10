@@ -12,7 +12,7 @@ import {
 } from "react-native";
 import { BarCodeScanner } from "expo-barcode-scanner";
 import BarcodeMask from "react-native-barcode-mask";
-import { Colors } from "../../theme/variables";
+import { Colors } from "@/theme/variables";
 import { Header } from "@/components/header";
 
 const screenWidth = Dimensions.get("screen").width;

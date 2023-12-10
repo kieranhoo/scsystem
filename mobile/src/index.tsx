@@ -1,15 +1,13 @@
 import React from "react";
 import * as Localization from "expo-localization";
-import { useCallback } from "react";
 import { i18n, Language } from "@/localization";
 import { NativeBaseProvider } from "native-base";
 import { store, persistor } from "@/store";
 import { Provider } from "react-redux";
 import { PersistGate } from "redux-persist/integration/react";
-import { ApplicationNavigator } from "./navigation";
+import { ApplicationNavigator } from "@/components/navigation";
 import { View, Text } from "react-native";
 import { useFonts } from "expo-font";
-import * as SplashScreen from "expo-splash-screen";
 import { SafeAreaView } from 'react-native-safe-area-context';
 
 import {

@@ -1,5 +1,5 @@
 import React from "react";
-import { i18n, LocalizationKey } from "@/Localization";
+import { i18n, LocalizationKey } from "@/localization";
 import { View, Text, StyleSheet } from "react-native";
 import { StatusBar } from "expo-status-bar";
 import { Button } from "native-base";
