@@ -7,12 +7,12 @@ import (
 )
 
 func AuthRoutes(a *fiber.App) {
-	r := a.Group("/v1/auth")
+	r := a.Group("/auth")
 	r.Post("/signup", controller.SignUp)
 	r.Post("/signin", controller.SignIn)
 }
 
 func UserRoutes(a *fiber.App) {
-	r := a.Group("/v1/user")
+	r := a.Group("/user")
 	r.Get("/", controller.GetMe)
 }

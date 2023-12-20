@@ -25,16 +25,17 @@ func (w *Worker) Run() error {
 	return w.engine.Run()
 }
 
-func JobLaunch() {
-	j := job.New()
-	j.Scheduler(service.Ping, 5*time.Second)
+func (app *_App) Scheduler() {
+	newJob := job.New()
+	go newJob.Scheduler(service.Ping, 5*time.Second)
 
-	j.Launch()
+	newJob.Info()
 }
 
 func (app *_App) Run() error {
 
-	app.BackgroundTask(JobLaunch)
+	app.BackgroundTask()
+	app.Scheduler()
 
 	app.Middleware(
 		middleware.FiberMiddleware,
@@ -42,7 +43,12 @@ func (app *_App) Run() error {
 	)
 
 	app.Route(
-		routes.Gateway,
+		routes.HealthCheck,
+		routes.AuthRoutes,
+		routes.RoomRoutes,
+		routes.UserRoutes,
+		routes.Swagger,
+		// routes.NotificationRoute,
 		routes.NotFoundRoute,
 	)
 

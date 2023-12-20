@@ -7,10 +7,11 @@ import (
 )
 
 func RoomRoutes(a *fiber.App) {
-	r := a.Group("/v1/room")
+	r := a.Group("/room")
 	r.Get("/", controller.Room)
 	r.Post("/register", controller.RegisterRoom)
-	r.Get("/activity", controller.GetActivity)
 	r.Get("/history", controller.Histories)
+
 	r.Post("/activity", controller.SaveActivityType)
+	r.Get("/activity", controller.GetActivity)
 }

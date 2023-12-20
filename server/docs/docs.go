@@ -15,26 +15,7 @@ const docTemplate = `{
     "host": "{{.Host}}",
     "basePath": "{{.BasePath}}",
     "paths": {
-        "/common/healthcheck": {
-            "get": {
-                "description": "health check api server.",
-                "consumes": [
-                    "application/json"
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "common"
-                ],
-                "responses": {
-                    "200": {
-                        "description": "OK"
-                    }
-                }
-            }
-        },
-        "/v1/auth/signin": {
+        "/auth/signin": {
             "post": {
                 "description": "Sign in account for admin.",
                 "consumes": [
@@ -67,7 +48,7 @@ const docTemplate = `{
                 }
             }
         },
-        "/v1/auth/signup": {
+        "/auth/signup": {
             "post": {
                 "description": "Register account for admin.",
                 "consumes": [
@@ -100,7 +81,26 @@ const docTemplate = `{
                 }
             }
         },
-        "/v1/room": {
+        "/common/healthcheck": {
+            "get": {
+                "description": "health check api server.",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "common"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    }
+                }
+            }
+        },
+        "/room": {
             "get": {
                 "description": "Get Room information from database",
                 "consumes": [
@@ -122,7 +122,7 @@ const docTemplate = `{
                 }
             }
         },
-        "/v1/room/activity": {
+        "/room/activity": {
             "get": {
                 "description": "Get User Activity for checkin.",
                 "consumes": [
@@ -191,7 +191,7 @@ const docTemplate = `{
                 }
             }
         },
-        "/v1/room/history": {
+        "/room/history": {
             "get": {
                 "description": "Get History.",
                 "consumes": [
@@ -222,7 +222,7 @@ const docTemplate = `{
                 }
             }
         },
-        "/v1/room/register": {
+        "/room/register": {
             "post": {
                 "description": "Register Room.",
                 "consumes": [
@@ -255,7 +255,7 @@ const docTemplate = `{
                 }
             }
         },
-        "/v1/user": {
+        "/user": {
             "get": {
                 "description": "Get information by student id",
                 "consumes": [

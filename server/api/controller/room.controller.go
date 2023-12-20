@@ -17,7 +17,7 @@ var RoomService = service.NewRoom()
 // @Produce json
 // @Param sign_in body schema.RegistrationRoomRequest true "RegisterRoom"
 // @Success 200 {object} schema.Response
-// @Router /v1/room/register [POST]
+// @Router /room/register [POST]
 func RegisterRoom(c *fiber.Ctx) error {
 	var req schema.RegistrationRoomRequest
 	if err := c.BodyParser(&req); err != nil {
@@ -51,7 +51,7 @@ func RegisterRoom(c *fiber.Ctx) error {
 // @Param sid query string true "student id"
 // @Param room query string true "room id"
 // @Success 200 {object} schema.DataResponse
-// @Router /v1/room/activity [GET]
+// @Router /room/activity [GET]
 func GetActivity(c *fiber.Ctx) error {
 	sid := c.Query("sid", "")
 	if sid == "" {
@@ -93,7 +93,7 @@ func GetActivity(c *fiber.Ctx) error {
 // @Produce json
 // @Param limit query string true "limit records"
 // @Success 200 {object} schema.DataResponse
-// @Router /v1/room/history [GET]
+// @Router /room/history [GET]
 func Histories(c *fiber.Ctx) error {
 	limit := c.Query("limit", "")
 	if limit == "" {
@@ -122,7 +122,7 @@ func Histories(c *fiber.Ctx) error {
 // @Produce json
 // @Param activity_param body schema.CheckInRequest true "CheckInRequest"
 // @Success 200 {object} schema.Response
-// @Router /v1/room/activity [POST]
+// @Router /room/activity [POST]
 func SaveActivityType(c *fiber.Ctx) error {
 	var req schema.CheckInRequest
 	if err := c.BodyParser(&req); err != nil {
@@ -154,7 +154,7 @@ func SaveActivityType(c *fiber.Ctx) error {
 // @Accept json
 // @Produce json
 // @Success 200 {object} schema.DataResponse
-// @Router /v1/room [GET]
+// @Router /room [GET]
 func Room(c *fiber.Ctx) error {
 	data, err := RoomService.GetRoom()
 	if err != nil {

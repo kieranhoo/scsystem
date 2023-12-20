@@ -1,6 +1,3 @@
-// Copyright 2023 Duc Hung Ho. All rights reserved.
-// Use of this source code is governed by a MIT license
-// that can be found in the LICENSE file.
 package main
 
 import (
@@ -8,7 +5,6 @@ import (
 	"os"
 	"os/signal"
 	"scsystem/api"
-	_ "scsystem/docs"
 	"syscall"
 )
 
