@@ -15,12 +15,11 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{host_dev}}/v1/room/history?limit=10",
+							"raw": "{{host_dev}}/room/history?limit=10",
 							"host": [
 								"{{host_dev}}"
 							],
 							"path": [
-								"v1",
 								"room",
 								"history"
 							],
@@ -40,19 +39,18 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{host_dev}}/v1/room/activity?sid=12345678&room=1",
+							"raw": "{{host}}/room/activity?sid=2012734&room=1",
 							"host": [
-								"{{host_dev}}"
+								"{{host}}"
 							],
 							"path": [
-								"v1",
 								"room",
 								"activity"
 							],
 							"query": [
 								{
 									"key": "sid",
-									"value": "12345678"
+									"value": "2012734"
 								},
 								{
 									"key": "room",
@@ -78,12 +76,11 @@
 							}
 						},
 						"url": {
-							"raw": "{{host}}/v1/room/activity",
+							"raw": "{{host}}/room/activity",
 							"host": [
 								"{{host}}"
 							],
 							"path": [
-								"v1",
 								"room",
 								"activity"
 							]
@@ -106,12 +103,11 @@
 							}
 						},
 						"url": {
-							"raw": "{{host_dev}}/v1/room/register",
+							"raw": "{{host_dev}}/room/register",
 							"host": [
 								"{{host_dev}}"
 							],
 							"path": [
-								"v1",
 								"room",
 								"register"
 							]
@@ -125,12 +121,11 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{host_dev}}/v1/room",
+							"raw": "{{host_dev}}/room",
 							"host": [
 								"{{host_dev}}"
 							],
 							"path": [
-								"v1",
 								"room"
 							]
 						}
@@ -148,12 +143,11 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{host_dev}}/v1/user?sid=2012734",
+							"raw": "{{host_dev}}/user?sid=2012734",
 							"host": [
 								"{{host_dev}}"
 							],
 							"path": [
-								"v1",
 								"user"
 							],
 							"query": [
