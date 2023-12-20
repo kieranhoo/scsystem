@@ -127,19 +127,7 @@ info:
   title: Student Checkin System
   version: 1.0.0
 paths:
-  /common/healthcheck:
-    get:
-      consumes:
-      - application/json
-      description: health check api server.
-      produces:
-      - application/json
-      responses:
-        "200":
-          description: OK
-      tags:
-      - common
-  /v1/auth/signin:
+  /auth/signin:
     post:
       consumes:
       - application/json
@@ -160,7 +148,7 @@ paths:
             $ref: '#/definitions/schema.SignInResponse'
       tags:
       - auth
-  /v1/auth/signup:
+  /auth/signup:
     post:
       consumes:
       - application/json
@@ -181,7 +169,19 @@ paths:
             $ref: '#/definitions/schema.SignUpResponse'
       tags:
       - auth
-  /v1/room:
+  /common/healthcheck:
+    get:
+      consumes:
+      - application/json
+      description: health check api server.
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+      tags:
+      - common
+  /room:
     get:
       consumes:
       - application/json
@@ -195,7 +195,7 @@ paths:
             $ref: '#/definitions/schema.DataResponse'
       tags:
       - room
-  /v1/room/activity:
+  /room/activity:
     get:
       consumes:
       - application/json
@@ -240,7 +240,7 @@ paths:
             $ref: '#/definitions/schema.Response'
       tags:
       - room
-  /v1/room/history:
+  /room/history:
     get:
       consumes:
       - application/json
@@ -260,7 +260,7 @@ paths:
             $ref: '#/definitions/schema.DataResponse'
       tags:
       - room
-  /v1/room/register:
+  /room/register:
     post:
       consumes:
       - application/json
@@ -281,7 +281,7 @@ paths:
             $ref: '#/definitions/schema.Response'
       tags:
       - room
-  /v1/user:
+  /user:
     get:
       consumes:
       - application/json

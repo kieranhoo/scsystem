@@ -23,7 +23,7 @@ type IApp interface {
 	BackgroundTask(...func()) IApp
 }
 
-func New() IApp {
+func NewServer() IApp {
 	return &_App{
 		engine: fiber.New(config.FiberConfig()),
 	}

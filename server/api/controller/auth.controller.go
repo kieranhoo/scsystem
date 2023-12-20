@@ -17,7 +17,7 @@ var authService = service.NewAuth()
 // @Produce json
 // @Param sign_up body schema.SignUpRequest true "Sign Up"
 // @Success 200 {object} schema.SignUpResponse
-// @Router /v1/auth/signup [POST]
+// @Router /auth/signup [POST]
 func SignUp(c *fiber.Ctx) error {
 	var req schema.SignUpRequest
 	if err := c.BodyParser(&req); err != nil {
@@ -51,7 +51,7 @@ func SignUp(c *fiber.Ctx) error {
 // @Produce json
 // @Param sign_in body schema.SignInRequest true "Sign In"
 // @Success 200 {object} schema.SignInResponse
-// @Router /v1/auth/signin [POST]
+// @Router /auth/signin [POST]
 func SignIn(c *fiber.Ctx) error {
 	var req schema.SignInRequest
 	if err := c.BodyParser(&req); err != nil {
@@ -87,7 +87,7 @@ func SignIn(c *fiber.Ctx) error {
 // @Produce json
 // @Param sid query string true "student id"
 // @Success 200 {object} schema.SignInResponse
-// @Router /v1/user [GET]
+// @Router /user [GET]
 func GetMe(c *fiber.Ctx) error {
 	sid := c.Query("sid", "")
 	if sid == "" {

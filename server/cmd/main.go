@@ -7,13 +7,38 @@ package main
 import (
 	"log"
 	"os"
-	"scsystem/cmd/app"
+	"os/signal"
+	"scsystem/api"
 	"sort"
+	"syscall"
 
 	"github.com/urfave/cli/v2"
 
 	_ "scsystem/docs"
 )
+
+var Command = []*cli.Command{
+	{
+		Name:    "worker",
+		Aliases: []string{"w"},
+		Usage:   "run worker handle tasks in queue",
+		Action: func(c *cli.Context) error {
+			w := api.NewWorker(10)
+			return w.Run()
+		},
+	},
+	{
+		Name:    "server",
+		Aliases: []string{"s"},
+		Usage:   "run api server",
+		Action: func(c *cli.Context) error {
+			sigChan := make(chan os.Signal, 1)
+			signal.Notify(sigChan, os.Interrupt, syscall.SIGTERM)
+			coreAPI := api.NewServer().Shutdown(sigChan)
+			return coreAPI.Run()
+		},
+	},
+}
 
 func NewClient() *cli.App {
 	_app := &cli.App{
@@ -21,7 +46,7 @@ func NewClient() *cli.App {
 		Usage:       "hpcc checkin",
 		Version:     "0.0.1",
 		Description: "API server",
-		Commands:    app.Command,
+		Commands:    Command,
 	}
 
 	sort.Sort(cli.FlagsByName(_app.Flags))
