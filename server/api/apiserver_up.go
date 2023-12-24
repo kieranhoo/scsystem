@@ -48,7 +48,6 @@ func (app *_App) Run() error {
 		routes.RoomRoutes,
 		routes.UserRoutes,
 		routes.Swagger,
-		// routes.NotificationRoute,
 		routes.NotFoundRoute,
 	)
 
