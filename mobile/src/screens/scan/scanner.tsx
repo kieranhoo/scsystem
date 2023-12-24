@@ -9,8 +9,8 @@ import {
   Modal,
   Image,
   TouchableWithoutFeedback,
+  ActivityIndicator,
 } from "react-native";
-import { ActivityIndicator } from "react-native";
 import { BarCodeScanner } from "expo-barcode-scanner";
 import BarcodeMask from "react-native-barcode-mask";
 import { Colors } from "@/theme/variables";
