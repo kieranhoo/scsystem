@@ -1,5 +1,6 @@
-import React from "react";
+import React, { useEffect } from "react";
 import {
+  BackHandler,
   Dimensions,
   View,
   Text,
@@ -12,6 +13,7 @@ import {
 import { StatusBar } from "expo-status-bar";
 import { Colors } from "../../theme/variables";
 import { RootScreens } from "..";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const screenWidth = Dimensions.get("screen").width;
 const screenHeight = Dimensions.get("screen").height;
@@ -57,6 +59,33 @@ const Slide: React.FC<{
 export const Onboarding = (props: { onNavigate: (string: RootScreens) => void }) => {
   const [currentSlideIndex, setCurrentSlideIndex] = React.useState(0);
   const ref = React.useRef<FlatList>(null);
+  const [onboardingShown, setOnboardingShown] = React.useState(false);
+
+  useEffect(() => {
+    checkOnboardingStatus();
+    const backHandler = BackHandler.addEventListener(
+      "hardwareBackPress",
+      () => {
+        return true;
+      }
+    );
+    return () => backHandler.remove();
+  }, []);
+
+  const checkOnboardingStatus = async () => {
+    try {
+      const checkonboardingShown = await AsyncStorage.getItem('onboardingShown');
+      if (checkonboardingShown === "true") {
+        setOnboardingShown(true);
+      }
+      else {
+        setOnboardingShown(false)
+        goToMainScreen()
+      }
+    } catch (error) {
+      console.error('Error accessing AsyncStorage:', error);
+    }
+  };
 
   const updateCurrentSlideIndex = (e: any) => {
     const contentOffsetX = e.nativeEvent.contentOffset.x;
@@ -80,6 +109,20 @@ export const Onboarding = (props: { onNavigate: (string: RootScreens) => void })
     setCurrentSlideIndex(lastSlideIndex);
   };
 
+  const goToMainScreen = () => {
+    // Lưu trạng thái vào AsyncStorage
+    AsyncStorage.setItem('onboardingShown', 'false')
+      .then(() => {
+        // Chuyển hướng đến trang MAIN
+        props.onNavigate(RootScreens.MAIN);
+      })
+      .catch((error: any) => {
+        console.error('Error saving onboarding state:', error);
+      });
+  };
+  if (!onboardingShown) {
+    return null;
+  }
   const Footer = () => {
     return (
       <View
@@ -107,7 +150,7 @@ export const Onboarding = (props: { onNavigate: (string: RootScreens) => void })
             <View style={styles.nextButtonContainer}>
               <TouchableOpacity
                 style={styles.btn}
-                onPress={() => props.onNavigate(RootScreens.MAIN)}
+                onPress={goToMainScreen}
               >
                 <Text
                   style={{
@@ -162,7 +205,6 @@ export const Onboarding = (props: { onNavigate: (string: RootScreens) => void })
       </View>
     );
   };
-
   return (
     <SafeAreaView style={styles.container}>
       <StatusBar style="auto" />

@@ -1,35 +1,53 @@
 import axios from "axios"
-export interface register {
-    "email": string,
-    "end_day": string,
-    "first_name": string,
-    "last_name": string,
-    "phone_number": string,
-    "registration_time": string,
-    "room_id": string,
-    "start_day": string,
-    "student_id": string,
-    "supervisor": string
-}
-export const lab = {
-    register: async () => {
-        const paramtest: register = {
-            "email": "lamchinh@gmail.com",
-            "end_day": "T5",
-            "first_name": "Chinh",
-            "last_name": "Lam",
-            "phone_number": "0123456789",
-            "registration_time": "1",
-            "room_id": "1",
-            "start_day": "1",
-            "student_id": "2000000",
-            "supervisor": "1"
+
+export const activity = {
+    checkin: async (registration_id: string) => {
+        try {
+            const result = await axios.post(`${process.env.BASE_URL}/room/activity`,
+                {
+                    activity_type: "in",
+                    admin_id: "1",
+                    registration_id: registration_id
+                }
+            )
+            return true
         }
-        let c = await axios.post(`https://api-server-ikierans.cloud.okteto.net/api/v1/lab/register`, paramtest, {
-            headers: {
-                'Content-Type': 'application/json'
-            }
-        })
-        console.log(c.data)
+        catch (err: any) {
+            console.log(err)
+            return false
+        }
+    },
+    checkout: async (registration_id: string) => {
+        try {
+            const result = await axios.post(`${process.env.BASE_URL}/room/activity`,
+                {
+                    activity_type: "out",
+                    admin_id: "1",
+                    registration_id: registration_id
+                }
+            )
+            return true
+        }
+        catch (err: any) {
+            console.log(err)
+            return false
+        }
+    }
+}
+
+export const room = {
+    check: async (sid: string, room_id: string) => {
+        try {
+            const result = await axios.get(`${process.env.BASE_URL}/room/activity`, {
+                params: {
+                    sid: sid,
+                    room: room_id,
+                }
+            })
+            return result.data
+        }
+        catch (err: any) {
+            console.log(err)
+        }
     }
 }
