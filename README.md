@@ -1,30 +1,6 @@
-# What is SCSYSTEM?
+# Student Checkin System
 
-# Getting Started
+### Mobile Application Demo
 
-1. Clone the source code from the repository:
-
-```bash
-git clone
-cd qrcheckin
-```
-
-2. Install the required dependencies
-
-```bash
-go mod download
-```
-
-3. Run the following command
-
-- run api server
-
-```bash
-make s
-```
-
-- run worker server
-
-```bash
-make w
-```
+<img src="/assets/Onboarding - 1.png" alt="Hình minh họa" width="300">
+<img src="/assets/Onboarding - 2.png" alt="Hình minh họa" width="300">
