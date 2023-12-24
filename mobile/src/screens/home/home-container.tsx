@@ -1,6 +1,6 @@
 
-import React, { useState, useEffect } from "react";
-import { useLazyGetUserQuery } from "@/services";
+import React from "react";
+// import { useLazyGetUserQuery } from "@/services";
 import { Home } from "./home";
 
 export const HomeContainer = () => {

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useCallback, useState } from "react";
 import * as Localization from "expo-localization";
 import { i18n, Language } from "@/localization";
 import { NativeBaseProvider } from "native-base";
@@ -9,6 +9,7 @@ import { ApplicationNavigator } from "@/components/navigation";
 import { View, Text } from "react-native";
 import { useFonts } from "expo-font";
 import { SafeAreaView } from 'react-native-safe-area-context';
+import * as SplashScreen from 'expo-splash-screen';
 
 import {
   Poppins_100Thin,
@@ -35,7 +36,11 @@ i18n.locale = Localization.locale;
 i18n.enableFallback = true;
 i18n.defaultLocale = Language.ENGLISH;
 
+// SplashScreen.preventAutoHideAsync();
+
 export default function App() {
+  const [appIsReady, setAppIsReady] = useState(false);
+
   let [fontsLoaded] = useFonts({
     Poppins_100Thin,
     Poppins_100Thin_Italic,
@@ -56,12 +61,21 @@ export default function App() {
     Poppins_900Black,
     Poppins_900Black_Italic,
   });
-  if (!fontsLoaded) {
-    return (
-      <View>
-        <Text>Dang load</Text>
-      </View>
-    );
+  useEffect(() => {
+    async function prepare() {
+      try {
+        await new Promise(resolve => setTimeout(resolve, 1000));
+      } catch (e) {
+        console.warn(e);
+      } finally {
+        setAppIsReady(true);
+      }
+    }
+    prepare();
+  }, []);
+
+  if (!appIsReady || !fontsLoaded) {
+    return null;
   } else {
     return (
       <NativeBaseProvider>
