@@ -51,22 +51,25 @@ const ResultPopup: React.FC<ResultPopupProps> = ({
   isLoading,
   setScanState,
   openStatePopUp,
-  setMes
+  setMes,
+  setLoading
 }) => {
   const checkactivity = async () => {
     try {
       if (result.activity_type === "no access") {
         onClose()
+        setMes("")
+        setLoading(true)
+        openStatePopUp(true)
         const checkresult = await activity.checkin(result.registration_id)
+        setLoading(false)
         if (checkresult) {
           setMes(`Student ${result.last_name} ${result.first_name} check in successfully`)
           setScanState(true)
-          openStatePopUp(true)
         }
         else {
           setMes(`Student ${result.last_name} ${result.first_name} check out fail`)
           setScanState(false)
-          openStatePopUp(true)
         }
       }
       else if (result.activity_type === "in") {
@@ -259,14 +262,14 @@ const InputPopup: React.FC<InputPopupProps> = ({ isVisible, onClose, check }) =>
 };
 
 export const Scanner = () => {
-  const [, setHasPermission] = useState<boolean | null>(null);
+  const [hasPermission, setHasPermission] = useState<boolean | null>(null);
   const [scanned, setScanned] = useState(false);
   const [result, setResult] = useState<string | null>(null);
   const [showPopup, setShowPopup] = useState(false);
   const [showInputPopup, setShowInputPopup] = useState(false);
   const [showState, setShowState] = useState(false);
   const [cameraBackground] = useState("transparent");
-  const [requestingPermission, setRequestingPermission] = useState(false);
+  const [requestingPermission, setRequestingPermission] = useState(true);
   const [isLoading, setIsLoading] = useState(false)
   const [scanstate, setScanState] = useState(false)
   const [statemes, setStateMes] = useState("")
@@ -337,6 +340,7 @@ export const Scanner = () => {
       )();
       return () => {
         setRequestingPermission(false)
+        setHasPermission(null)
         setScanned(false);
         setResult(null);
         setShowPopup(false);
@@ -349,45 +353,25 @@ export const Scanner = () => {
       <View>
         <Header title="Scan" />
       </View>
-      {requestingPermission ? (
-        // <View>
-        // </View>
-        <Modal transparent={true} visible={true}>
-          <View style={styles.modalContainer}>
-            <View style={styles.modalContent}>
-              <ActivityIndicator size="large" color={Colors.PRIMARY} />
-              <Text style={{ marginTop: 10, fontFamily: "Poppins_400Regular" }}>Requesting camera permission...</Text>
-            </View>
-          </View>
-        </Modal>
-      ) : (
-        <>
-          {
-            scanned ? <BarCodeScanner
-              onBarCodeScanned={undefined}
-              style={styles.camera}
-            >
-              <View style={styles.cameraMask}>
-                <BarcodeMask
-                  width={300}
-                  height={300}
-                  edgeWidth={20}
-                  edgeHeight={20}
-                  edgeColor={Colors.PRIMARY}
-                  edgeRadius={10}
-                  edgeBorderWidth={5}
-                  animatedLineColor={Colors.PRIMARY}
-                  animatedLineHeight={1.5}
-                  animatedLineWidth={200}
-                  lineAnimationDuration={2000}
-                  useNativeDriver
-                  backgroundColor={cameraBackground}
-                />
-              </View>
-            </BarCodeScanner>
-              :
-              <BarCodeScanner
-                onBarCodeScanned={handleBarCodeScanned}
+      {requestingPermission && (
+        <View>
+        </View>
+        // <Modal transparent={true} visible={true}>
+        //   <View style={styles.modalContainer}>
+        //     <View style={styles.modalContent}>
+        //       <ActivityIndicator size="large" color={Colors.PRIMARY} />
+        //       <Text style={{ marginTop: 10, fontFamily: "Poppins_400Regular" }}>Requesting camera permission...</Text>
+        //     </View>
+        //   </View>
+        // </Modal>
+      )
+      }
+      {
+        hasPermission !== null ?
+          <>
+            {
+              scanned ? <BarCodeScanner
+                onBarCodeScanned={undefined}
                 style={styles.camera}
               >
                 <View style={styles.cameraMask}>
@@ -408,26 +392,49 @@ export const Scanner = () => {
                   />
                 </View>
               </BarCodeScanner>
-          }
-          <View style={styles.inputcontainer}>
-            <TouchableOpacity
-              onPress={handleShowInputPopUp}
-              style={styles.button}
-            >
-              <Text style={styles.buttontext}>Add Record</Text>
-            </TouchableOpacity>
-          </View>
-          {showInputPopup && (
-            <InputPopup isVisible={showInputPopup} onClose={handleCloseInputPopup} check={handleBarCodeScanned} />
-          )}
-          {showPopup && (
-            <ResultPopup isVisible={showPopup} result={result} isLoading={isLoading} onClose={handleClosePopup} setScanState={setScanState} openStatePopUp={setShowState} setMes={setStateMes} setLoading={setIsLoading} />
-          )}
-          {showState && (
-            <StatePopup isVisible={showState} result={scanstate} onClose={handleCloseState} mes={statemes} isLoading={isLoading} />
-          )}
-        </>
-      )}
+                :
+                <BarCodeScanner
+                  onBarCodeScanned={handleBarCodeScanned}
+                  style={styles.camera}
+                >
+                  <View style={styles.cameraMask}>
+                    <BarcodeMask
+                      width={300}
+                      height={300}
+                      edgeWidth={20}
+                      edgeHeight={20}
+                      edgeColor={Colors.PRIMARY}
+                      edgeRadius={10}
+                      edgeBorderWidth={5}
+                      animatedLineColor={Colors.PRIMARY}
+                      animatedLineHeight={1.5}
+                      animatedLineWidth={200}
+                      lineAnimationDuration={2000}
+                      useNativeDriver
+                      backgroundColor={cameraBackground}
+                    />
+                  </View>
+                </BarCodeScanner>
+            }
+            <View style={styles.inputcontainer}>
+              <TouchableOpacity
+                onPress={handleShowInputPopUp}
+                style={styles.button}
+              >
+                <Text style={styles.buttontext}>Add Record</Text>
+              </TouchableOpacity>
+            </View>
+            {showInputPopup && (
+              <InputPopup isVisible={showInputPopup} onClose={handleCloseInputPopup} check={handleBarCodeScanned} />
+            )}
+            {showPopup && (
+              <ResultPopup isVisible={showPopup} result={result} isLoading={isLoading} onClose={handleClosePopup} setScanState={setScanState} openStatePopUp={setShowState} setMes={setStateMes} setLoading={setIsLoading} />
+            )}
+            {showState && (
+              <StatePopup isVisible={showState} result={scanstate} onClose={handleCloseState} mes={statemes} isLoading={isLoading} />
+            )}
+          </> : <></>
+      }
     </View>
   );
 };
