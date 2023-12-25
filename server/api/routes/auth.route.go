@@ -6,13 +6,13 @@ import (
 	"github.com/gofiber/fiber/v2"
 )
 
-func AuthRoutes(a *fiber.App) {
+func Auth(a *fiber.App) {
 	r := a.Group("/auth")
 	r.Post("/signup", controller.SignUp)
 	r.Post("/signin", controller.SignIn)
 }
 
-func UserRoutes(a *fiber.App) {
+func User(a *fiber.App) {
 	r := a.Group("/user")
 	r.Get("/", controller.GetMe)
 }

@@ -4,7 +4,7 @@ import (
 	"scsystem/api/middleware"
 	"scsystem/api/routes"
 	"scsystem/internal/config"
-	"scsystem/internal/service"
+	"scsystem/internal/service/cron"
 	"scsystem/internal/tasks"
 	"scsystem/pkg/job"
 	"scsystem/pkg/mailers"
@@ -27,7 +27,7 @@ func (w *Worker) Run() error {
 
 func (app *_App) Scheduler() {
 	newJob := job.New()
-	go newJob.Scheduler(service.Ping, 5*time.Second)
+	go newJob.Scheduler(cron.Ping, 5*time.Second)
 
 	newJob.Info()
 }
@@ -44,9 +44,10 @@ func (app *_App) Run() error {
 
 	app.Route(
 		routes.HealthCheck,
-		routes.AuthRoutes,
-		routes.RoomRoutes,
-		routes.UserRoutes,
+		routes.Auth,
+		routes.Room,
+		routes.User,
+		routes.Stat,
 		routes.Swagger,
 		routes.NotFoundRoute,
 	)

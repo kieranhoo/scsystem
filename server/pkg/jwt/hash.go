@@ -1,4 +1,4 @@
-package utils
+package jwt
 
 import (
 	"scsystem/internal/config"
