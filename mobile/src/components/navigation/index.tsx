@@ -7,6 +7,7 @@ import { WelcomeContainer } from "@/screens/welcome";
 import { RootScreens } from "@/screens";
 import { OnboardingContainer } from "@/screens/onboarding";
 import { ScannerContainer } from "@/screens/scan/scanner-container";
+import { ProfileContainer } from "@/screens/profile";
 
 export type RootStackParamList = {
   [RootScreens.MAIN]: undefined;
@@ -46,6 +47,10 @@ const ApplicationNavigator = () => {
         <RootStack.Screen
           name={RootScreens.SCANNER}
           component={ScannerContainer}
+        />
+        <RootStack.Screen
+          name={RootScreens.PROFILE}
+          component={ProfileContainer}
         />
       </RootStack.Navigator>
     </NavigationContainer>
