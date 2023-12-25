@@ -6,10 +6,6 @@ import (
 	"scsystem/pkg/worker"
 )
 
-func Ping() {
-	// mailers.SendHTML("iduchungho@gmail.com")
-	// log.Println("PONG")
-}
 
 func HealthCheck() error {
 	return worker.Exec(
