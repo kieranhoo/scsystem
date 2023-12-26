@@ -14,13 +14,13 @@ Create table registration (
     registration_time varchar(255) not null,
     supervisor varchar(255) not null,
     user_id varchar(255) not null, 
-    room_id varchar(255) not null,
+    room_id int not null,
     start_day timestamp not null,
     end_day timestamp not null
 );
 
 create table organization (
-	id varchar(255) primary key,
+	id int primary key auto_increment,
     name varchar(255) not null,
     email varchar(255) not null,
     head varchar(255) not null,
@@ -29,15 +29,15 @@ create table organization (
 );
 
 create table room (
-	id varchar(255) primary key,
-    office_id varchar(255) not null,
+	id int primary key auto_increment,
+    office_id int not null,
     name varchar(255) not null,
     description varchar(255) not null
 );
 
 create table office (
-	id varchar(255) primary key,
-    organization_id varchar(255) not null,
+	id int primary key auto_increment,
+    organization_id int not null,
     name varchar(255) not null,
     address varchar(255) not null,
     manager varchar(255) not null,
@@ -46,11 +46,42 @@ create table office (
 
 create table history (
 	id int primary key auto_increment,
-    registration_id varchar(255) not null,
+    registration_id int not null,
     activity_type varchar(255) not null,
     time timestamp not null,
     admin_id varchar(255) not null
 );
+
+
+alter table history 
+add FOREIGN key (registration_id)
+REFERENCES registration(id)
+ON DELETE CASCADE
+ON UPDATE CASCADE;
+
+alter table registration 
+add FOREIGN key (user_id)
+REFERENCES users(id)
+ON DELETE CASCADE
+ON UPDATE CASCADE;
+
+alter table registration 
+add FOREIGN key (room_id)
+REFERENCES room(id)
+ON DELETE CASCADE
+ON UPDATE CASCADE;
+
+alter table room 
+add FOREIGN key (office_id)
+REFERENCES office(id)
+ON DELETE CASCADE
+ON UPDATE CASCADE;
+
+alter table office 
+add FOREIGN key (organization_id)
+REFERENCES organization(id)
+ON DELETE CASCADE
+ON UPDATE CASCADE;
 
 use hpcc_checkin;
 

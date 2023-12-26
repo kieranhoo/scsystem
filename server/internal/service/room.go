@@ -5,8 +5,6 @@ import (
 	"scsystem/internal/repo"
 	"scsystem/internal/schema"
 	"scsystem/internal/tasks"
-	"scsystem/pkg/database"
-	"scsystem/pkg/database/queries"
 )
 
 type Registration struct {
@@ -20,7 +18,7 @@ func NewRoom() IRoomService {
 }
 
 func (regis *Registration) RegisterRoom(req *schema.RegistrationRoomRequest) error {
-	_user, err := repo.NewUser().GetByID(req.StudentId)
+	_user, err := regis.repo.GetByID(req.StudentId)
 	if err != nil || _user == nil {
 		if err := tasks.SaveUser(&model.Users{
 			Id:          req.StudentId,
@@ -66,32 +64,6 @@ func (regis *Registration) RegisterRoom(req *schema.RegistrationRoomRequest) err
 	// ))
 }
 
-func (regis *Registration) RegistrationLatest(studentId, roomId string) (*schema.UserRoomData, error) {
-	RoomData := new(schema.UserRoomData)
-	conn, err := database.Connection()
-	if err != nil {
-		return nil, err
-	}
-	if err := conn.Raw(queries.RegistrationLatest, studentId, roomId).Scan(RoomData).Error; err != nil {
-		return nil, err
-	}
-	history, err := repo.NewHistory().Latest(RoomData.RegistrationId)
-	if err != nil {
-		return nil, err
-	}
-	switch history.ActivityType {
-	case "":
-		RoomData.ActivityType = "no access"
-	case "out":
-		RoomData.ActivityType = "out"
-	case "in":
-		RoomData.ActivityType = "in"
-	default:
-		panic("unknown activity type")
-	}
-	return RoomData, nil
-}
-
 func (regis *Registration) SaveActivityType(req *schema.CheckInRequest) error {
 	return tasks.SaveActivityType(&model.History{
 		RegistrationId: req.RegistrationId,
@@ -108,30 +80,18 @@ func (regis *Registration) SaveActivityType(req *schema.CheckInRequest) error {
 	// ))
 }
 
+func (regis *Registration) RegistrationLatest(studentId, roomId string) (*schema.UserRoomData, error) {
+	return regis.repo.RegistrationLatest(studentId, roomId)
+}
+
 func (regis *Registration) GetHistories(limit string) ([]model.History, error) {
 	return repo.NewHistory().GetList(limit)
 }
 
 func (regis *Registration) GetHistoriesData(limit string) ([]schema.HistoryData, error) {
-	var historyData []schema.HistoryData
-	conn, err := database.Connection()
-	if err != nil {
-		return nil, err
-	}
-	if err := conn.Raw(queries.HistoryData, limit).Scan(&historyData).Error; err != nil {
-		return nil, err
-	}
-	return historyData, nil
+	return repo.NewHistory().GetHistory(limit)
 }
 
 func (regis *Registration) GetRoom() ([]schema.RoomData, error) {
-	conn, err := database.Connection()
-	if err != nil {
-		return nil, err
-	}
-	var roomData []schema.RoomData
-	if err := conn.Raw(queries.RoomData).Scan(&roomData).Error; err != nil {
-		return nil, err
-	}
-	return roomData, nil
+	return repo.NewRoom().Get()
 }
