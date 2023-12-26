@@ -55,6 +55,12 @@ type Response struct {
 	Msg     string `json:"msg" validate:"required"`
 }
 
+type NewRoomRequest struct {
+	OfficeID    string `json:"office_id" gorm:"column:office_id" validate:"required"`
+	Name        string `json:"name" gorm:"column:name" validate:"required"`
+	Description string `json:"description" gorm:"column:description" validate:"required"`
+}
+
 type RoomData struct {
 	RoomID           string `json:"room_id" validate:"required" gorm:"column:room_id"`
 	OfficeID         string `json:"office_id" validate:"required" gorm:"column:office_id"`

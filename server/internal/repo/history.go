@@ -2,7 +2,9 @@ package repo
 
 import (
 	"scsystem/internal/model"
+	"scsystem/internal/schema"
 	"scsystem/pkg/database"
+	"scsystem/pkg/database/queries"
 	"time"
 
 	"gorm.io/gorm"
@@ -61,4 +63,12 @@ func (his *History) GetList(limit string) ([]model.History, error) {
 
 func (his *History) GetActivityType() string {
 	return his.data.ActivityType
+}
+
+func (his *History) GetHistory(limit string) ([]schema.HistoryData, error) {
+	var historyData []schema.HistoryData
+	if err := his.conn.Raw(queries.HistoryData, limit).Scan(&historyData).Error; err != nil {
+		return nil, err
+	}
+	return historyData, nil
 }
