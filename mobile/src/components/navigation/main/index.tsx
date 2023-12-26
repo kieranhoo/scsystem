@@ -2,6 +2,7 @@ import React from "react";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { HomeContainer } from "@/screens/home";
 import { ScannerContainer } from "@/screens/scan";
+import { RoomsContainer } from "@/screens/rooms";
 
 const Tab = createBottomTabNavigator();
 
@@ -29,7 +30,7 @@ export const MainNavigator = () => {
       />
       <Tab.Screen
         name="Rooms"
-        component={HomeContainer}
+        component={RoomsContainer}
         options={{
           tabBarIconStyle: { display: "none" },
           tabBarLabelPosition: "beside-icon",
