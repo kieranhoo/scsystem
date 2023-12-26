@@ -19,3 +19,6 @@ type IRoomService interface {
 	GetHistoriesData(limit string) ([]schema.HistoryData, error)
 	GetRoom() ([]schema.RoomData, error)
 }
+
+type IStat interface {
+}

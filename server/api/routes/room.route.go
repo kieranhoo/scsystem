@@ -6,9 +6,10 @@ import (
 	"github.com/gofiber/fiber/v2"
 )
 
-func RoomRoutes(a *fiber.App) {
+func Room(a *fiber.App) {
 	r := a.Group("/room")
 	r.Get("/", controller.Room)
+	r.Post("/", controller.NewRoom)
 	r.Post("/register", controller.RegisterRoom)
 	r.Get("/history", controller.Histories)
 

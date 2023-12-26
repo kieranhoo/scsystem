@@ -13,7 +13,7 @@ updates:
       time: "10:00"
     open-pull-requests-limit: 10
   - package-ecosystem: npm
-    directory: "/websocket"
+    directory: "/socket"
     schedule:
       interval: daily
       time: "10:00"

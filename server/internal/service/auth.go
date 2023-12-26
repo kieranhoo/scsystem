@@ -5,7 +5,7 @@ import (
 	"scsystem/internal/model"
 	"scsystem/internal/repo"
 	"scsystem/internal/schema"
-	"scsystem/pkg/utils"
+	"scsystem/pkg/jwt"
 )
 
 type Auth struct {
@@ -19,7 +19,7 @@ func NewAuth() IAuthService {
 }
 
 func (auth *Auth) SignUp(req schema.SignUpRequest) error {
-	_pass, err := utils.GenPassword(req.Password)
+	_pass, err := jwt.GenPassword(req.Password)
 	if err != nil {
 		return err
 	}
@@ -45,10 +45,10 @@ func (auth *Auth) SignIn(req schema.SignInRequest) (string, error) {
 	if err != nil {
 		return "", err
 	}
-	if err := utils.ComparePassword(_user.Password, req.Password); err != nil {
+	if err := jwt.ComparePassword(_user.Password, req.Password); err != nil {
 		return "", err
 	}
-	token, err := utils.GenerateToken(_user.Email)
+	token, err := jwt.GenerateToken(_user.Email)
 	if err != nil {
 		return "", err
 	}

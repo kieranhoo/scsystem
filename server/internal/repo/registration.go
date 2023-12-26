@@ -2,7 +2,9 @@ package repo
 
 import (
 	"scsystem/internal/model"
+	"scsystem/internal/schema"
 	"scsystem/pkg/database"
+	"scsystem/pkg/database/queries"
 
 	"gorm.io/gorm"
 )
@@ -67,4 +69,30 @@ func (res *Registration) Latest() (*model.Registration, error) {
 
 func (res *Registration) Empty() bool {
 	return res.data.UserID == ""
+}
+
+func (res *Registration) RegistrationLatest(studentId, roomId string) (*schema.UserRoomData, error) {
+	RoomData := new(schema.UserRoomData)
+	conn, err := database.Connection()
+	if err != nil {
+		return nil, err
+	}
+	if err := conn.Raw(queries.RegistrationLatest, studentId, roomId).Scan(RoomData).Error; err != nil {
+		return nil, err
+	}
+	history, err := NewHistory().Latest(RoomData.RegistrationId)
+	if err != nil {
+		return nil, err
+	}
+	switch history.ActivityType {
+	case "":
+		RoomData.ActivityType = "no access"
+	case "out":
+		RoomData.ActivityType = "out"
+	case "in":
+		RoomData.ActivityType = "in"
+	default:
+		panic("unknown activity type")
+	}
+	return RoomData, nil
 }
