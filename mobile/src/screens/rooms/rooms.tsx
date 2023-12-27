@@ -18,6 +18,14 @@ import { Colors } from "../../theme/variables";
 const screenWidth = Dimensions.get("screen").width;
 const screenHeight = Dimensions.get("screen").height;
 
+interface Item {
+  id: number;
+  name: string;
+  mssv: any;
+  status: any;
+  time: any;
+}
+
 export const Rooms = () => {
   const [selectedDate, setSelectedDate] = useState<Moment>(moment());
 
@@ -25,22 +33,28 @@ export const Rooms = () => {
     setSelectedDate(date);
   };
 
-  // const events = [
-  //   {
-  //     id: 1,
-  //     name: 'Nguyen Van A',
-  //     mssv: 'MSSV: 2012345',
-  //     status: "checkin",
-  //     time: "06:30 am",
-  //   },
-  //   {
-  //     id: 2,
-  //     name: 'Nguyen Van B',
-  //     mssv: 'MSSV: 2012989',
-  //     status: "checkin",
-  //     time: "06:30 pm",
-  //   },
-  // ];
+  const events: Item[] = [
+    {
+      id: 1,
+      name: 'Nguyen Van A',
+      mssv: 'MSSV: 2012345',
+      status: "checkin",
+      time: "06:30 am",
+    },
+    {
+      id: 2,
+      name: 'Nguyen Van B',
+      mssv: 'MSSV: 2012989',
+      status: "checkin",
+      time: "06:30 pm",
+    },
+  ];
+
+  const renderItem = ({ item }: { item: Item }) => (
+    <View>
+      <Text>{item.name}</Text>
+    </View>
+  );
 
   return (
     <View style={styles.container}>
@@ -55,6 +69,7 @@ export const Rooms = () => {
             scrollable
             scrollerPaging
             numDaysInWeek={7}
+
             dateNumberStyle={{color: "#6C6C6C"}}
             dateNameStyle={{color: "#6C6C6C"}}
             dayContainerStyle={styles.dateContainer}
@@ -62,7 +77,6 @@ export const Rooms = () => {
             highlightDateNameStyle={{color: "#1B61B5"}}
             highlightDateNumberStyle={{color: "#1B61B5"}}
             selectedDate={selectedDate}
-            // calendarColor={'#7743CE'}
             // onDateSelected={handleDateSelected}
             // calendarAnimation={{ type: "sequence", duration: 30 }}
             // daySelectionAnimation={{
@@ -110,12 +124,12 @@ export const Rooms = () => {
           </TouchableOpacity>
         </View>
         <View style={styles.detailContainer}>
-          {/* <FlatList
+          <FlatList
             data={events}
             renderItem={renderItem}
             keyExtractor={(item) => item.id.toString()}
-            contentContainerStyle={styles.eventList}
-          /> */}
+            // contentContainerStyle={styles.eventList}
+          />
         </View>
       </View>
     </View>
@@ -125,23 +139,30 @@ export const Rooms = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: Colors.WHITE,
+    backgroundColor: "#F4F7FB",
   },
-  header_container: {},
+  header_container: {
+    // shadowOffset: {
+    //   width: 0,
+    //   height: 0,
+    // },
+    // shadowOpacity: 0.2,
+    // shadowRadius: 5,
+  },
   content_container: {
     flex: 1,
   },
   calendarContainer: {
     flex: 0.12,
     justifyContent: "center",
-    backgroundColor: "lightgreen",
+    marginBottom: 10,
   },
   calendarStripStyle: {
     height: 75,
   },
   dateContainer: {
     borderWidth: 1.5,
-    borderRadius: 15,
+    borderRadius: 5,
     borderColor: Colors.WHITE,
     backgroundColor: Colors.WHITE,
   },
@@ -156,9 +177,16 @@ const styles = StyleSheet.create({
   statusStyle: {
     flex: 0.65,
     flexDirection: "row",
-    borderRadius: 5,
+    borderTopLeftRadius: 5,
+    borderTopRightRadius: 5,
     justifyContent: "center",
-    backgroundColor: "lightblue",
+    backgroundColor: Colors.WHITE,
+    shadowOffset: {
+      width: 0,
+      height: -3,
+    },
+    shadowOpacity: 0.2,
+    shadowRadius: 5,
   },
   checkIn: {
     flex: 0.5,
@@ -188,11 +216,18 @@ const styles = StyleSheet.create({
     marginTop: screenHeight * 0.005,
     borderBottomLeftRadius: 5,
     borderBottomRightRadius: 5,
-    backgroundColor: "orange",
+    backgroundColor: Colors.WHITE,
+    shadowOffset: {
+      width: 0,
+      height: 3,
+    },
+    shadowOpacity: 0.2,
+    shadowRadius: 5,
   },
   detailContainer: {
     flex: 0.69,
     backgroundColor: "yellow",
+    marginTop: 10,
   },
   regular14: {
     fontSize: 14,
