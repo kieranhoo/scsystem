@@ -7,7 +7,7 @@ import {
   TouchableOpacity,
   FlatList,
   ViewStyle,
-  StyleProp
+  StyleProp,
 } from "react-native";
 import { Header } from "@/components/header";
 import CalendarStrip from "react-native-calendar-strip";
@@ -36,23 +36,38 @@ export const Rooms = () => {
   const events: Item[] = [
     {
       id: 1,
-      name: 'Nguyen Van A',
-      mssv: 'MSSV: 2012345',
+      name: "Nguyen Van A",
+      mssv: "MSSV: 2012345",
       status: "checkin",
       time: "06:30 am",
     },
     {
       id: 2,
-      name: 'Nguyen Van B',
-      mssv: 'MSSV: 2012989',
+      name: "Nguyen Van B",
+      mssv: "MSSV: 2012989",
       status: "checkin",
       time: "06:30 pm",
     },
   ];
 
   const renderItem = ({ item }: { item: Item }) => (
-    <View>
-      <Text>{item.name}</Text>
+    <View style={styles.informContainer}>
+      <View style={styles.informTextContainer}>
+        <View style={styles.textNameContainer}>
+          <Text style={styles.textName}>{item.name}</Text>
+        </View>
+        <View style={styles.textIdContainer}>
+          <Text style={styles.textId}>{item.mssv}</Text>
+        </View>
+      </View>
+      <View style={styles.informStatusContainer}>
+        <View style={styles.textStatusContainer}>
+          <Text style={styles.textStatus}>{item.status}</Text>
+        </View>
+        <View style={styles.textTimeContainer}>
+          <Text style={styles.textTime}>{item.time}</Text>
+        </View>
+      </View>
     </View>
   );
 
@@ -69,13 +84,12 @@ export const Rooms = () => {
             scrollable
             scrollerPaging
             numDaysInWeek={7}
-
-            dateNumberStyle={{color: "#6C6C6C"}}
-            dateNameStyle={{color: "#6C6C6C"}}
+            dateNumberStyle={{ color: "#6C6C6C" }}
+            dateNameStyle={{ color: "#6C6C6C" }}
             dayContainerStyle={styles.dateContainer}
             highlightDateContainerStyle={styles.highlightDateContainer}
-            highlightDateNameStyle={{color: "#1B61B5"}}
-            highlightDateNumberStyle={{color: "#1B61B5"}}
+            highlightDateNameStyle={{ color: "#1B61B5" }}
+            highlightDateNumberStyle={{ color: "#1B61B5" }}
             selectedDate={selectedDate}
             // onDateSelected={handleDateSelected}
             // calendarAnimation={{ type: "sequence", duration: 30 }}
@@ -128,6 +142,7 @@ export const Rooms = () => {
             data={events}
             renderItem={renderItem}
             keyExtractor={(item) => item.id.toString()}
+            showsVerticalScrollIndicator={false}
             // contentContainerStyle={styles.eventList}
           />
         </View>
@@ -228,6 +243,52 @@ const styles = StyleSheet.create({
     flex: 0.69,
     backgroundColor: "yellow",
     marginTop: 10,
+    marginHorizontal: screenWidth * 0.05,
+  },
+  informContainer: {
+    flex: 1,
+    flexDirection: "row",
+    marginBottom: 10,
+    backgroundColor: Colors.WHITE,
+  },
+  informTextContainer: {
+    flex: 0.6,
+    backgroundColor: "aqua",
+  },
+  textNameContainer: {
+    flex: 0.5,
+    paddingLeft: 15,
+    backgroundColor: "orange",
+  },
+  textIdContainer: {
+    flex: 0.5,
+    paddingLeft: 15,
+    backgroundColor: "red",
+  },
+  textName: {
+    color: Colors.BLACK,
+  },
+  textId: {
+    color: "rgba(108, 108, 108, 0.89)",
+  },
+  informStatusContainer: {
+    flex: 0.4,
+  },
+  textStatusContainer: {
+    flex: 0.5,
+    alignItems: "center",
+    backgroundColor: "aqua",
+  },
+  textTimeContainer: {
+    flex: 0.5,
+    alignItems: "center",
+    backgroundColor: "lightgreen",
+  },
+  textStatus: {
+    color: "rgba(52, 168, 83, 0.93)",
+  },
+  textTime: {
+    color: "rgba(108, 108, 108, 0.89)",
   },
   regular14: {
     fontSize: 14,
