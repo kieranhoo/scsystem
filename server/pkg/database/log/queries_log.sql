@@ -52,6 +52,13 @@ create table history (
     admin_id varchar(255) not null
 );
 
+create table chart (
+	id int primary key auto_increment,
+	time timestamp not null,
+    in_count int not null,
+    out_count int not null, 
+    room_id int not null
+)
 
 alter table history 
 add FOREIGN key (registration_id)
@@ -99,12 +106,12 @@ SELECT registration.id as id,  registration_time, user_id as student_id, start_d
 FROM registration 
 	join users on users.id = registration.user_id
     join (
-		select organization.name as org_name, office.name as office_name, room.name as room_name, office.id 
+		select organization.name as org_name, office.name as office_name, room.name as room_name, room.id
 		from room 
 			join office on room.office_id=office.id 
 			join organization on organization.id=office.organization_id
 	) as rooms on rooms.id = registration.room_id
-where user_id = 123124
+where user.id = 2013381 and room_id = 2
 ORDER BY registration.id desc LIMIT 1;
 
 select * from organization﻿;
@@ -140,3 +147,13 @@ delete from registration where id = "1";
 UPDATE registration
 SET registration_time = "11h-12h", supervisor = "DHD", start_day = "2013-08-05 18:19:03", end_day = "2013-08-05 18:19:03"
 WHERE user_id = "12345678" AND room_id = "1";
+
+select office.id ,office.name,office.phone_number, manager, 
+organization_id as org_id, organization.name as org_name,
+organization.phone_number as org_phone_number, organization.email as org_email,
+organization.head as org_head, organization.website as org_website
+from office join organization on organization_id = organization.id;
+
+
+INSERT INTO registration (registration_time, supervisor, user_id, room_id, start_day, end_day)
+VALUES ('7h-9h', 'hoang le hai thanh', '2013381', '2', '2020-08-05 18:19:00', '2020-08-05 18:19:00');

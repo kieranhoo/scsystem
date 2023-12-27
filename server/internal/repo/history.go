@@ -30,10 +30,15 @@ func (his *History) Insert(_his *model.History) error {
 	_time := time.Now().UTC().Format(time.DateTime)
 	if err := his.conn.Exec(
 		"INSERT INTO history (registration_id, activity_type, time, admin_id) VALUES (?, ?, ?, ?);",
-		_his.RegistrationId, _his.ActivityType, _time, _his.AdminId).Error; err != nil {
+		_his.RegistrationId, _his.ActivityType, _time, _his.AdminId,
+	).Error; err != nil {
 		return err
 	}
-	return nil
+	registration, err := NewRegistration().GetByID(_his.RegistrationId)
+	if err != nil {
+		return err
+	}
+	return NewChart().UpdateChartData(registration.RoomId, _his.ActivityType)
 }
 
 func (his *History) Latest(registrationId string) (*model.History, error) {

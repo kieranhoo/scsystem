@@ -39,9 +39,15 @@ type IOffice interface {
 	Get() ([]schema.OfficeData, error)
 }
 
+type IChart interface {
+	UpdateChartData(roomId, activityType string) error
+	GetData7Day(roomId string) (_in []schema.ChartData, _out []schema.ChartData, month string, year int, err error)
+}
+
 type IRoom interface {
 	Insert(room *model.Room) error
 	Get() ([]schema.RoomData, error)
+	GetByID(roomId string) (*model.Room, error)
 }
 
 type IOrganization interface {

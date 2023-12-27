@@ -4,7 +4,7 @@ import (
 	"scsystem/api/middleware"
 	"scsystem/api/routes"
 	"scsystem/internal/config"
-	"scsystem/internal/service/cron"
+	"scsystem/internal/cron"
 	"scsystem/internal/tasks"
 	"scsystem/pkg/job"
 	"scsystem/pkg/mailers"
@@ -27,7 +27,7 @@ func (w *Worker) Run() error {
 
 func (app *_App) Scheduler() {
 	newJob := job.New()
-	go newJob.Scheduler(cron.Ping, 5*time.Second)
+	go newJob.Scheduler(cron.ScanInValidDate, 5*time.Second)
 
 	newJob.Info()
 }

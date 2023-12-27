@@ -8,6 +8,6 @@ import (
 
 func Stat(a *fiber.App) {
 	r := a.Group("/stat")
-	r.Get("/chart", controller.HealthCheck)
-	r.Get("/rooms", controller.HealthCheck)
+	r.Get("/chart", controller.GetChartData)
+	r.Get("/rooms", controller.GetRoomData)
 }

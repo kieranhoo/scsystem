@@ -255,6 +255,68 @@ const docTemplate = `{
                 }
             }
         },
+        "/stat/chart": {
+            "get": {
+                "description": "Get Chart Data IN/OUT.",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "stat"
+                ],
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "room id",
+                        "name": "room_id",
+                        "in": "query",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/schema.ChartMetadata"
+                        }
+                    }
+                }
+            }
+        },
+        "/stat/rooms": {
+            "get": {
+                "description": "Get Room Data IN/OUT.",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "stat"
+                ],
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "room id",
+                        "name": "room_id",
+                        "in": "query",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/schema.RoomStat"
+                        }
+                    }
+                }
+            }
+        },
         "/user": {
             "get": {
                 "description": "Get information by student id",
@@ -288,6 +350,42 @@ const docTemplate = `{
         }
     },
     "definitions": {
+        "schema.ChartData": {
+            "type": "object",
+            "properties": {
+                "label": {
+                    "description": "day",
+                    "type": "string"
+                },
+                "value": {
+                    "description": "counter in/out",
+                    "type": "integer"
+                }
+            }
+        },
+        "schema.ChartMetadata": {
+            "type": "object",
+            "properties": {
+                "data": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/schema.ChartData"
+                    }
+                },
+                "month": {
+                    "type": "string"
+                },
+                "room_id": {
+                    "type": "string"
+                },
+                "room_name": {
+                    "type": "string"
+                },
+                "year": {
+                    "type": "string"
+                }
+            }
+        },
         "schema.CheckInRequest": {
             "type": "object",
             "required": [
@@ -379,6 +477,26 @@ const docTemplate = `{
                 },
                 "success": {
                     "type": "boolean"
+                }
+            }
+        },
+        "schema.RoomStat": {
+            "type": "object",
+            "properties": {
+                "in": {
+                    "type": "integer"
+                },
+                "out": {
+                    "type": "integer"
+                },
+                "room_id": {
+                    "type": "string"
+                },
+                "room_name": {
+                    "type": "string"
+                },
+                "total": {
+                    "type": "integer"
                 }
             }
         },
