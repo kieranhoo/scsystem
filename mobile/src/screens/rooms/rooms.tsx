@@ -6,13 +6,15 @@ import {
   Dimensions,
   TouchableOpacity,
   FlatList,
+  ViewStyle,
+  StyleProp
 } from "react-native";
 import { Header } from "@/components/header";
 import CalendarStrip from "react-native-calendar-strip";
 import moment, { Moment } from "moment";
 import Ionicons from "react-native-vector-icons/Ionicons";
 import Octicons from "react-native-vector-icons/Octicons";
-
+import { Colors } from "../../theme/variables";
 const screenWidth = Dimensions.get("screen").width;
 const screenHeight = Dimensions.get("screen").height;
 
@@ -50,17 +52,26 @@ export const Rooms = () => {
           <CalendarStrip
             style={styles.calendarStripStyle}
             showMonth={false}
-            scrollable={true}
-            scrollerPaging={true}
-            // selectedDate={selectedDate}
+            scrollable
+            scrollerPaging
+            numDaysInWeek={7}
+            dateNumberStyle={{color: "#6C6C6C"}}
+            dateNameStyle={{color: "#6C6C6C"}}
+            dayContainerStyle={styles.dateContainer}
+            highlightDateContainerStyle={styles.highlightDateContainer}
+            highlightDateNameStyle={{color: "#1B61B5"}}
+            highlightDateNumberStyle={{color: "#1B61B5"}}
+            selectedDate={selectedDate}
+            // calendarColor={'#7743CE'}
             // onDateSelected={handleDateSelected}
             // calendarAnimation={{ type: "sequence", duration: 30 }}
             // daySelectionAnimation={{
-            //   type: "border",
-            //   borderWidth: 1,
-            //   borderHighlightColor: "black",
-            //   duration: 30,
+            //   type: 'border',
+            //   duration: 20,
+            //   borderWidth: 1.5,
+            //   borderHighlightColor: "rgba(27, 97, 181, 0.89)",
             // }}
+            // iconContainer={{flex: 0.1}}
           />
         </View>
         <View style={styles.statusContainer}>
@@ -114,7 +125,7 @@ export const Rooms = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#FFFFFF",
+    backgroundColor: Colors.WHITE,
   },
   header_container: {},
   content_container: {
@@ -123,10 +134,20 @@ const styles = StyleSheet.create({
   calendarContainer: {
     flex: 0.12,
     justifyContent: "center",
-    backgroundColor: "blue",
+    backgroundColor: "lightgreen",
   },
   calendarStripStyle: {
-    height: 100,
+    height: 75,
+  },
+  dateContainer: {
+    borderWidth: 1.5,
+    borderRadius: 15,
+    borderColor: Colors.WHITE,
+    backgroundColor: Colors.WHITE,
+  },
+  highlightDateContainer: {
+    borderColor: "rgba(27, 97, 181, 0.89)",
+    backgroundColor: "rgba(27, 97, 181, 0.1)",
   },
   statusContainer: {
     flex: 0.19,
