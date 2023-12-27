@@ -48,28 +48,35 @@ func (s *Stat) GetChartData(roomId string) (*schema.ChartMetadata, error) {
 
 }
 
-func (s *Stat) GetRoomData(roomId string) (*schema.RoomStat, error) {
-	in, out, _, _, err := s.repo.GetData7Day(roomId)
+func (s *Stat) GetRoomData() (*schema.RoomStat, error) {
+	var data []schema.RoomStatData
+	room, err := repo.NewRoom().Get()
 	if err != nil {
 		return nil, err
 	}
-	room, err := repo.NewRoom().GetByID(roomId)
-	if err != nil {
-		return nil, err
-	}
-	var inCount int
-	if len(in) != 0 {
-		inCount = in[0].Value
-	}
-	var outCount int
-	if len(out) != 0 {
-		outCount = out[0].Value
+	for _, r := range room {
+		in, out, _, _, err := s.repo.GetData7Day(r.RoomID)
+		if err != nil {
+			return nil, err
+		}
+		var inCount int
+		if len(in) != 0 {
+			inCount = in[0].Value
+		}
+		var outCount int
+		if len(out) != 0 {
+			outCount = out[0].Value
+		}
+		data = append(data, schema.RoomStatData{
+			RoomName: r.RoomName,
+			RoomID:   r.RoomID,
+			In:       inCount,
+			Out:      outCount,
+			Total:    inCount + outCount,
+		})
 	}
 	return &schema.RoomStat{
-		RoomName: room.Name,
-		RoomID:   roomId,
-		In:       inCount,
-		Out:      outCount,
-		Total:    inCount + outCount,
+		Total: len(room),
+		Data:  data,
 	}, nil
 }

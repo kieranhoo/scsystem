@@ -13,10 +13,14 @@ type ChartMetadata struct {
 	Data     []ChartData `json:"data"`
 }
 
-type RoomStat struct {
+type RoomStatData struct {
 	RoomName string `json:"room_name"`
 	RoomID   string `json:"room_id"`
 	In       int    `json:"in"`
 	Out      int    `json:"out"`
 	Total    int    `json:"total"`
+}
+type RoomStat struct {
+	Total int            `json:"total"`
+	Data  []RoomStatData `json:"data"`
 }

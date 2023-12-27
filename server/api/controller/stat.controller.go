@@ -38,18 +38,10 @@ func GetChartData(c *fiber.Ctx) error {
 // @Tags stat
 // @Accept json
 // @Produce json
-// @Param room_id query string true "room id"
 // @Success 200 {object} schema.RoomStat
 // @Router /stat/rooms [GET]
 func GetRoomData(c *fiber.Ctx) error {
-	roomId := c.Query("room_id", "")
-	if roomId == "" {
-		return c.Status(fiber.StatusBadRequest).JSON(schema.Error{
-			Success: false,
-			Msg:     "missing query params room_id",
-		})
-	}
-	data, err := service.NewStat().GetRoomData(roomId)
+	data, err := service.NewStat().GetRoomData()
 	if err != nil {
 		return c.Status(fiber.StatusBadRequest).JSON(schema.Error{
 			Success: false,
