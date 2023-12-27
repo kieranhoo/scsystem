@@ -92,6 +92,15 @@ definitions:
     type: object
   schema.RoomStat:
     properties:
+      data:
+        items:
+          $ref: '#/definitions/schema.RoomStatData'
+        type: array
+      total:
+        type: integer
+    type: object
+  schema.RoomStatData:
+    properties:
       in:
         type: integer
       out:
@@ -343,12 +352,6 @@ paths:
       consumes:
       - application/json
       description: Get Room Data IN/OUT.
-      parameters:
-      - description: room id
-        in: query
-        name: room_id
-        required: true
-        type: string
       produces:
       - application/json
       responses:

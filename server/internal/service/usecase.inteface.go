@@ -22,5 +22,5 @@ type IRoomService interface {
 
 type IStat interface {
 	GetChartData(roomId string) (*schema.ChartMetadata, error)
-	GetRoomData(roomId string) (*schema.RoomStat, error)
+	GetRoomData() (*schema.RoomStat, error)
 }

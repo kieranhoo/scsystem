@@ -298,15 +298,6 @@ const docTemplate = `{
                 "tags": [
                     "stat"
                 ],
-                "parameters": [
-                    {
-                        "type": "string",
-                        "description": "room id",
-                        "name": "room_id",
-                        "in": "query",
-                        "required": true
-                    }
-                ],
                 "responses": {
                     "200": {
                         "description": "OK",
@@ -481,6 +472,20 @@ const docTemplate = `{
             }
         },
         "schema.RoomStat": {
+            "type": "object",
+            "properties": {
+                "data": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/schema.RoomStatData"
+                    }
+                },
+                "total": {
+                    "type": "integer"
+                }
+            }
+        },
+        "schema.RoomStatData": {
             "type": "object",
             "properties": {
                 "in": {
