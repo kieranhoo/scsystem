@@ -19,7 +19,7 @@ const (
 	FROM registration 
 		JOIN users ON users.id = registration.user_id
     	JOIN (
-			SELECT organization.name AS org_name, office.name AS office_name, room.name AS room_name, office.id 
+			SELECT organization.name AS org_name, office.name AS office_name, room.name AS room_name, room.id 
 			FROM room 
 				JOIN office ON room.office_id=office.id 
 				JOIN organization ON organization.id=office.organization_id

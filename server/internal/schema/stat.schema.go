@@ -6,14 +6,17 @@ type ChartData struct {
 }
 
 type ChartMetadata struct {
-	Month string      `json:"month"`
-	Year  string      `json:"year"`
-	Data  []ChartData `json:"data"`
+	Month    string      `json:"month"`
+	Year     string      `json:"year"`
+	RoomName string      `json:"room_name"`
+	RoomID   string      `json:"room_id"`
+	Data     []ChartData `json:"data"`
 }
 
 type RoomStat struct {
-	Room   string `json:"room"`
-	RoomID string `json:"room_id"`
-	In     string `json:"in"`
-	Out    string `json:"out"`
+	RoomName string `json:"room_name"`
+	RoomID   string `json:"room_id"`
+	In       int    `json:"in"`
+	Out      int    `json:"out"`
+	Total    int    `json:"total"`
 }

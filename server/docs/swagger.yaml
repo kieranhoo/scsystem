@@ -1,5 +1,29 @@
 basePath: /
 definitions:
+  schema.ChartData:
+    properties:
+      label:
+        description: day
+        type: string
+      value:
+        description: counter in/out
+        type: integer
+    type: object
+  schema.ChartMetadata:
+    properties:
+      data:
+        items:
+          $ref: '#/definitions/schema.ChartData'
+        type: array
+      month:
+        type: string
+      room_id:
+        type: string
+      room_name:
+        type: string
+      year:
+        type: string
+    type: object
   schema.CheckInRequest:
     properties:
       activity_type:
@@ -65,6 +89,19 @@ definitions:
     required:
     - msg
     - success
+    type: object
+  schema.RoomStat:
+    properties:
+      in:
+        type: integer
+      out:
+        type: integer
+      room_id:
+        type: string
+      room_name:
+        type: string
+      total:
+        type: integer
     type: object
   schema.SignInRequest:
     properties:
@@ -281,6 +318,46 @@ paths:
             $ref: '#/definitions/schema.Response'
       tags:
       - room
+  /stat/chart:
+    get:
+      consumes:
+      - application/json
+      description: Get Chart Data IN/OUT.
+      parameters:
+      - description: room id
+        in: query
+        name: room_id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/schema.ChartMetadata'
+      tags:
+      - stat
+  /stat/rooms:
+    get:
+      consumes:
+      - application/json
+      description: Get Room Data IN/OUT.
+      parameters:
+      - description: room id
+        in: query
+        name: room_id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/schema.RoomStat'
+      tags:
+      - stat
   /user:
     get:
       consumes:

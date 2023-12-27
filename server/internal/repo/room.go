@@ -44,3 +44,12 @@ func (r *Room) Get() ([]schema.RoomData, error) {
 	}
 	return roomData, nil
 }
+
+func (r *Room) GetByID(roomId string) (*model.Room, error) {
+	if err := r.conn.Raw(
+		"SELECT * FROM room WHERE id = ?", roomId,
+	).Scan(r.data).Error; err != nil {
+		return nil, err
+	}
+	return r.data, nil
+}

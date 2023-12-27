@@ -18,8 +18,9 @@ func NewRoom() IRoomService {
 }
 
 func (regis *Registration) RegisterRoom(req *schema.RegistrationRoomRequest) error {
-	_user, err := regis.repo.GetByID(req.StudentId)
-	if err != nil || _user == nil {
+	_user, err := regis.repo.GetByUserIdAndRoom(req.StudentId, req.RoomId)
+	// log.Fatal(_user)
+	if err != nil || _user.Id == "" {
 		if err := tasks.SaveUser(&model.Users{
 			Id:          req.StudentId,
 			FirstName:   req.FirstName,

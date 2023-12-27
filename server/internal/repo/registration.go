@@ -73,11 +73,7 @@ func (res *Registration) Empty() bool {
 
 func (res *Registration) RegistrationLatest(studentId, roomId string) (*schema.UserRoomData, error) {
 	RoomData := new(schema.UserRoomData)
-	conn, err := database.Connection()
-	if err != nil {
-		return nil, err
-	}
-	if err := conn.Raw(queries.RegistrationLatest, studentId, roomId).Scan(RoomData).Error; err != nil {
+	if err := res.conn.Raw(queries.RegistrationLatest, studentId, roomId).Scan(RoomData).Error; err != nil {
 		return nil, err
 	}
 	history, err := NewHistory().Latest(RoomData.RegistrationId)
