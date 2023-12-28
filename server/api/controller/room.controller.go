@@ -8,7 +8,7 @@ import (
 	"github.com/gofiber/fiber/v2"
 )
 
-var RoomService = service.NewRoom()
+
 
 // RegisterRoom
 // @Description Register Room.
@@ -19,6 +19,7 @@ var RoomService = service.NewRoom()
 // @Success 200 {object} schema.Response
 // @Router /room/register [POST]
 func RegisterRoom(c *fiber.Ctx) error {
+	var RoomService = service.NewRoom()
 	var req schema.RegistrationRoomRequest
 	if err := c.BodyParser(&req); err != nil {
 		return c.Status(fiber.StatusBadRequest).JSON(schema.Error{
@@ -53,6 +54,7 @@ func RegisterRoom(c *fiber.Ctx) error {
 // @Success 200 {object} schema.DataResponse
 // @Router /room/activity [GET]
 func GetActivity(c *fiber.Ctx) error {
+	var RoomService = service.NewRoom()
 	sid := c.Query("sid", "")
 	if sid == "" {
 		return c.Status(fiber.StatusBadRequest).JSON(schema.Error{
@@ -95,6 +97,7 @@ func GetActivity(c *fiber.Ctx) error {
 // @Success 200 {object} schema.DataResponse
 // @Router /room/history [GET]
 func Histories(c *fiber.Ctx) error {
+	var RoomService = service.NewRoom()
 	limit := c.Query("limit", "")
 	if limit == "" {
 		return c.Status(fiber.StatusBadRequest).JSON(schema.Error{
@@ -124,6 +127,7 @@ func Histories(c *fiber.Ctx) error {
 // @Success 200 {object} schema.Response
 // @Router /room/activity [POST]
 func SaveActivityType(c *fiber.Ctx) error {
+	var RoomService = service.NewRoom()
 	var req schema.CheckInRequest
 	if err := c.BodyParser(&req); err != nil {
 		return c.Status(fiber.StatusBadRequest).JSON(schema.Error{
@@ -156,6 +160,7 @@ func SaveActivityType(c *fiber.Ctx) error {
 // @Success 200 {object} schema.DataResponse
 // @Router /room [GET]
 func Room(c *fiber.Ctx) error {
+	var RoomService = service.NewRoom()
 	data, err := RoomService.GetRoom()
 	if err != nil {
 		return c.Status(fiber.StatusBadRequest).JSON(schema.Error{
