@@ -39,9 +39,8 @@ services:
       - FLASK_RUN_HOST=${FLASK_RUN_HOST}
       - FLASK_RUN_PORT=${FLASK_RUN_PORT}
     restart: always
-    command: "./bin/exe s"
     ports:
-      - 8000:8000
+      - 5100:5100
 
 networks:
   scsystem_api_network:
