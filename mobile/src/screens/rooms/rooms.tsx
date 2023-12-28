@@ -15,6 +15,7 @@ import moment, { Moment } from "moment";
 import Ionicons from "react-native-vector-icons/Ionicons";
 import Octicons from "react-native-vector-icons/Octicons";
 import { Colors } from "../../theme/variables";
+
 const screenWidth = Dimensions.get("screen").width;
 const screenHeight = Dimensions.get("screen").height;
 
@@ -38,14 +39,56 @@ export const Rooms = () => {
       id: 1,
       name: "Nguyen Van A",
       mssv: "MSSV: 2012345",
-      status: "checkin",
+      status: "Check in",
       time: "06:30 am",
     },
     {
       id: 2,
       name: "Nguyen Van B",
       mssv: "MSSV: 2012989",
-      status: "checkin",
+      status: "Check in",
+      time: "06:30 pm",
+    },
+    {
+      id: 3,
+      name: "Nguyen Van B",
+      mssv: "MSSV: 2012989",
+      status: "Check in",
+      time: "06:30 pm",
+    },
+    {
+      id: 4,
+      name: "Nguyen Van B",
+      mssv: "MSSV: 2012989",
+      status: "Check in",
+      time: "06:30 pm",
+    },
+    {
+      id: 5,
+      name: "Nguyen Van B",
+      mssv: "MSSV: 2012989",
+      status: "Check in",
+      time: "06:30 pm",
+    },
+    {
+      id: 6,
+      name: "Nguyen Van B",
+      mssv: "MSSV: 2012989",
+      status: "Check in",
+      time: "06:30 pm",
+    },
+    {
+      id: 7,
+      name: "Nguyen Van B",
+      mssv: "MSSV: 2012989",
+      status: "Check in",
+      time: "06:30 pm",
+    },
+    {
+      id: 8,
+      name: "Nguyen Van B",
+      mssv: "MSSV: 2012989",
+      status: "Check in",
       time: "06:30 pm",
     },
   ];
@@ -241,34 +284,40 @@ const styles = StyleSheet.create({
   },
   detailContainer: {
     flex: 0.69,
-    backgroundColor: "yellow",
     marginTop: 10,
     marginHorizontal: screenWidth * 0.05,
   },
   informContainer: {
     flex: 1,
     flexDirection: "row",
+    padding: 10,
     marginBottom: 10,
+    borderRadius: 5,
     backgroundColor: Colors.WHITE,
+    shadowOffset: {
+      width: 0,
+      height: 0,
+    },
+    shadowOpacity: 0.2,
+    shadowRadius: 2.5,
   },
   informTextContainer: {
     flex: 0.6,
-    backgroundColor: "aqua",
   },
   textNameContainer: {
     flex: 0.5,
-    paddingLeft: 15,
-    backgroundColor: "orange",
+    paddingLeft: 10,
   },
   textIdContainer: {
     flex: 0.5,
-    paddingLeft: 15,
-    backgroundColor: "red",
+    paddingLeft: 10,
   },
   textName: {
+    fontSize: 25,
     color: Colors.BLACK,
   },
   textId: {
+    fontSize: 14,
     color: "rgba(108, 108, 108, 0.89)",
   },
   informStatusContainer: {
@@ -276,18 +325,25 @@ const styles = StyleSheet.create({
   },
   textStatusContainer: {
     flex: 0.5,
-    alignItems: "center",
-    backgroundColor: "aqua",
+    alignSelf: "center",
+    paddingHorizontal: 10,
+    justifyContent: "center",
+    borderRadius: 5,
+    borderWidth: 1.5,
+    borderColor: "rgba(52, 168, 83, 0.89)",
+    backgroundColor: "rgba(52, 168, 83, 0.15)",
   },
   textTimeContainer: {
     flex: 0.5,
+    justifyContent: "center",
     alignItems: "center",
-    backgroundColor: "lightgreen",
   },
   textStatus: {
+    fontSize: 14,
     color: "rgba(52, 168, 83, 0.93)",
   },
   textTime: {
+    fontSize: 10,
     color: "rgba(108, 108, 108, 0.89)",
   },
   regular14: {
