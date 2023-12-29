@@ -354,13 +354,24 @@ const docTemplate = `{
                 }
             }
         },
+        "schema.ChartDataValue": {
+            "type": "object",
+            "properties": {
+                "in": {
+                    "$ref": "#/definitions/schema.ChartData"
+                },
+                "out": {
+                    "$ref": "#/definitions/schema.ChartData"
+                }
+            }
+        },
         "schema.ChartMetadata": {
             "type": "object",
             "properties": {
                 "data": {
                     "type": "array",
                     "items": {
-                        "$ref": "#/definitions/schema.ChartData"
+                        "$ref": "#/definitions/schema.ChartDataValue"
                     }
                 },
                 "month": {

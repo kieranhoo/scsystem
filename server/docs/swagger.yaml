@@ -9,11 +9,18 @@ definitions:
         description: counter in/out
         type: integer
     type: object
+  schema.ChartDataValue:
+    properties:
+      in:
+        $ref: '#/definitions/schema.ChartData'
+      out:
+        $ref: '#/definitions/schema.ChartData'
+    type: object
   schema.ChartMetadata:
     properties:
       data:
         items:
-          $ref: '#/definitions/schema.ChartData'
+          $ref: '#/definitions/schema.ChartDataValue'
         type: array
       month:
         type: string

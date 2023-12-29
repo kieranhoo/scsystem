@@ -5,12 +5,17 @@ type ChartData struct {
 	Label string `json:"label"` // day
 }
 
+type ChartDataValue struct {
+	In  ChartData `json:"in"`
+	Out ChartData `json:"out"`
+}
+
 type ChartMetadata struct {
-	Month    string      `json:"month"`
-	Year     string      `json:"year"`
-	RoomName string      `json:"room_name"`
-	RoomID   string      `json:"room_id"`
-	Data     []ChartData `json:"data"`
+	Month    string           `json:"month"`
+	Year     string           `json:"year"`
+	RoomName string           `json:"room_name"`
+	RoomID   string           `json:"room_id"`
+	Data     []ChartDataValue `json:"data"`
 }
 
 type RoomStatData struct {
