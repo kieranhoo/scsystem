@@ -11,134 +11,49 @@ const screenWidth = Dimensions.get("screen").width;
 const screenHeight = Dimensions.get("screen").height;
 
 export const Home = () => {
-  const barData = [
+  const [bardata, setBardata] = useState({
+    "month": "December",
+    "year": "2023",
+    "room_name": "sample",
+    "room_id": "0",
+    "data": [
+      {
+        "in": {
+          "value": 1,
+          "label": "5"
+        },
+        "out": {
+          "value": 1,
+          "label": "5"
+        }
+      }
+    ]
+  });
+
+  const transformedArray = bardata.data.flatMap(item => ([
     {
-      value: 60,
-      label: '20',
+      value: item.in.value,
+      label: item.in.label,
       spacing: 2,
       labelWidth: 30,
-      labelTextStyle: {color: 'gray'},
+      labelTextStyle: { color: 'gray' },
       frontColor: '#34A853',
       topLabelComponent: () => (
-        <Text style={{color: 'gray', fontSize: 10, marginBottom: 2}}>30</Text>
+        <Text style={{ color: 'gray', fontSize: 10, marginBottom: 2 }}>
+          {item.in.value}
+        </Text>
       ),
     },
     {
-      value: 30, 
+      value: item.out.value, 
       frontColor: '#ED4A4A',
       topLabelComponent: () => (
-        <Text style={{color: 'gray', fontSize: 10, marginBottom: 2}}>30</Text>
+        <Text style={{color: 'gray', fontSize: 10, marginBottom: 2}}>
+          {item.out.value}
+        </Text>
       ),
-    },
-    {
-      value: 30,
-      label: '21',
-      spacing: 2,
-      labelWidth: 30,
-      labelTextStyle: {color: 'gray'},
-      frontColor: '#34A853',
-      topLabelComponent: () => (
-        <Text style={{color: 'gray', fontSize: 10, marginBottom: 2}}>30</Text>
-      ),
-    },
-    {
-      value: 30, 
-      frontColor: '#ED4A4A',
-      topLabelComponent: () => (
-        <Text style={{color: 'gray', fontSize: 10, marginBottom: 2}}>30</Text>
-      ),
-    },
-    {
-      value: 30,
-      label: '22',
-      spacing: 2,
-      labelWidth: 30,
-      labelTextStyle: {color: 'gray'},
-      frontColor: '#34A853',
-      topLabelComponent: () => (
-        <Text style={{color: 'gray', fontSize: 10, marginBottom: 2}}>30</Text>
-      ),
-    },
-    {
-      value: 30, 
-      frontColor: '#ED4A4A',
-      topLabelComponent: () => (
-        <Text style={{color: 'gray', fontSize: 10, marginBottom: 2}}>30</Text>
-      ),
-    },
-    {
-      value: 30,
-      label: '23',
-      spacing: 2,
-      labelWidth: 30,
-      labelTextStyle: {color: 'gray'},
-      frontColor: '#34A853',
-      topLabelComponent: () => (
-        <Text style={{color: 'gray', fontSize: 10, marginBottom: 2}}>30</Text>
-      ),
-    },
-    {
-      value: 30, 
-      frontColor: '#ED4A4A',
-      topLabelComponent: () => (
-        <Text style={{color: 'gray', fontSize: 10, marginBottom: 2}}>30</Text>
-      ),
-    },
-    {
-      value: 30,
-      label: '24',
-      spacing: 2,
-      labelWidth: 30,
-      labelTextStyle: {color: 'gray'},
-      frontColor: '#34A853',
-      topLabelComponent: () => (
-        <Text style={{color: 'gray', fontSize: 10, marginBottom: 2}}>30</Text>
-      ),
-    },
-    {
-      value: 30, 
-      frontColor: '#ED4A4A',
-      topLabelComponent: () => (
-        <Text style={{color: 'gray', fontSize: 10, marginBottom: 2}}>30</Text>
-      ),
-    },
-    {
-      value: 30,
-      label: '25',
-      spacing: 2,
-      labelWidth: 30,
-      labelTextStyle: {color: 'gray'},
-      frontColor: '#34A853',
-      topLabelComponent: () => (
-        <Text style={{color: 'gray', fontSize: 10, marginBottom: 2}}>30</Text>
-      ),
-    },
-    {
-      value: 30, 
-      frontColor: '#ED4A4A',
-      topLabelComponent: () => (
-        <Text style={{color: 'gray', fontSize: 10, marginBottom: 2}}>30</Text>
-      ),
-    },
-    {
-      value: 30,
-      label: '26',
-      spacing: 2,
-      labelWidth: 30,
-      labelTextStyle: {color: 'gray'},
-      frontColor: '#34A853',
-      topLabelComponent: () => (
-        <Text style={{color: 'gray', fontSize: 10, marginBottom: 2}}>30</Text>
-      ),
-    },
-    {
-      value: 30, 
-      frontColor: '#ED4A4A',
-      topLabelComponent: () => (
-        <Text style={{color: 'gray', fontSize: 10, marginBottom: 2}}>30</Text>
-      ),
-    },
-  ];
+    }
+  ]));
 
   const DATA = [
     { room_id: '1', room_name: 'loading', in: 0, out: 0, total: 0 },
@@ -150,6 +65,9 @@ export const Home = () => {
   const [generaldata, setGeneraldata] = useState(DATA);
   useEffect(() => {
     setTimeout(async () => {
+      axios.get(`${process.env.BASE_URL}/stat/chart`, { params: { room_id: 1 } }).then(resp => {
+        setBardata(resp.data);
+      });
       axios.get(`${process.env.BASE_URL}/stat/rooms`).then(resp => {
         setGeneraldata(resp.data.data);
       });
@@ -182,7 +100,7 @@ export const Home = () => {
       <View style={styles.barchart_title}>
         <View style={{flexDirection: 'row', alignItems: 'center'}}>
           <Text style={styles.title}>
-            Daily in Room A
+            Daily in {bardata.room_name}
           </Text>
         </View>
         <View style={{ flexDirection: 'row' }}>
@@ -212,7 +130,7 @@ export const Home = () => {
         <View style={styles.component_content}>
           {renderTitle()}
           <BarChart
-            data={barData}
+            data={transformedArray}
             height={150}
             barWidth={14}
             spacing={14}
