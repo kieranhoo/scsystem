@@ -25,16 +25,18 @@ func (s *Stat) GetChartData(roomId string) (*schema.ChartMetadata, error) {
 	if err != nil {
 		return nil, err
 	}
-	var data []schema.ChartData
+	var data []schema.ChartDataValue
 	for i, v := range in {
 		data = append(data,
-			schema.ChartData{
-				Value: v.Value,
-				Label: v.Label,
-			},
-			schema.ChartData{
-				Value: out[i].Value,
-				Label: out[i].Label,
+			schema.ChartDataValue{
+				In: schema.ChartData{
+					Value: v.Value,
+					Label: v.Label,
+				},
+				Out: schema.ChartData{
+					Value: out[i].Value,
+					Label: out[i].Label,
+				},
 			},
 		)
 	}
