@@ -1,12 +1,10 @@
 import React, { useState } from "react";
-import { View, Text } from "native-base";
-import { StyleSheet, Dimensions } from "react-native";
+import { View, Text, StyleSheet, Dimensions, TouchableOpacity } from "react-native";
 import { Colors } from "@/theme/variables";
 import DropDownPicker from "react-native-dropdown-picker";
+import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 
-interface HeaderProps {
-
-}
+interface HeaderProps {}
 
 const screenWidth = Dimensions.get("screen").width;
 const screenHeight = Dimensions.get("screen").height;
@@ -21,38 +19,61 @@ export const RoomsHeader: React.FC<HeaderProps> = () => {
   ]);
 
   return (
-    <View style={{ overflow: "hidden", paddingBottom: 1 }}>
-      <View style={styles.dropdownContainer}>
-        <DropDownPicker
-          open={open}
-          items={items}
-          value={selectedValue}
-          setOpen={setOpen}
-          setValue={setSelectedValue}
-          setItems={setItems}
-          //   containerStyle={{ height: 40, width: 200 }}
-          //   style={{ backgroundColor: "#fafafa" }}
-          //   itemStyle={{
-          //     justifyContent: "flex-start",
-          //   }}
-          //   dropDownStyle={{ backgroundColor: "#fafafa" }}
-          //   onChangeItem={(item) => setSelectedValue(item.value)}
+    <View style={styles.headerContainer}>
+      <DropDownPicker
+        open={open}
+        items={items}
+        value={selectedValue}
+        setOpen={setOpen}
+        setValue={setSelectedValue}
+        setItems={setItems}
+        containerStyle={styles.dropdownContainer}
+        //   style={{ backgroundColor: "#fafafa" }}
+        //   itemStyle={{
+        //     justifyContent: "flex-start",
+        //   }}
+        //   dropDownStyle={{ backgroundColor: "#fafafa" }}
+        //   onChangeItem={(item) => setSelectedValue(item.value)}
+      />
+      <TouchableOpacity style={styles.iconContainer}>
+        <MaterialCommunityIcons
+          name="account-box"
+          size={50}
+          color={"rgba(27, 97, 181, 0.89)"}
         />
-      </View>
+      </TouchableOpacity>
     </View>
   );
 };
 
 const styles = StyleSheet.create({
-  dropdownContainer: {
+  headerContainer: {
+    flexDirection: "row",
     backgroundColor: Colors.WHITE,
-    paddingHorizontal: 0.03 * screenWidth,
     paddingBottom: 0.02 * screenHeight,
     shadowColor: "#000",
     shadowOffset: { width: 1, height: 1 },
     shadowOpacity: 0.4,
     shadowRadius: 3,
     elevation: 5,
+    zIndex: 10,
+  },
+  dropdownContainer: {
+    flex: 0.75,
+    paddingLeft: 15,
+    backgroundColor: Colors.WHITE,
+    // paddingHorizontal: 0.03 * screenWidth,
+    // paddingBottom: 0.02 * screenHeight,
+    // shadowColor: "#000",
+    // shadowOffset: { width: 1, height: 1 },
+    // shadowOpacity: 0.4,
+    // shadowRadius: 3,
+    // elevation: 5,
     // justifyContent: 'center'
+  },
+  iconContainer: {
+    flex: 0.25,
+    alignItems: "center",
+    justifyContent: "center",
   },
 });

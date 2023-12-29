@@ -15,7 +15,6 @@ import moment, { Moment } from "moment";
 import Ionicons from "react-native-vector-icons/Ionicons";
 import Octicons from "react-native-vector-icons/Octicons";
 import { Colors } from "../../theme/variables";
-import DropDownPicker from "react-native-dropdown-picker";
 
 const screenWidth = Dimensions.get("screen").width;
 const screenHeight = Dimensions.get("screen").height;
@@ -34,14 +33,6 @@ export const Rooms = () => {
   const handleDateSelected = (date: Moment) => {
     setSelectedDate(date);
   };
-
-    const [open, setOpen] = useState(false);
-  const [selectedValue, setSelectedValue] = useState(null);
-  const [items, setItems] = useState([
-    { label: "Option 1", value: "option1" },
-    { label: "Option 2", value: "option2" },
-    { label: "Option 3", value: "option3" },
-  ]);
 
   const events: Item[] = [
     {
@@ -125,9 +116,9 @@ export const Rooms = () => {
 
   return (
     <View style={styles.container}>
-      <View style={styles.header_container}>
+      {/* <View style={styles.header_container}> */}
         <RoomsHeader />
-      </View>
+      {/* </View> */}
       <View style={styles.content_container}>
         <View style={styles.calendarContainer}>
           <CalendarStrip
