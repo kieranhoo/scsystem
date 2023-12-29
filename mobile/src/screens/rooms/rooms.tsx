@@ -9,12 +9,13 @@ import {
   ViewStyle,
   StyleProp,
 } from "react-native";
-import { Header } from "@/components/header";
+import { RoomsHeader } from "@/components/header/rooms-header";
 import CalendarStrip from "react-native-calendar-strip";
 import moment, { Moment } from "moment";
 import Ionicons from "react-native-vector-icons/Ionicons";
 import Octicons from "react-native-vector-icons/Octicons";
 import { Colors } from "../../theme/variables";
+import DropDownPicker from "react-native-dropdown-picker";
 
 const screenWidth = Dimensions.get("screen").width;
 const screenHeight = Dimensions.get("screen").height;
@@ -34,60 +35,68 @@ export const Rooms = () => {
     setSelectedDate(date);
   };
 
+    const [open, setOpen] = useState(false);
+  const [selectedValue, setSelectedValue] = useState(null);
+  const [items, setItems] = useState([
+    { label: "Option 1", value: "option1" },
+    { label: "Option 2", value: "option2" },
+    { label: "Option 3", value: "option3" },
+  ]);
+
   const events: Item[] = [
     {
       id: 1,
       name: "Nguyen Van A",
-      mssv: "MSSV: 2012345",
+      mssv: "2012345",
       status: "Check in",
       time: "06:30 am",
     },
     {
       id: 2,
       name: "Nguyen Van B",
-      mssv: "MSSV: 2012989",
+      mssv: "2012989",
       status: "Check in",
       time: "06:30 pm",
     },
     {
       id: 3,
       name: "Nguyen Van B",
-      mssv: "MSSV: 2012989",
+      mssv: "2012989",
       status: "Check in",
       time: "06:30 pm",
     },
     {
       id: 4,
       name: "Nguyen Van B",
-      mssv: "MSSV: 2012989",
+      mssv: "2012989",
       status: "Check in",
       time: "06:30 pm",
     },
     {
       id: 5,
       name: "Nguyen Van B",
-      mssv: "MSSV: 2012989",
+      mssv: "2012989",
       status: "Check in",
       time: "06:30 pm",
     },
     {
       id: 6,
       name: "Nguyen Van B",
-      mssv: "MSSV: 2012989",
+      mssv: "2012989",
       status: "Check in",
       time: "06:30 pm",
     },
     {
       id: 7,
       name: "Nguyen Van B",
-      mssv: "MSSV: 2012989",
+      mssv: "2012989",
       status: "Check in",
       time: "06:30 pm",
     },
     {
       id: 8,
       name: "Nguyen Van B",
-      mssv: "MSSV: 2012989",
+      mssv: "2012989",
       status: "Check in",
       time: "06:30 pm",
     },
@@ -100,7 +109,7 @@ export const Rooms = () => {
           <Text style={styles.textName}>{item.name}</Text>
         </View>
         <View style={styles.textIdContainer}>
-          <Text style={styles.textId}>{item.mssv}</Text>
+          <Text style={styles.textId}>MSSV: {item.mssv}</Text>
         </View>
       </View>
       <View style={styles.informStatusContainer}>
@@ -117,7 +126,7 @@ export const Rooms = () => {
   return (
     <View style={styles.container}>
       <View style={styles.header_container}>
-        <Header title="Rooms" />
+        <RoomsHeader />
       </View>
       <View style={styles.content_container}>
         <View style={styles.calendarContainer}>
@@ -134,15 +143,6 @@ export const Rooms = () => {
             highlightDateNameStyle={{ color: "#1B61B5" }}
             highlightDateNumberStyle={{ color: "#1B61B5" }}
             selectedDate={selectedDate}
-            // onDateSelected={handleDateSelected}
-            // calendarAnimation={{ type: "sequence", duration: 30 }}
-            // daySelectionAnimation={{
-            //   type: 'border',
-            //   duration: 20,
-            //   borderWidth: 1.5,
-            //   borderHighlightColor: "rgba(27, 97, 181, 0.89)",
-            // }}
-            // iconContainer={{flex: 0.1}}
           />
         </View>
         <View style={styles.statusContainer}>
@@ -186,7 +186,6 @@ export const Rooms = () => {
             renderItem={renderItem}
             keyExtractor={(item) => item.id.toString()}
             showsVerticalScrollIndicator={false}
-            // contentContainerStyle={styles.eventList}
           />
         </View>
       </View>
@@ -314,10 +313,12 @@ const styles = StyleSheet.create({
   },
   textName: {
     fontSize: 25,
+    fontFamily: "Poppins_400Regular",
     color: Colors.BLACK,
   },
   textId: {
     fontSize: 14,
+    fontFamily: "Poppins_400Regular",
     color: "rgba(108, 108, 108, 0.89)",
   },
   informStatusContainer: {
@@ -340,10 +341,12 @@ const styles = StyleSheet.create({
   },
   textStatus: {
     fontSize: 14,
+    fontFamily: "Poppins_400Regular",
     color: "rgba(52, 168, 83, 0.93)",
   },
   textTime: {
     fontSize: 10,
+    fontFamily: "Poppins_400Regular",
     color: "rgba(108, 108, 108, 0.89)",
   },
   regular14: {
