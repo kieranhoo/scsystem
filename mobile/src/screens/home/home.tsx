@@ -1,9 +1,11 @@
-import React from "react";
-import { View, Text, StyleSheet, Dimensions, FlatList } from "react-native";
+import React, { useEffect, useState } from "react";
+import { View, Text, StyleSheet, Dimensions, FlatList, ScrollView } from "react-native";
 import { Header } from "@/components/header";
 import {BarChart} from 'react-native-gifted-charts';
 import { Colors } from "@/theme/variables";
 import { autoBatchEnhancer } from "@reduxjs/toolkit";
+import { rooms } from "@/services";
+import axios from "axios";
 
 const screenWidth = Dimensions.get("screen").width;
 const screenHeight = Dimensions.get("screen").height;
@@ -11,7 +13,7 @@ const screenHeight = Dimensions.get("screen").height;
 export const Home = () => {
   const barData = [
     {
-      value: 30,
+      value: 60,
       label: '20',
       spacing: 2,
       labelWidth: 30,
@@ -139,17 +141,28 @@ export const Home = () => {
   ];
 
   const DATA = [
-    { id: '1', room: 'room 1', in: 10, out: 100, total: 100 },
-    { id: '2', room: 'room 2', in: 10, out: 20, total: 30 },
-    { id: '3', room: 'room 3', in: 10, out: 20, total: 30 },
+    { room_id: '1', room_name: 'loading', in: 0, out: 0, total: 0 },
+    { room_id: '2', room_name: 'loading', in: 0, out: 0, total: 0 },
+    { room_id: '3', room_name: 'loading', in: 0, out: 0, total: 0 },
     // Add more items as needed
   ];
 
-  type RoomProps = {room: string, in: number, out: number, total: number};
+  const [generaldata, setGeneraldata] = useState(DATA);
+  useEffect(() => {
+    setTimeout(async () => {
+      axios.get(`${process.env.BASE_URL}/stat/rooms`).then(resp => {
+        setGeneraldata(resp.data.data);
+      });
+    }, generaldata==DATA?0:60000);
+  });
+
+  type RoomProps = {room_name: string, in: number, out: number, total: number};
 
   const Room = (Room: RoomProps) => (
     <View style={styles.room}>
-      <Text style={styles.title}>{Room.room}</Text>
+      <ScrollView horizontal>
+        <Text style={styles.title}>{Room.room_name}</Text>
+      </ScrollView>
       <View style={{ flexDirection: 'column' ,alignItems: 'center'}}>
         <View style={styles.total_card}>
           <Text style={{fontWeight: 'bold', color: '#306fbb'}}>Total: {Room.total}</Text>
@@ -215,10 +228,10 @@ export const Home = () => {
         </View>
         <View style={styles.component_content}>
           <FlatList
-            data={DATA}
+            data={generaldata}
             horizontal={true}
-            renderItem={({item}) => <Room room={item.room} in={item.in} out={item.out} total={item.total} />}
-            keyExtractor={item => item.id}
+            renderItem={({item}) => <Room room_name={item.room_name} in={item.in} out={item.out} total={item.total} />}
+            keyExtractor={item => item.room_id}
           />
         </View>
       </View>
@@ -232,6 +245,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#f4f7fb',
   },
   header_container: {
+    backgroundColor: Colors.WHITE,
     shadowOffset: {
       width: 0,
       height: 0,
