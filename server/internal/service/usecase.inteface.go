@@ -16,7 +16,7 @@ type IRoomService interface {
 	RegistrationLatest(studentId, roomId string) (*schema.UserRoomData, error)
 	SaveActivityType(req *schema.CheckInRequest) error
 	GetHistories(limit string) ([]model.History, error)
-	GetHistoriesData(limit string) ([]schema.HistoryData, error)
+	GetHistoriesData(date, roomId string) (*schema.HistoryDataResponse, error)
 	GetRoom() ([]schema.RoomData, error)
 }
 

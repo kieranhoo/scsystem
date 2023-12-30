@@ -70,9 +70,9 @@ func (his *History) GetActivityType() string {
 	return his.data.ActivityType
 }
 
-func (his *History) GetHistory(limit string) ([]schema.HistoryData, error) {
+func (his *History) GetHistory(date, roomId string) ([]schema.HistoryData, error) {
 	var historyData []schema.HistoryData
-	if err := his.conn.Raw(queries.HistoryData, limit).Scan(&historyData).Error; err != nil {
+	if err := his.conn.Raw(queries.HistoryData, roomId, date).Scan(&historyData).Error; err != nil {
 		return nil, err
 	}
 	return historyData, nil

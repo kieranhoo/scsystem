@@ -15,33 +15,40 @@
                 color: rgb(0,0,255);
             }
         </style>
-        <title>Email Template</title>
+        <title>Letter confirming laboratory use</title>
     </head>
     <body>
-        <div class="content-indent">
-            Dear {{ .Name }},
-        </div>
-        <br />
-        <div class="content-indent">
-            Reason: (Ex: Notification about your registeration)
-        </div>
-        <br />
-        <div class="content-indent">
-            Content: (Ví dụ: You registerd successful, time to checkin C6 isT in
-            Meeting Room ...)
-        </div>
-        <br />
-        <div class="content-indent">
-            Please contact us if you need help or have any questions.
-        </div>
-        <br />
-        <div class="content-indent">
-            Sincerely,
-        </div>
-        <br />
-        <div class="content-indent">
-            Sign (Ex: iST Admin Team)
-        </div>
+        </p>Dear {{ .Name }}, <br/>
+        <br/>
+        I hope this email finds you well. We would like to confirm your recent reservation <br /> 
+        for the use of Lab Room <b>{{ .RoomNumber }}</b> on <b>{{ .Date }}</b> at <b>{{ .Time }}</b>. <br/>
+        We appreciate your interest in utilizing our facilities and are pleased to accommodate your request.
+        <br/>
+        <br/>
+            Here are the details of your reservation:
+            <br/>
+            <br/>
+            Lab Room: <b>{{ .RoomNumber }}</b> <br/>
+            Date: <b>{{ .Date }}</b> <br/>
+            Time: <b>{{ .StartTime }}</b> to <b>{{ .EndTime }}</b> <br/>
+            <br/>
+            Please ensure that you adhere to the scheduled time to avoid any conflicts with other users.<br/> 
+            Additionally, kindly review and comply with the lab's usage guidelines and safety protocols <br/> provided during your orientation.
+            <br/>
+            <br/>   
+            If you have any specific requirements or need additional assistance, <br/>
+            please do not hesitate to contact our lab coordinator at {{ .Email }}.
+            <br/>
+            <br/>
+            Thank you for choosing our lab facilities. We look forward to your successful and productive <br/>
+            session in Lab Room {{ .RoomNumber }}.
+        </p>
+        
+        Best regards,
+        
+        {{ .FullName }}
+        {{ .Position }}
+        {{ .Information }}
         <div>
             <br />
             <div class>--</div>

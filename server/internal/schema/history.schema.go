@@ -19,6 +19,13 @@ type HistoryData struct {
 	OrgName          string `json:"org_name"`
 }
 
+type HistoryDataResponse struct {
+	TotalIn  int           `json:"total_in"`
+	TotalOut int           `json:"total_out"`
+	RoomName string        `json:"room_name"`
+	Data     []HistoryData `json:"data"`
+}
+
 type History struct {
 	Id             int    `json:"id" gorm:"column:id"`
 	RegistrationId string `json:"registration_id" gorm:"column:registration_id"`

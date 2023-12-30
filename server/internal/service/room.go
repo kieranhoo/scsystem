@@ -5,6 +5,8 @@ import (
 	"scsystem/internal/repo"
 	"scsystem/internal/schema"
 	"scsystem/internal/tasks"
+	"scsystem/pkg/mailers"
+	"time"
 )
 
 type Registration struct {
@@ -43,6 +45,19 @@ func (regis *Registration) RegisterRoom(req *schema.RegistrationRoomRequest) err
 		// 	return err
 		// }
 	}
+
+	go mailers.ConfirmRegistrationRoom(req.Email, mailers.ConfirmEmail{
+		Name:        req.FirstName + " " + req.LastName,
+		RoomNumber:  req.RoomId,
+		Date:        time.Now().UTC().Format(time.DateOnly),
+		Time:        req.RegistrationTime,
+		StartTime:   req.StartDay,
+		EndTime:     req.EndDay,
+		Email:       "tarzaines@gmail.com",
+		FullName:    "ad",
+		Position:    "admin",
+		Information: "ist Director",
+	})
 
 	return tasks.SaveRegistration(&model.Registration{
 		RegistrationTime: req.RegistrationTime,
@@ -89,8 +104,26 @@ func (regis *Registration) GetHistories(limit string) ([]model.History, error) {
 	return repo.NewHistory().GetList(limit)
 }
 
-func (regis *Registration) GetHistoriesData(limit string) ([]schema.HistoryData, error) {
-	return repo.NewHistory().GetHistory(limit)
+func (regis *Registration) GetHistoriesData(date, roomId string) (*schema.HistoryDataResponse, error) {
+	data, err := repo.NewHistory().GetHistory(date, roomId)
+	if err != nil {
+		return nil, err
+	}
+	var response = schema.HistoryDataResponse{
+		Data: data,
+	}
+	if len(data) > 0 {
+		response.RoomName = data[0].RoomName
+	}
+	for _, v := range data {
+		switch v.ActivityType {
+		case "in":
+			response.TotalIn++
+		case "out":
+			response.TotalOut++
+		}
+	}
+	return &response, nil
 }
 
 func (regis *Registration) GetRoom() ([]schema.RoomData, error) {

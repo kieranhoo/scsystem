@@ -24,7 +24,7 @@ func ValidateCheckIn(c *fiber.Ctx) error {
 	if req.ActivityType != "in" && req.ActivityType != "out" {
 		return c.Status(fiber.StatusBadRequest).JSON(schema.Error{
 			Success: false,
-			Msg:     "invalid activity type",
+			Msg:     "invalid activity type, uses 'in' or 'out' lowercase",
 		})
 	}
 	return c.Next()
