@@ -1,8 +1,17 @@
 import React, { useState } from "react";
-import { View, Text, StyleSheet, Dimensions, TouchableOpacity } from "react-native";
+import {
+  View,
+  Text,
+  StyleSheet,
+  Dimensions,
+  TouchableOpacity,
+  Modal,
+  FlatList,
+  TouchableWithoutFeedback,
+} from "react-native";
 import { Colors } from "@/theme/variables";
-import DropDownPicker from "react-native-dropdown-picker";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
+import DropDownPicker from "react-native-dropdown-picker";
 
 interface HeaderProps {}
 
@@ -13,9 +22,9 @@ export const RoomsHeader: React.FC<HeaderProps> = () => {
   const [open, setOpen] = useState(false);
   const [selectedValue, setSelectedValue] = useState(null);
   const [items, setItems] = useState([
-    { label: "Option 1", value: "option1" },
-    { label: "Option 2", value: "option2" },
-    { label: "Option 3", value: "option3" },
+    { label: "Room A", value: "option1" },
+    { label: "Room B", value: "option2" },
+    { label: "Room C", value: "option3" },
   ]);
 
   return (
@@ -27,14 +36,21 @@ export const RoomsHeader: React.FC<HeaderProps> = () => {
         setOpen={setOpen}
         setValue={setSelectedValue}
         setItems={setItems}
+        placeholder="Rooms:"
+        style={{
+          borderRadius: 10,
+          borderWidth: 2.5,
+          borderColor: "rgba(27, 97, 181, 0.89)",
+        }}
         containerStyle={styles.dropdownContainer}
-        //   style={{ backgroundColor: "#fafafa" }}
-        //   itemStyle={{
-        //     justifyContent: "flex-start",
-        //   }}
-        //   dropDownStyle={{ backgroundColor: "#fafafa" }}
-        //   onChangeItem={(item) => setSelectedValue(item.value)}
+        dropDownContainerStyle={{
+          borderTopWidth: 0,
+          borderRadius: 10,
+          borderWidth: 2.5,
+          borderColor: "rgba(27, 97, 181, 0.89)",
+        }}
       />
+
       <TouchableOpacity style={styles.iconContainer}>
         <MaterialCommunityIcons
           name="account-box"
@@ -49,6 +65,7 @@ export const RoomsHeader: React.FC<HeaderProps> = () => {
 const styles = StyleSheet.create({
   headerContainer: {
     flexDirection: "row",
+    paddingHorizontal: 5,
     backgroundColor: Colors.WHITE,
     paddingBottom: 0.02 * screenHeight,
     shadowColor: "#000",
@@ -59,20 +76,14 @@ const styles = StyleSheet.create({
     zIndex: 10,
   },
   dropdownContainer: {
-    flex: 0.75,
-    paddingLeft: 15,
+    flex: 0.8,
+    flexDirection: "row",
+    marginLeft: 10,
+    marginRight: 5,
     backgroundColor: Colors.WHITE,
-    // paddingHorizontal: 0.03 * screenWidth,
-    // paddingBottom: 0.02 * screenHeight,
-    // shadowColor: "#000",
-    // shadowOffset: { width: 1, height: 1 },
-    // shadowOpacity: 0.4,
-    // shadowRadius: 3,
-    // elevation: 5,
-    // justifyContent: 'center'
   },
   iconContainer: {
-    flex: 0.25,
+    flex: 0.2,
     alignItems: "center",
     justifyContent: "center",
   },

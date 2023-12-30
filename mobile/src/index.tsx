@@ -1,7 +1,7 @@
 import React, { useEffect, useCallback, useState } from "react";
 import * as Localization from "expo-localization";
 import { i18n, Language } from "@/localization";
-import { NativeBaseProvider, StatusBar } from "native-base";
+import { NativeBaseProvider } from "native-base";
 import { store, persistor } from "@/store";
 import { Provider } from "react-redux";
 import { PersistGate } from "redux-persist/integration/react";
@@ -10,6 +10,7 @@ import { View, Text } from "react-native";
 import { useFonts } from "expo-font";
 import { SafeAreaView } from 'react-native-safe-area-context';
 import * as SplashScreen from 'expo-splash-screen';
+import { StatusBar } from "expo-status-bar";
 
 import {
   Poppins_100Thin,
@@ -85,6 +86,7 @@ export default function App() {
               style={{ flex: 1 }}
               edges={["right", "top", "left"]}
             >
+              <StatusBar style="dark" />
               < ApplicationNavigator />
             </SafeAreaView>
           </PersistGate>

@@ -6,6 +6,9 @@ import {
   Dimensions,
   TouchableOpacity,
   FlatList,
+  Modal,
+  TouchableWithoutFeedback,
+  TextInput,
   ViewStyle,
   StyleProp,
 } from "react-native";
@@ -27,11 +30,61 @@ interface Item {
   time: any;
 }
 
+interface InputPopupProps {
+  isVisible: boolean;
+  onClose: () => void;
+  // check: any;
+}
+
+const InputPopup: React.FC<InputPopupProps> = ({
+  isVisible,
+  onClose,
+  // check,
+}) => {
+  const [value, setValue] = useState("");
+  const handleClick = () => {
+    onClose();
+    // check({ data: value });
+  };
+  return (
+    <Modal
+      animationType="none"
+      transparent={true}
+      visible={isVisible}
+      onRequestClose={onClose}
+    >
+      <TouchableWithoutFeedback onPress={onClose}>
+        <View style={styles.modalContainer}>
+          <View style={styles.modalContent}>
+            <Text style={styles.label}>Student ID:</Text>
+            <TextInput
+              placeholder="Type Student ID to check in/out"
+              placeholderTextColor={"rgba(0, 0, 0, 0.5)"}
+              value={value}
+              onChangeText={setValue}
+              style={styles.input}
+              keyboardType="numeric"
+            />
+            <TouchableOpacity onPress={handleClick} style={styles.button}>
+              <Text style={styles.buttontext}>OK</Text>
+            </TouchableOpacity>
+          </View>
+        </View>
+      </TouchableWithoutFeedback>
+    </Modal>
+  );
+};
+
 export const Rooms = () => {
   const [selectedDate, setSelectedDate] = useState<Moment>(moment());
+  const [isModalVisible, setIsModalVisible] = useState(false);
 
   const handleDateSelected = (date: Moment) => {
     setSelectedDate(date);
+  };
+
+  const handleAddRecordPress = () => {
+    setIsModalVisible(true);
   };
 
   const events: Item[] = [
@@ -94,7 +147,7 @@ export const Rooms = () => {
   ];
 
   const renderItem = ({ item }: { item: Item }) => (
-    <View style={styles.informContainer}>
+    <TouchableOpacity style={styles.informContainer}>
       <View style={styles.informTextContainer}>
         <View style={styles.textNameContainer}>
           <Text style={styles.textName}>{item.name}</Text>
@@ -111,13 +164,13 @@ export const Rooms = () => {
           <Text style={styles.textTime}>{item.time}</Text>
         </View>
       </View>
-    </View>
+    </TouchableOpacity>
   );
 
   return (
     <View style={styles.container}>
       {/* <View style={styles.header_container}> */}
-        <RoomsHeader />
+      <RoomsHeader />
       {/* </View> */}
       <View style={styles.content_container}>
         <View style={styles.calendarContainer}>
@@ -162,7 +215,10 @@ export const Rooms = () => {
               <Text style={styles.regular14}>check out</Text>
             </View>
           </View>
-          <TouchableOpacity style={styles.addRecordStyle}>
+          <TouchableOpacity
+            style={styles.addRecordStyle}
+            onPress={handleAddRecordPress}
+          >
             <Text style={styles.regular14Add}>Add record</Text>
             <Ionicons
               name="add-circle-outline"
@@ -180,6 +236,13 @@ export const Rooms = () => {
           />
         </View>
       </View>
+      {isModalVisible && (
+        <InputPopup
+          isVisible={isModalVisible}
+          onClose={() => setIsModalVisible(false)}
+          // check={/* pass the check function here */}
+        />
+      )}
     </View>
   );
 };
@@ -210,7 +273,7 @@ const styles = StyleSheet.create({
   },
   dateContainer: {
     borderWidth: 1.5,
-    borderRadius: 5,
+    borderRadius: 10,
     borderColor: Colors.WHITE,
     backgroundColor: Colors.WHITE,
   },
@@ -225,16 +288,16 @@ const styles = StyleSheet.create({
   statusStyle: {
     flex: 0.65,
     flexDirection: "row",
-    borderTopLeftRadius: 5,
-    borderTopRightRadius: 5,
+    borderTopLeftRadius: 10,
+    borderTopRightRadius: 10,
     justifyContent: "center",
     backgroundColor: Colors.WHITE,
     shadowOffset: {
       width: 0,
-      height: -3,
+      height: 0,
     },
-    shadowOpacity: 0.2,
-    shadowRadius: 5,
+    shadowOpacity: 0.1,
+    shadowRadius: 2.5,
   },
   checkIn: {
     flex: 0.5,
@@ -262,19 +325,19 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     flexDirection: "row",
     marginTop: screenHeight * 0.005,
-    borderBottomLeftRadius: 5,
-    borderBottomRightRadius: 5,
+    borderBottomLeftRadius: 10,
+    borderBottomRightRadius: 10,
     backgroundColor: Colors.WHITE,
     shadowOffset: {
       width: 0,
-      height: 3,
+      height: 0,
     },
-    shadowOpacity: 0.2,
-    shadowRadius: 5,
+    shadowOpacity: 0.1,
+    shadowRadius: 2.5,
   },
   detailContainer: {
     flex: 0.69,
-    marginTop: 10,
+    marginVertical: 10,
     marginHorizontal: screenWidth * 0.05,
   },
   informContainer: {
@@ -282,13 +345,13 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     padding: 10,
     marginBottom: 10,
-    borderRadius: 5,
+    borderRadius: 10,
     backgroundColor: Colors.WHITE,
     shadowOffset: {
       width: 0,
       height: 0,
     },
-    shadowOpacity: 0.2,
+    shadowOpacity: 0.1,
     shadowRadius: 2.5,
   },
   informTextContainer: {
@@ -320,7 +383,7 @@ const styles = StyleSheet.create({
     alignSelf: "center",
     paddingHorizontal: 10,
     justifyContent: "center",
-    borderRadius: 5,
+    borderRadius: 10,
     borderWidth: 1.5,
     borderColor: "rgba(52, 168, 83, 0.89)",
     backgroundColor: "rgba(52, 168, 83, 0.15)",
@@ -362,5 +425,42 @@ const styles = StyleSheet.create({
     color: "rgba(27, 97, 181, 0.89)",
     fontFamily: "Poppins_400Regular",
     marginRight: 5,
+  },
+  modalContainer: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: "rgba(0,0,0,0.5)",
+  },
+  modalContent: {
+    padding: 16,
+    borderRadius: 10,
+    elevation: 5,
+    width: 0.8 * screenWidth,
+    backgroundColor: Colors.WHITE,
+  },
+  button: {
+    paddingHorizontal: 10,
+    paddingVertical: 4,
+    borderRadius: 10,
+    justifyContent: "center",
+    backgroundColor: Colors.PRIMARY,
+  },
+  buttontext: {
+    color: Colors.WHITE,
+    fontFamily: "Poppins_400Regular",
+    textAlign: "center",
+    textAlignVertical: "center",
+  },
+  input: {
+    padding: 4,
+    marginTop: 10,
+    marginBottom: 12,
+    borderWidth: 1,
+    borderColor: "rgba(27, 97, 181, 0.89)",
+    borderRadius: 10,
+  },
+  label: {
+    fontFamily: "Poppins_600SemiBold",
   },
 });
