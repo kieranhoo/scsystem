@@ -53,6 +53,54 @@ definitions:
     - data
     - success
     type: object
+  schema.HistoryData:
+    properties:
+      activity_type:
+        type: string
+      admin_id:
+        type: string
+      email:
+        type: string
+      end_day:
+        type: string
+      first_name:
+        type: string
+      id:
+        type: integer
+      last_name:
+        type: string
+      office_name:
+        type: string
+      org_name:
+        type: string
+      phone_number:
+        type: string
+      registration_time:
+        type: string
+      room_name:
+        type: string
+      start_day:
+        type: string
+      supervisor:
+        type: string
+      time:
+        type: string
+      user_id:
+        type: string
+    type: object
+  schema.HistoryDataResponse:
+    properties:
+      data:
+        items:
+          $ref: '#/definitions/schema.HistoryData'
+        type: array
+      room_name:
+        type: string
+      total_in:
+        type: integer
+      total_out:
+        type: integer
+    type: object
   schema.RegistrationRoomRequest:
     properties:
       email:
@@ -299,9 +347,14 @@ paths:
       - application/json
       description: Get History.
       parameters:
-      - description: limit records
+      - description: room id
         in: query
-        name: limit
+        name: room_id
+        required: true
+        type: string
+      - description: date only
+        in: query
+        name: date
         required: true
         type: string
       produces:
@@ -310,7 +363,7 @@ paths:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/schema.DataResponse'
+            $ref: '#/definitions/schema.HistoryDataResponse'
       tags:
       - room
   /room/register:

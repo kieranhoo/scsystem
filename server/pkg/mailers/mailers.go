@@ -18,27 +18,39 @@ func Config(email, appPassword string) {
 	_appPassword = appPassword
 }
 
-func SendHTML(tempPath, to string) error {
-	t, err := template.ParseFiles(tempPath)
+type ConfirmEmail struct {
+	Name        string
+	RoomNumber  string
+	Date        string
+	Time        string
+	StartTime   string
+	EndTime     string
+	Email       string
+	FullName    string
+	Position    string
+	Information string
+}
+
+func ConfirmRegistrationRoom(to string, data ConfirmEmail) error {
+	t, err := template.ParseFiles("pkg/template/confirm-en.html")
 	if err != nil {
 		log.Fatal(err)
 	}
 	var body bytes.Buffer
-	err = t.Execute(&body, struct{ Name string }{Name: "Kawasaki"})
+	err = t.Execute(&body, data)
 	if err != nil {
 		return err
 	}
-
 	mail := gomail.NewMessage()
 	mail.SetHeader("From", _email)
 	mail.SetHeader("To", to)
 	// mail.SetAddressHeader("Cc", "dan@example.com", "Dan")
-	mail.SetHeader("Subject", "Thư xác nhận sử dụng phòng")
+	mail.SetHeader("Subject", "Confirmation of Lab Room Reservation")
 	mail.SetBody("text/html", body.String())
 	// mail.Attach("/home/Alex/lolcat.jpg")
 
 	d := gomail.NewDialer("smtp.gmail.com", 587, _email, _appPassword)
-	// Send the email to Bob, Cora and Dan.
+
 	if err := d.DialAndSend(mail); err != nil {
 		return err
 	}

@@ -31,7 +31,7 @@ type IHistory interface {
 	Empty() bool
 	GetList(limit string) ([]model.History, error)
 	GetActivityType() string
-	GetHistory(limit string) ([]schema.HistoryData, error)
+	GetHistory(date, roomId string) ([]schema.HistoryData, error)
 }
 
 type IOffice interface {

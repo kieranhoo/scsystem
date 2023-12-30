@@ -8,8 +8,6 @@ import (
 	"github.com/gofiber/fiber/v2"
 )
 
-
-
 // RegisterRoom
 // @Description Register Room.
 // @Tags room
@@ -93,29 +91,34 @@ func GetActivity(c *fiber.Ctx) error {
 // @Tags room
 // @Accept json
 // @Produce json
-// @Param limit query string true "limit records"
-// @Success 200 {object} schema.DataResponse
+// @Param room_id query string true "room id"
+// @Param date query string true "date only"
+// @Success 200 {object} schema.HistoryDataResponse
 // @Router /room/history [GET]
 func Histories(c *fiber.Ctx) error {
 	var RoomService = service.NewRoom()
-	limit := c.Query("limit", "")
-	if limit == "" {
+	room_id := c.Query("room_id", "")
+	if room_id == "" {
 		return c.Status(fiber.StatusBadRequest).JSON(schema.Error{
 			Success: false,
-			Msg:     "missing query params limit",
+			Msg:     "missing query params room_id",
 		})
 	}
-	data, err := RoomService.GetHistoriesData(limit)
+	date := c.Query("date", "")
+	if date == "" {
+		return c.Status(fiber.StatusBadRequest).JSON(schema.Error{
+			Success: false,
+			Msg:     "missing query params date",
+		})
+	}
+	data, err := RoomService.GetHistoriesData(date, room_id)
 	if err != nil {
 		return c.Status(fiber.StatusBadRequest).JSON(schema.Error{
 			Success: false,
 			Msg:     err.Error(),
 		})
 	}
-	return c.JSON(schema.DataResponse{
-		Success: true,
-		Data:    data,
-	})
+	return c.JSON(data)
 }
 
 // SaveActivityType
