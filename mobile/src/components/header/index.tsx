@@ -23,7 +23,7 @@ export const Header: React.FC<HeaderProps> = ({ title }) => {
 const styles = StyleSheet.create({
     container: {
         backgroundColor: Colors.WHITE,
-        paddingHorizontal: 0.03 * screenWidth,
+        paddingHorizontal: 0.06 * screenWidth,
         paddingBottom: 0.02 * screenHeight,
         shadowColor: '#000',
         shadowOffset: { width: 1, height: 1 },
@@ -35,6 +35,6 @@ const styles = StyleSheet.create({
     title: {
         paddingTop: 0.03 * screenHeight,
         fontFamily: "Poppins_600SemiBold",
-        fontSize: 24
+        fontSize: 28
     }
 });

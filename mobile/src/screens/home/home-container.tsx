@@ -1,19 +1,17 @@
 
-import React from "react";
-// import { useLazyGetUserQuery } from "@/services";
+import { rooms, useLazyGetUserQuery } from "@/services";
+import React, { useEffect, useState } from "react";
 import { Home } from "./home";
 
 export const HomeContainer = () => {
-  // const [userId, setUserId] = useState("9");
+  // const [generalStateOfAllRooms, setGeneralStateOfAllRooms] = useState(null);
+  // setGeneralStateOfAllRooms(rooms.getgeneralstateallroom())
 
-  // const [fetchOne, { data, isSuccess, isLoading, isFetching, error }] =
-  //   useLazyGetUserQuery();
+    // setTimeout(async () => {
+    //   setGeneralStateOfAllRooms(await rooms.getgeneralstateallroom());
+    //   console.log("1 check:", generalStateOfAllRooms);
+    // }, 5000);
 
-  // useEffect(() => {
-  //   fetchOne(userId);
-  // }, [fetchOne, userId]);
-
-  // return <Home data={data} isLoading={isLoading} />;
+  // return <Home data={generalStateOfAllRooms} />;
   return <Home />;
-
 };
