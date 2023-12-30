@@ -1,6 +1,7 @@
 package service
 
 import (
+	"errors"
 	"scsystem/internal/model"
 	"scsystem/internal/repo"
 	"scsystem/internal/schema"
@@ -46,9 +47,14 @@ func (regis *Registration) RegisterRoom(req *schema.RegistrationRoomRequest) err
 		// }
 	}
 
+	room, err := repo.NewRoom().GetByID(req.RoomId)
+	if err != nil || room.Name == "" {
+		return errors.New("room is not available")
+	}
+
 	go mailers.ConfirmRegistrationRoom(req.Email, mailers.ConfirmEmail{
 		Name:        req.FirstName + " " + req.LastName,
-		RoomNumber:  req.RoomId,
+		RoomNumber:  room.Name,
 		Date:        time.Now().UTC().Format(time.DateOnly),
 		Time:        req.RegistrationTime,
 		StartTime:   req.StartDay,
@@ -97,7 +103,23 @@ func (regis *Registration) SaveActivityType(req *schema.CheckInRequest) error {
 }
 
 func (regis *Registration) RegistrationLatest(studentId, roomId string) (*schema.UserRoomData, error) {
-	return regis.repo.RegistrationLatest(studentId, roomId)
+	roomData, err := regis.repo.RegistrationLatest(studentId, roomId)
+	if err != nil || roomData.StartDay == "" {
+		return nil, errors.New("no data for registration")
+	}
+	day := time.Now().UTC()
+	startDay, err := time.Parse(time.DateTime, roomData.StartDay)
+	if err != nil {
+		return nil, errors.New("time format error: " + err.Error())
+	}
+	endDay, err := time.Parse(time.DateTime, roomData.EndDay)
+	if err != nil {
+		return nil, errors.New("time format error: " + err.Error())
+	}
+	if day.Before(startDay) || day.After(endDay) {
+		return nil, errors.New("no data available")
+	}
+	return roomData, nil
 }
 
 func (regis *Registration) GetHistories(limit string) ([]model.History, error) {
