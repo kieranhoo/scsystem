@@ -9,8 +9,6 @@ import {
   Modal,
   TouchableWithoutFeedback,
   TextInput,
-  ViewStyle,
-  StyleProp,
 } from "react-native";
 import { RoomsHeader } from "@/components/header/rooms-header";
 import CalendarStrip from "react-native-calendar-strip";
@@ -18,40 +16,38 @@ import moment, { Moment } from "moment";
 import Ionicons from "react-native-vector-icons/Ionicons";
 import Octicons from "react-native-vector-icons/Octicons";
 import { Colors } from "../../theme/variables";
-import { rooms } from "@/services";
 import axios from "axios";
 
 const screenWidth = Dimensions.get("screen").width;
 const screenHeight = Dimensions.get("screen").height;
 
 interface Item {
-  id: number;
-  name: string;
-  mssv: any;
-  status: any;
-  time: any;
+  activity_type: string;
+  admin_id: string;
+  email: string;
+  end_day: string;
+  first_name: string;
+  id: any;
+  last_name: string;
+  office_name: string;
+  org_name: string;
+  phone_number: string;
+  registration_time: string;
+  room_name: string;
+  start_day: string;
+  supervisor: string;
+  time: string;
+  user_id: string;
 }
-
 interface InputPopupProps {
   isVisible: boolean;
   onClose: () => void;
-  // check: any;
 }
 
-interface RoomHistoryProps {
-  room_id: string;
-  date: string;
-}
-
-const InputPopup: React.FC<InputPopupProps> = ({
-  isVisible,
-  onClose,
-  // check,
-}) => {
+const InputPopup: React.FC<InputPopupProps> = ({ isVisible, onClose }) => {
   const [value, setValue] = useState("");
   const handleClick = () => {
     onClose();
-    // check({ data: value });
   };
   return (
     <Modal
@@ -86,7 +82,9 @@ export const Rooms = () => {
   const [selectedDate, setSelectedDate] = useState<Moment>(moment());
   const [selectedRoomId, setSelectedRoomId] = useState<string>("");
   const [isModalVisible, setIsModalVisible] = useState(false);
-  const [events, setEvents] = useState<Item[]>([]); 
+  const [events, setEvents] = useState<Item[]>([]);
+  const [totalIn, setTotalIn] = useState<number>(0);
+  const [totalOut, setTotalOut] = useState<number>(0);
 
   const handleDateSelected = (date: Moment) => {
     setSelectedDate(date);
@@ -103,7 +101,7 @@ export const Rooms = () => {
           date: date,
         },
       });
-      console.log(result.data)
+      // console.log(result.data)
       return result.data;
     } catch (err: any) {
       return [];
@@ -112,8 +110,34 @@ export const Rooms = () => {
 
   const fetchDataByRoomAndDate = async (room_id: string, date: string) => {
     try {
-      const data = await getDataByRoomAndDate(room_id, date);
-      setEvents(data);
+      const fetchdata = await getDataByRoomAndDate(room_id, date);
+      if (fetchdata && fetchdata.data) {
+        const data = fetchdata.data.map((item: Item) => ({
+          activity_type: item.activity_type,
+          admin_id: item.admin_id,
+          email: item.email,
+          end_day: item.end_day,
+          first_name: item.first_name,
+          id: item.id,
+          last_name: item.last_name,
+          office_name: item.office_name,
+          org_name: item.org_name,
+          phone_number: item.phone_number,
+          registration_time: item.registration_time,
+          room_name: item.room_name,
+          start_day: item.start_day,
+          supervisor: item.supervisor,
+          time: item.time,
+          user_id: item.user_id,
+        }));
+        setEvents(data);
+        setTotalIn(fetchdata.total_in);
+        setTotalOut(fetchdata.total_out);
+      } else {
+        setEvents([]);
+        setTotalIn(0);
+        setTotalOut(0);
+      }
     } catch (error) {
       console.error("Error fetching data:", error);
     }
@@ -127,42 +151,23 @@ export const Rooms = () => {
     if (selectedRoomId && selectedDate) {
       fetchDataByRoomAndDate(selectedRoomId, selectedDate.format("YYYY-MM-DD"));
     }
-  }, []);
-
-  // useEffect(() => {
-  //   getDataByRoomAndDate("1", "2023-12-27");
-  // }, []);
-
-  // const events: Item[] = [
-  //   {
-  //     id: 1,
-  //     name: "Nguyen Van A",
-  //     mssv: "2012345",
-  //     status: "Check in",
-  //     time: "06:30 am",
-  //   },
-  //   {
-  //     id: 2,
-  //     name: "Nguyen Van B",
-  //     mssv: "2012989",
-  //     status: "Check in",
-  //     time: "06:30 pm",
-  //   },
-  // ];
+  }, [selectedRoomId, selectedDate]);
 
   const renderItem = ({ item }: { item: Item }) => (
     <TouchableOpacity style={styles.informContainer}>
       <View style={styles.informTextContainer}>
         <View style={styles.textNameContainer}>
-          <Text style={styles.textName}>{item.name}</Text>
+          <Text style={styles.textName}>
+            {item.last_name} {item.first_name}
+          </Text>
         </View>
         <View style={styles.textIdContainer}>
-          <Text style={styles.textId}>MSSV: {item.mssv}</Text>
+          <Text style={styles.textId}>MSSV: {item.user_id}</Text>
         </View>
       </View>
       <View style={styles.informStatusContainer}>
         <View style={styles.textStatusContainer}>
-          <Text style={styles.textStatus}>{item.status}</Text>
+          <Text style={styles.textStatus}>{item.activity_type}</Text>
         </View>
         <View style={styles.textTimeContainer}>
           <Text style={styles.textTime}>{item.time}</Text>
@@ -173,7 +178,6 @@ export const Rooms = () => {
 
   return (
     <View style={styles.container}>
-
       <RoomsHeader onSelectRoom={(roomId) => setSelectedRoomId(roomId)} />
 
       <View style={styles.content_container}>
@@ -203,7 +207,7 @@ export const Rooms = () => {
                   size={30}
                   color="rgba(52, 168, 83, 0.93)"
                 />
-                <Text style={styles.regular25In}>25</Text>
+                <Text style={styles.regular25In}>{totalIn}</Text>
               </View>
               <Text style={styles.regular14}>check in</Text>
             </View>
@@ -215,12 +219,12 @@ export const Rooms = () => {
                   size={30}
                   color="rgba(237, 74, 74, 0.87)"
                 />
-                <Text style={styles.regular25Out}>18</Text>
+                <Text style={styles.regular25Out}>{totalOut}</Text>
               </View>
               <Text style={styles.regular14}>check out</Text>
             </View>
           </View>
-          <TouchableOpacity
+          {/* <TouchableOpacity
             style={styles.addRecordStyle}
             onPress={handleAddRecordPress}
           >
@@ -230,7 +234,7 @@ export const Rooms = () => {
               size={25}
               color="rgba(27, 97, 181, 0.89)"
             />
-          </TouchableOpacity>
+          </TouchableOpacity> */}
         </View>
         <View style={styles.detailContainer}>
           <FlatList
@@ -245,7 +249,6 @@ export const Rooms = () => {
         <InputPopup
           isVisible={isModalVisible}
           onClose={() => setIsModalVisible(false)}
-          // check={/* pass the check function here */}
         />
       )}
     </View>
@@ -256,14 +259,6 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: "#F4F7FB",
-  },
-  header_container: {
-    // shadowOffset: {
-    //   width: 0,
-    //   height: 0,
-    // },
-    // shadowOpacity: 0.2,
-    // shadowRadius: 5,
   },
   content_container: {
     flex: 1,
@@ -293,16 +288,15 @@ const styles = StyleSheet.create({
   statusStyle: {
     flex: 0.65,
     flexDirection: "row",
-    borderTopLeftRadius: 10,
-    borderTopRightRadius: 10,
+    borderRadius: 10,
     justifyContent: "center",
     backgroundColor: Colors.WHITE,
     shadowOffset: {
       width: 0,
       height: 0,
     },
-    shadowOpacity: 0.1,
-    shadowRadius: 2.5,
+    shadowOpacity: 0.2,
+    shadowRadius: 5,
   },
   checkIn: {
     flex: 0.5,
@@ -342,7 +336,7 @@ const styles = StyleSheet.create({
   },
   detailContainer: {
     flex: 0.69,
-    marginVertical: 10,
+    marginBottom: 10,
     marginHorizontal: screenWidth * 0.05,
   },
   informContainer: {
