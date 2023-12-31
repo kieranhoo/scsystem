@@ -38,6 +38,11 @@ interface InputPopupProps {
   // check: any;
 }
 
+interface RoomHistoryProps {
+  room_id: string;
+  date: string;
+}
+
 const InputPopup: React.FC<InputPopupProps> = ({
   isVisible,
   onClose,
@@ -77,48 +82,73 @@ const InputPopup: React.FC<InputPopupProps> = ({
   );
 };
 
-
-// async function fetchData() { 
-//   try {
-//     const roomData = await rooms.getroominform();
-
-//   } catch (error) {
-//     console.error('Error fetching room data:', error);
-//   }
-// }
-
 export const Rooms = () => {
   const [selectedDate, setSelectedDate] = useState<Moment>(moment());
+  const [selectedRoomId, setSelectedRoomId] = useState<string>("");
   const [isModalVisible, setIsModalVisible] = useState(false);
+  const [events, setEvents] = useState<Item[]>([]); 
 
   const handleDateSelected = (date: Moment) => {
     setSelectedDate(date);
+    if (selectedRoomId) {
+      fetchDataByRoomAndDate(selectedRoomId, date.format("YYYY-MM-DD"));
+    }
+  };
+
+  const getDataByRoomAndDate = async (room_id: string, date: string) => {
+    try {
+      const result = await axios.get(`${process.env.BASE_URL}/room/history`, {
+        params: {
+          room_id: room_id,
+          date: date,
+        },
+      });
+      console.log(result.data)
+      return result.data;
+    } catch (err: any) {
+      return [];
+    }
+  };
+
+  const fetchDataByRoomAndDate = async (room_id: string, date: string) => {
+    try {
+      const data = await getDataByRoomAndDate(room_id, date);
+      setEvents(data);
+    } catch (error) {
+      console.error("Error fetching data:", error);
+    }
   };
 
   const handleAddRecordPress = () => {
     setIsModalVisible(true);
   };
-  
+
+  useEffect(() => {
+    if (selectedRoomId && selectedDate) {
+      fetchDataByRoomAndDate(selectedRoomId, selectedDate.format("YYYY-MM-DD"));
+    }
+  }, []);
+
   // useEffect(() => {
-  //   fetchData();
+  //   getDataByRoomAndDate("1", "2023-12-27");
   // }, []);
 
-  const events: Item[] = [
-    {
-      id: 1,
-      name: "Nguyen Van A",
-      mssv: "2012345",
-      status: "Check in",
-      time: "06:30 am",
-    },
-    {
-      id: 2,
-      name: "Nguyen Van B",
-      mssv: "2012989",
-      status: "Check in",
-      time: "06:30 pm",
-    },
-  ];
+  // const events: Item[] = [
+  //   {
+  //     id: 1,
+  //     name: "Nguyen Van A",
+  //     mssv: "2012345",
+  //     status: "Check in",
+  //     time: "06:30 am",
+  //   },
+  //   {
+  //     id: 2,
+  //     name: "Nguyen Van B",
+  //     mssv: "2012989",
+  //     status: "Check in",
+  //     time: "06:30 pm",
+  //   },
+  // ];
 
   const renderItem = ({ item }: { item: Item }) => (
     <TouchableOpacity style={styles.informContainer}>
@@ -143,9 +173,9 @@ export const Rooms = () => {
 
   return (
     <View style={styles.container}>
-      {/* <View style={styles.header_container}> */}
-      <RoomsHeader />
-      {/* </View> */}
+
+      <RoomsHeader onSelectRoom={(roomId) => setSelectedRoomId(roomId)} />
+
       <View style={styles.content_container}>
         <View style={styles.calendarContainer}>
           <CalendarStrip
@@ -161,6 +191,7 @@ export const Rooms = () => {
             highlightDateNameStyle={{ color: "#1B61B5" }}
             highlightDateNumberStyle={{ color: "#1B61B5" }}
             selectedDate={selectedDate}
+            onDateSelected={handleDateSelected}
           />
         </View>
         <View style={styles.statusContainer}>
