@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   View,
   Text,
@@ -12,20 +12,45 @@ import {
 import { Colors } from "@/theme/variables";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 import DropDownPicker from "react-native-dropdown-picker";
+import { rooms } from "@/services";
 
 interface HeaderProps {}
+
+interface Room {
+  room_name: string;
+  room_id: string;
+}
 
 const screenWidth = Dimensions.get("screen").width;
 const screenHeight = Dimensions.get("screen").height;
 
 export const RoomsHeader: React.FC<HeaderProps> = () => {
   const [open, setOpen] = useState(false);
-  const [selectedValue, setSelectedValue] = useState(null);
-  const [items, setItems] = useState([
-    { label: "Room A", value: "option1" },
-    { label: "Room B", value: "option2" },
-    { label: "Room C", value: "option3" },
-  ]);
+  const [selectedValue, setSelectedValue] = useState<string | null>(null);
+  const [items, setItems] = useState<{ label: string; value: string }[]>([]);
+
+  async function fetchData() {
+    try {
+      const roomData = await rooms.getroominform();
+      const roomNames = roomData.data.map((room: Room) => ({
+        label: room.room_name,
+        value: room.room_id,
+      }));
+      setItems(roomNames);
+    } catch (error) {
+      console.error("Error fetching room data:", error);
+    }
+  }
+
+  useEffect(() => {
+    fetchData();
+  }, []);
+
+  useEffect(() => {
+    if (items.length > 0 && selectedValue === null) {
+      setSelectedValue(items[0].value);
+    }
+  }, [items, selectedValue]);
 
   return (
     <View style={styles.headerContainer}>

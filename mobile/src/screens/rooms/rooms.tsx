@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   View,
   Text,
@@ -18,6 +18,8 @@ import moment, { Moment } from "moment";
 import Ionicons from "react-native-vector-icons/Ionicons";
 import Octicons from "react-native-vector-icons/Octicons";
 import { Colors } from "../../theme/variables";
+import { rooms } from "@/services";
+import axios from "axios";
 
 const screenWidth = Dimensions.get("screen").width;
 const screenHeight = Dimensions.get("screen").height;
@@ -75,6 +77,16 @@ const InputPopup: React.FC<InputPopupProps> = ({
   );
 };
 
+
+// async function fetchData() { 
+//   try {
+//     const roomData = await rooms.getroominform();
+
+//   } catch (error) {
+//     console.error('Error fetching room data:', error);
+//   }
+// }
+
 export const Rooms = () => {
   const [selectedDate, setSelectedDate] = useState<Moment>(moment());
   const [isModalVisible, setIsModalVisible] = useState(false);
@@ -86,6 +98,10 @@ export const Rooms = () => {
   const handleAddRecordPress = () => {
     setIsModalVisible(true);
   };
+  
+  // useEffect(() => {
+  //   fetchData();
+  // }, []);
 
   const events: Item[] = [
     {
@@ -97,48 +113,6 @@ export const Rooms = () => {
     },
     {
       id: 2,
-      name: "Nguyen Van B",
-      mssv: "2012989",
-      status: "Check in",
-      time: "06:30 pm",
-    },
-    {
-      id: 3,
-      name: "Nguyen Van B",
-      mssv: "2012989",
-      status: "Check in",
-      time: "06:30 pm",
-    },
-    {
-      id: 4,
-      name: "Nguyen Van B",
-      mssv: "2012989",
-      status: "Check in",
-      time: "06:30 pm",
-    },
-    {
-      id: 5,
-      name: "Nguyen Van B",
-      mssv: "2012989",
-      status: "Check in",
-      time: "06:30 pm",
-    },
-    {
-      id: 6,
-      name: "Nguyen Van B",
-      mssv: "2012989",
-      status: "Check in",
-      time: "06:30 pm",
-    },
-    {
-      id: 7,
-      name: "Nguyen Van B",
-      mssv: "2012989",
-      status: "Check in",
-      time: "06:30 pm",
-    },
-    {
-      id: 8,
       name: "Nguyen Van B",
       mssv: "2012989",
       status: "Check in",
