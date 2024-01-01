@@ -38,4 +38,11 @@ const (
 	JOIN office ON office.id = office_id
     JOIN organization ON organization.id = organization_id;
 	`
+
+	RegistrationBefore1Week string = `
+	select * 
+	from registration 
+	WHERE end_day >= NOW() - INTERVAL 7 DAY
+	  AND end_day <= NOW();
+	`
 )

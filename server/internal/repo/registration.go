@@ -92,3 +92,15 @@ func (res *Registration) RegistrationLatest(studentId, roomId string) (*schema.U
 	}
 	return RoomData, nil
 }
+
+func (res *Registration) OneWeekBefore() ([]model.Registration, error) {
+	var registration []model.Registration
+	if err := res.conn.Raw(queries.RegistrationBefore1Week).Scan(&registration).Error; err != nil {
+		return nil, err
+	}
+	return registration, nil
+}
+
+func (res *Registration) DeleteById(id string) error {
+	return res.conn.Exec("DELETE FROM registration WHERE id = ?", id).Error
+}
