@@ -153,28 +153,57 @@ export const Rooms = () => {
     }
   }, [selectedRoomId, selectedDate]);
 
-  const renderItem = ({ item }: { item: Item }) => (
-    <TouchableOpacity style={styles.informContainer}>
-      <View style={styles.informTextContainer}>
-        <View style={styles.textNameContainer}>
-          <Text style={styles.textName}>
-            {item.last_name} {item.first_name}
-          </Text>
+  const renderItem = ({ item }: { item: Item }) => {
+    const formattedTime = moment(item.time).format("h:mm A");
+    return (
+      <TouchableOpacity style={styles.informContainer}>
+        <View style={styles.informTextContainer}>
+          <View style={styles.textNameContainer}>
+            <Text style={styles.textName}>
+              {item.last_name} {item.first_name}
+            </Text>
+          </View>
+          <View style={styles.textIdContainer}>
+            <Text style={styles.textId}>MSSV: {item.user_id}</Text>
+          </View>
         </View>
-        <View style={styles.textIdContainer}>
-          <Text style={styles.textId}>MSSV: {item.user_id}</Text>
+        <View style={styles.informStatusContainer}>
+          <View
+            style={[
+              styles.textStatusContainer,
+              {
+                backgroundColor:
+                  item.activity_type === "out"
+                    ? "rgba(237, 74, 74, 0.15)"
+                    : "rgba(52, 168, 83, 0.15)",
+                borderColor:
+                  item.activity_type === "out"
+                    ? "rgba(237, 74, 74, 0.87)"
+                    : "rgba(52, 168, 83, 0.89)",
+              },
+            ]}
+          >
+            <Text
+              style={[
+                styles.textStatus,
+                {
+                  color:
+                    item.activity_type === "out"
+                      ? "rgba(237, 74, 74, 0.87)"
+                      : "rgba(52, 168, 83, 0.89)",
+                },
+              ]}
+            >
+              Check {item.activity_type}
+            </Text>
+          </View>
+          <View style={styles.textTimeContainer}>
+            <Text style={styles.textTime}>{formattedTime}</Text>
+          </View>
         </View>
-      </View>
-      <View style={styles.informStatusContainer}>
-        <View style={styles.textStatusContainer}>
-          <Text style={styles.textStatus}>{item.activity_type}</Text>
-        </View>
-        <View style={styles.textTimeContainer}>
-          <Text style={styles.textTime}>{item.time}</Text>
-        </View>
-      </View>
-    </TouchableOpacity>
-  );
+      </TouchableOpacity>
+    );
+  };
 
   return (
     <View style={styles.container}>
@@ -365,7 +394,7 @@ const styles = StyleSheet.create({
     paddingLeft: 10,
   },
   textName: {
-    fontSize: 25,
+    fontSize: 20,
     fontFamily: "Poppins_400Regular",
     color: Colors.BLACK,
   },
@@ -384,8 +413,6 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     borderRadius: 10,
     borderWidth: 1.5,
-    borderColor: "rgba(52, 168, 83, 0.89)",
-    backgroundColor: "rgba(52, 168, 83, 0.15)",
   },
   textTimeContainer: {
     flex: 0.5,
@@ -395,10 +422,9 @@ const styles = StyleSheet.create({
   textStatus: {
     fontSize: 14,
     fontFamily: "Poppins_400Regular",
-    color: "rgba(52, 168, 83, 0.93)",
   },
   textTime: {
-    fontSize: 10,
+    fontSize: 12,
     fontFamily: "Poppins_400Regular",
     color: "rgba(108, 108, 108, 0.89)",
   },
