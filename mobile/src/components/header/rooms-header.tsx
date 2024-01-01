@@ -29,12 +29,9 @@ interface PopupProps {
   onClose: () => void;
 }
 
-const Popup: React.FC<PopupProps & { supervisor: string; selectedRoomName: string }> = ({
-  isVisible,
-  onClose,
-  supervisor,
-  selectedRoomName,
-}) => {
+const Popup: React.FC<
+  PopupProps & { supervisor: string; selectedRoomName: string }
+> = ({ isVisible, onClose, supervisor, selectedRoomName }) => {
   const [value, setValue] = useState("");
   const handleClick = () => {
     onClose();
@@ -67,7 +64,10 @@ const Popup: React.FC<PopupProps & { supervisor: string; selectedRoomName: strin
 const screenWidth = Dimensions.get("screen").width;
 const screenHeight = Dimensions.get("screen").height;
 
-export const RoomsHeader: React.FC<RoomsHeaderProps> = ({ onSelectRoom, supervisor }) => {
+export const RoomsHeader: React.FC<RoomsHeaderProps> = ({
+  onSelectRoom,
+  supervisor,
+}) => {
   const [open, setOpen] = useState(false);
   const [selectedValue, setSelectedValue] = useState<string>("");
   const [items, setItems] = useState<{ label: string; value: string }[]>([]);
@@ -95,11 +95,11 @@ export const RoomsHeader: React.FC<RoomsHeaderProps> = ({ onSelectRoom, supervis
     if (items.length > 0 && selectedValue === "") {
       const defaultRoomId = items[0].value;
 
-      const defaultRoom = items.find(item => item.value === defaultRoomId);
+      const defaultRoom = items.find((item) => item.value === defaultRoomId);
       if (defaultRoom) {
         setSelectedRoomName(defaultRoom.label);
       }
-      
+
       setSelectedValue(defaultRoomId);
       onSelectRoom(defaultRoomId);
       // console.log(defaultRoomId);
@@ -111,10 +111,13 @@ export const RoomsHeader: React.FC<RoomsHeaderProps> = ({ onSelectRoom, supervis
   };
 
   const handleDropdownChange = (value: SetStateAction<string>) => {
-    const selectedRoomId = typeof value === 'function' ? (value as (prevState: string) => string)(selectedValue) : value;
+    const selectedRoomId =
+      typeof value === "function"
+        ? (value as (prevState: string) => string)(selectedValue)
+        : value;
     setSelectedValue(selectedRoomId);
 
-    const selectedRoom = items.find(item => item.value === selectedRoomId);
+    const selectedRoom = items.find((item) => item.value === selectedRoomId);
     if (selectedRoom) {
       setSelectedRoomName(selectedRoom.label);
     }
@@ -132,7 +135,7 @@ export const RoomsHeader: React.FC<RoomsHeaderProps> = ({ onSelectRoom, supervis
         setOpen={setOpen}
         setValue={handleDropdownChange}
         setItems={setItems}
-        placeholder="Rooms:"  
+        placeholder="Rooms:"
         style={{
           borderRadius: 10,
           borderWidth: 2.5,
@@ -145,9 +148,21 @@ export const RoomsHeader: React.FC<RoomsHeaderProps> = ({ onSelectRoom, supervis
           borderWidth: 2.5,
           borderColor: "rgba(27, 97, 181, 0.89)",
         }}
+        selectedItemContainerStyle={{
+          backgroundColor: "rgba(27, 97, 181, 0.1)",
+        }}
+        labelStyle={{
+          paddingLeft: 5,
+          fontSize: 22,
+          fontFamily: "Poppins_400Regular",
+          color: Colors.BLACK,
+        }}
       />
 
-      <TouchableOpacity style={styles.iconContainer} onPress={handleContactPress}>
+      <TouchableOpacity
+        style={styles.iconContainer}
+        onPress={handleContactPress}
+      >
         <MaterialCommunityIcons
           name="account-box"
           size={50}
@@ -163,7 +178,6 @@ export const RoomsHeader: React.FC<RoomsHeaderProps> = ({ onSelectRoom, supervis
           selectedRoomName={selectedRoomName}
         />
       )}
-
     </View>
   );
 };
