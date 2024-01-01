@@ -43,6 +43,8 @@ const ApplicationNavigator = () => {
         <RootStack.Screen
           name={RootScreens.MAIN}
           component={MainNavigator}
+          options={{ gestureEnabled: false }}
+
         />
         <RootStack.Screen
           name={RootScreens.SCANNER}
