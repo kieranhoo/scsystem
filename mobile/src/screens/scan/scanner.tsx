@@ -480,6 +480,7 @@ const styles = StyleSheet.create({
   },
   input: {
     padding: 4,
+    marginTop: 10,
     marginBottom: 12,
     borderWidth: 1,
     borderColor: "gray",

@@ -10,6 +10,7 @@ import { View, Text } from "react-native";
 import { useFonts } from "expo-font";
 import { SafeAreaView } from 'react-native-safe-area-context';
 import * as SplashScreen from 'expo-splash-screen';
+import { StatusBar } from "expo-status-bar";
 
 import {
   Poppins_100Thin,
@@ -85,6 +86,7 @@ export default function App() {
               style={{ flex: 1 }}
               edges={["right", "top", "left"]}
             >
+              <StatusBar style="dark" />
               < ApplicationNavigator />
             </SafeAreaView>
           </PersistGate>
