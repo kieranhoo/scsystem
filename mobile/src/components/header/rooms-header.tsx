@@ -16,6 +16,7 @@ import { rooms } from "@/services";
 
 interface RoomsHeaderProps {
   onSelectRoom: (roomId: string) => void;
+  supervisor: string;
 }
 
 interface Room {
@@ -28,9 +29,11 @@ interface PopupProps {
   onClose: () => void;
 }
 
-const Popup: React.FC<PopupProps> = ({
+const Popup: React.FC<PopupProps & { supervisor: string; selectedRoomName: string }> = ({
   isVisible,
   onClose,
+  supervisor,
+  selectedRoomName,
 }) => {
   const [value, setValue] = useState("");
   const handleClick = () => {
@@ -48,7 +51,8 @@ const Popup: React.FC<PopupProps> = ({
           <View style={styles.modalContent}>
             <Text style={styles.label}>Contact Information</Text>
             <View style={styles.informContainer}>
-              <Text style={styles.informText}>Room B - Nguyen Van D</Text>
+              <Text style={styles.informText}>Room: {selectedRoomName}</Text>
+              <Text style={styles.informText}>Supervisor: {supervisor}</Text>
             </View>
             <TouchableOpacity onPress={handleClick} style={styles.button}>
               <Text style={styles.buttontext}>Close</Text>
@@ -63,11 +67,12 @@ const Popup: React.FC<PopupProps> = ({
 const screenWidth = Dimensions.get("screen").width;
 const screenHeight = Dimensions.get("screen").height;
 
-export const RoomsHeader: React.FC<RoomsHeaderProps> = ({ onSelectRoom }) => {
+export const RoomsHeader: React.FC<RoomsHeaderProps> = ({ onSelectRoom, supervisor }) => {
   const [open, setOpen] = useState(false);
   const [selectedValue, setSelectedValue] = useState<string>("");
   const [items, setItems] = useState<{ label: string; value: string }[]>([]);
   const [isModalVisible, setIsModalVisible] = useState(false);
+  const [selectedRoomName, setSelectedRoomName] = useState<string>("");
 
   async function fetchData() {
     try {
@@ -89,6 +94,12 @@ export const RoomsHeader: React.FC<RoomsHeaderProps> = ({ onSelectRoom }) => {
   useEffect(() => {
     if (items.length > 0 && selectedValue === "") {
       const defaultRoomId = items[0].value;
+
+      const defaultRoom = items.find(item => item.value === defaultRoomId);
+      if (defaultRoom) {
+        setSelectedRoomName(defaultRoom.label);
+      }
+      
       setSelectedValue(defaultRoomId);
       onSelectRoom(defaultRoomId);
       // console.log(defaultRoomId);
@@ -102,6 +113,12 @@ export const RoomsHeader: React.FC<RoomsHeaderProps> = ({ onSelectRoom }) => {
   const handleDropdownChange = (value: SetStateAction<string>) => {
     const selectedRoomId = typeof value === 'function' ? (value as (prevState: string) => string)(selectedValue) : value;
     setSelectedValue(selectedRoomId);
+
+    const selectedRoom = items.find(item => item.value === selectedRoomId);
+    if (selectedRoom) {
+      setSelectedRoomName(selectedRoom.label);
+    }
+
     onSelectRoom(selectedRoomId);
     // console.log(selectedRoomId);
   };
@@ -142,6 +159,8 @@ export const RoomsHeader: React.FC<RoomsHeaderProps> = ({ onSelectRoom }) => {
         <Popup
           isVisible={isModalVisible}
           onClose={() => setIsModalVisible(false)}
+          supervisor={supervisor}
+          selectedRoomName={selectedRoomName}
         />
       )}
 

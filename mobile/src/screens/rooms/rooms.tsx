@@ -154,7 +154,7 @@ export const Rooms = () => {
   }, [selectedRoomId, selectedDate]);
 
   const renderItem = ({ item }: { item: Item }) => {
-    const formattedTime = moment(item.time).format("h:mm A");
+    const formattedTime = moment(item.time).format("HH : mm");
     return (
       <TouchableOpacity style={styles.informContainer}>
         <View style={styles.informTextContainer}>
@@ -207,7 +207,8 @@ export const Rooms = () => {
 
   return (
     <View style={styles.container}>
-      <RoomsHeader onSelectRoom={(roomId) => setSelectedRoomId(roomId)} />
+      {/* <RoomsHeader onSelectRoom={(roomId) => setSelectedRoomId(roomId)} /> */}
+      <RoomsHeader onSelectRoom={(roomId) => setSelectedRoomId(roomId)} supervisor={events.length > 0 ? events[0].supervisor : ""} />
 
       <View style={styles.content_container}>
         <View style={styles.calendarContainer}>
