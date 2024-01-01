@@ -88,7 +88,7 @@ const ResultPopup: React.FC<ResultPopupProps> = ({
       }
     }
     catch (err: any) {
-      setMes(`Student ${result.last_name} ${result.first_name} check in/out fail`)
+      setMes(`Student check in/out fail`)
       setScanState(false)
       openStatePopUp(true)
     }
@@ -114,7 +114,7 @@ const ResultPopup: React.FC<ResultPopupProps> = ({
                 <View>
                   <View style={styles.studentInfor}>
                     <Text style={styles.studentName}>
-                      {result.last_name} {result.first_name}
+                      {result?.last_name} {result.first_name}
                     </Text>
                     <Text style={styles.studentSpecialInfor}>
                       ID: {result.student_id}
@@ -291,9 +291,13 @@ export const Scanner = () => {
       }
     }
     catch (err: any) {
+      setShowPopup(false)
       setScanned(true);
       setScanState(false)
-      setStateMes("Scan student ID fail")
+      if (err?.response?.data?.msg) {
+        setStateMes(err.response.data.msg)
+      }
+      else setStateMes("Scan student ID fail")
       setShowState(true)
       setIsLoading(false)
     }
