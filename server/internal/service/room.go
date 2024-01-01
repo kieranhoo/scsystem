@@ -1,12 +1,13 @@
 package service
 
 import (
+	"errors"
 	"scsystem/internal/model"
 	"scsystem/internal/repo"
 	"scsystem/internal/schema"
 	"scsystem/internal/tasks"
-	"scsystem/pkg/database"
-	"scsystem/pkg/database/queries"
+	"scsystem/pkg/mailers"
+	"time"
 )
 
 type Registration struct {
@@ -20,8 +21,9 @@ func NewRoom() IRoomService {
 }
 
 func (regis *Registration) RegisterRoom(req *schema.RegistrationRoomRequest) error {
-	_user, err := repo.NewUser().GetByID(req.StudentId)
-	if err != nil || _user == nil {
+	_user, err := regis.repo.GetByUserIdAndRoom(req.StudentId, req.RoomId)
+	// log.Fatal(_user)
+	if err != nil || _user.Id == "" {
 		if err := tasks.SaveUser(&model.Users{
 			Id:          req.StudentId,
 			FirstName:   req.FirstName,
@@ -45,6 +47,24 @@ func (regis *Registration) RegisterRoom(req *schema.RegistrationRoomRequest) err
 		// }
 	}
 
+	room, err := repo.NewRoom().GetByID(req.RoomId)
+	if err != nil || room.Name == "" {
+		return errors.New("room is not available")
+	}
+
+	go mailers.ConfirmRegistrationRoom(req.Email, mailers.ConfirmEmail{
+		Name:        req.FirstName + " " + req.LastName,
+		RoomNumber:  room.Name,
+		Date:        time.Now().UTC().Format(time.DateOnly),
+		Time:        req.RegistrationTime,
+		StartTime:   req.StartDay,
+		EndTime:     req.EndDay,
+		Email:       "tarzaines@gmail.com",
+		FullName:    "ad",
+		Position:    "admin",
+		Information: "ist Director",
+	})
+
 	return tasks.SaveRegistration(&model.Registration{
 		RegistrationTime: req.RegistrationTime,
 		Supervisor:       req.Supervisor,
@@ -66,32 +86,6 @@ func (regis *Registration) RegisterRoom(req *schema.RegistrationRoomRequest) err
 	// ))
 }
 
-func (regis *Registration) RegistrationLatest(studentId, roomId string) (*schema.UserRoomData, error) {
-	RoomData := new(schema.UserRoomData)
-	conn, err := database.Connection()
-	if err != nil {
-		return nil, err
-	}
-	if err := conn.Raw(queries.RegistrationLatest, studentId, roomId).Scan(RoomData).Error; err != nil {
-		return nil, err
-	}
-	history, err := repo.NewHistory().Latest(RoomData.RegistrationId)
-	if err != nil {
-		return nil, err
-	}
-	switch history.ActivityType {
-	case "":
-		RoomData.ActivityType = "no access"
-	case "out":
-		RoomData.ActivityType = "out"
-	case "in":
-		RoomData.ActivityType = "in"
-	default:
-		panic("unknown activity type")
-	}
-	return RoomData, nil
-}
-
 func (regis *Registration) SaveActivityType(req *schema.CheckInRequest) error {
 	return tasks.SaveActivityType(&model.History{
 		RegistrationId: req.RegistrationId,
@@ -108,30 +102,52 @@ func (regis *Registration) SaveActivityType(req *schema.CheckInRequest) error {
 	// ))
 }
 
+func (regis *Registration) RegistrationLatest(studentId, roomId string) (*schema.UserRoomData, error) {
+	roomData, err := regis.repo.RegistrationLatest(studentId, roomId)
+	if err != nil || roomData.StartDay == "" {
+		return nil, errors.New("no data for registration")
+	}
+	day := time.Now().UTC()
+	startDay, err := time.Parse(time.DateTime, roomData.StartDay)
+	if err != nil {
+		return nil, errors.New("time format error: " + err.Error())
+	}
+	endDay, err := time.Parse(time.DateTime, roomData.EndDay)
+	if err != nil {
+		return nil, errors.New("time format error: " + err.Error())
+	}
+	if day.Before(startDay) || day.After(endDay) {
+		return nil, errors.New("no data available")
+	}
+	return roomData, nil
+}
+
 func (regis *Registration) GetHistories(limit string) ([]model.History, error) {
 	return repo.NewHistory().GetList(limit)
 }
 
-func (regis *Registration) GetHistoriesData(limit string) ([]schema.HistoryData, error) {
-	var historyData []schema.HistoryData
-	conn, err := database.Connection()
+func (regis *Registration) GetHistoriesData(date, roomId string) (*schema.HistoryDataResponse, error) {
+	data, err := repo.NewHistory().GetHistory(date, roomId)
 	if err != nil {
 		return nil, err
 	}
-	if err := conn.Raw(queries.HistoryData, limit).Scan(&historyData).Error; err != nil {
-		return nil, err
+	var response = schema.HistoryDataResponse{
+		Data: data,
 	}
-	return historyData, nil
+	if len(data) > 0 {
+		response.RoomName = data[0].RoomName
+	}
+	for _, v := range data {
+		switch v.ActivityType {
+		case "in":
+			response.TotalIn++
+		case "out":
+			response.TotalOut++
+		}
+	}
+	return &response, nil
 }
 
 func (regis *Registration) GetRoom() ([]schema.RoomData, error) {
-	conn, err := database.Connection()
-	if err != nil {
-		return nil, err
-	}
-	var roomData []schema.RoomData
-	if err := conn.Raw(queries.RoomData).Scan(&roomData).Error; err != nil {
-		return nil, err
-	}
-	return roomData, nil
+	return repo.NewRoom().Get()
 }

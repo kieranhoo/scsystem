@@ -2,7 +2,9 @@ package repo
 
 import (
 	"scsystem/internal/model"
+	"scsystem/internal/schema"
 	"scsystem/pkg/database"
+	"scsystem/pkg/database/queries"
 	"time"
 
 	"gorm.io/gorm"
@@ -28,10 +30,15 @@ func (his *History) Insert(_his *model.History) error {
 	_time := time.Now().UTC().Format(time.DateTime)
 	if err := his.conn.Exec(
 		"INSERT INTO history (registration_id, activity_type, time, admin_id) VALUES (?, ?, ?, ?);",
-		_his.RegistrationId, _his.ActivityType, _time, _his.AdminId).Error; err != nil {
+		_his.RegistrationId, _his.ActivityType, _time, _his.AdminId,
+	).Error; err != nil {
 		return err
 	}
-	return nil
+	registration, err := NewRegistration().GetByID(_his.RegistrationId)
+	if err != nil {
+		return err
+	}
+	return NewChart().UpdateChartData(registration.RoomId, _his.ActivityType)
 }
 
 func (his *History) Latest(registrationId string) (*model.History, error) {
@@ -61,4 +68,12 @@ func (his *History) GetList(limit string) ([]model.History, error) {
 
 func (his *History) GetActivityType() string {
 	return his.data.ActivityType
+}
+
+func (his *History) GetHistory(date, roomId string) ([]schema.HistoryData, error) {
+	var historyData []schema.HistoryData
+	if err := his.conn.Raw(queries.HistoryData, roomId, date).Scan(&historyData).Error; err != nil {
+		return nil, err
+	}
+	return historyData, nil
 }

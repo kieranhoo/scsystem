@@ -1,7 +1,6 @@
 version: "3.1"
 services:
   api-server:
-    # image: duchungho/scsystem:latest
     build:
       context: .
       dockerfile: Dockerfile
@@ -30,40 +29,18 @@ services:
     ports:
       - 8000:8000
 
-  # worker:
-  #   image: duchungho/scsystem:latest
-  #   environment:
-  #     - STAGE_STATUS=prod
-  #     - HOST=0.0.0.0
-  #     - PORT=8000
-  #     - SERVER_READ_TIMEOUT=60
-  #     - JWT_SECRET_KEY=${JWT_SECRET_KEY}
-  #     - JWT_COST=${JWT_COST}
-  #     - DB_HOST=${DB_HOST}
-  #     - DB_PORT=${DB_PORT}
-  #     - DB_USER=${DB_USER}
-  #     - DB_PASSWORD=${DB_PASSWORD}
-  #     - DB_NAME=${DB_NAME}
-  #     - DB_SSL_MODE=${DB_SSL_MODE}
-  #     - REDIS_HOST=redis
-  #     - REDIS_PORT=6379
-  #     - REDIS_PASSWORD=password
-  #     - SENTRY_DSN=${SENTRY_DSN}
-  #     - SENTRY_RELEASE=${SENTRY_RELEASE}
-  #     - EMAIL_APP_PASSWORD=${EMAIL_APP_PASSWORD}
-  #     - EMAIL=${EMAIL}
-  #   restart: always
-  #   command: "./bin/exe w"
-
-  # redis:
-  #   image: redis
-  #   ports:
-  #     - 6379:6379
-  #   command: /bin/sh -c "redis-server --requirepass password"
-  #   environment:
-  #     - REDIS_HOST_PASSWORD=password
-  #   volumes:
-  #     - ./data/redis:/data
+  alert:
+    build:
+      context: .
+      dockerfile: Dockerfile.alert
+    environment:
+      - FLASK_ENV=${FLASK_ENV}
+      - FLASK_APP=${FLASK_APP}
+      - FLASK_RUN_HOST=${FLASK_RUN_HOST}
+      - FLASK_RUN_PORT=${FLASK_RUN_PORT}
+    restart: always
+    ports:
+      - 5100:5100
 
 networks:
   scsystem_api_network:

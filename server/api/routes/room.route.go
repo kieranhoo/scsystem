@@ -2,16 +2,18 @@ package routes
 
 import (
 	"scsystem/api/controller"
+	"scsystem/api/middleware"
 
 	"github.com/gofiber/fiber/v2"
 )
 
-func RoomRoutes(a *fiber.App) {
+func Room(a *fiber.App) {
 	r := a.Group("/room")
 	r.Get("/", controller.Room)
-	r.Post("/register", controller.RegisterRoom)
-	r.Get("/history", controller.Histories)
+	r.Post("/", controller.NewRoom)
+	r.Post("/register", middleware.RegisterRoomValidate, controller.RegisterRoom)
+	r.Get("/history", middleware.DatetimeValidate, controller.Histories)
 
-	r.Post("/activity", controller.SaveActivityType)
+	r.Post("/activity", middleware.ValidateCheckIn, controller.SaveActivityType)
 	r.Get("/activity", controller.GetActivity)
 }

@@ -2,6 +2,7 @@ package repo
 
 import (
 	"scsystem/internal/model"
+	"scsystem/internal/schema"
 )
 
 type IUsers interface {
@@ -21,6 +22,7 @@ type IRegistration interface {
 	UpdateByIDAndRoom(_res *model.Registration) error
 	Latest() (*model.Registration, error)
 	Empty() bool
+	RegistrationLatest(studentId, roomId string) (*schema.UserRoomData, error)
 }
 
 type IHistory interface {
@@ -29,4 +31,26 @@ type IHistory interface {
 	Empty() bool
 	GetList(limit string) ([]model.History, error)
 	GetActivityType() string
+	GetHistory(date, roomId string) ([]schema.HistoryData, error)
+}
+
+type IOffice interface {
+	Insert(office *model.Office) error
+	Get() ([]schema.OfficeData, error)
+}
+
+type IChart interface {
+	UpdateChartData(roomId, activityType string) error
+	GetData7Day(roomId string) (_in []schema.ChartData, _out []schema.ChartData, month string, year int, err error)
+}
+
+type IRoom interface {
+	Insert(room *model.Room) error
+	Get() ([]schema.RoomData, error)
+	GetByID(roomId string) (*model.Room, error)
+}
+
+type IOrganization interface {
+	Insert(org *model.Organization) error
+	Get() ([]model.Organization, error)
 }

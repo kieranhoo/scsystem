@@ -39,9 +39,9 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{host}}/room/activity?sid=2012734&room=1",
+							"raw": "{{host_dev}}/room/activity?sid=2013381&room=3",
 							"host": [
-								"{{host}}"
+								"{{host_dev}}"
 							],
 							"path": [
 								"room",
@@ -50,11 +50,11 @@
 							"query": [
 								{
 									"key": "sid",
-									"value": "2012734"
+									"value": "2013381"
 								},
 								{
 									"key": "room",
-									"value": "1"
+									"value": "3"
 								}
 							]
 						}
@@ -68,7 +68,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n  \"activity_type\": \"string\",\r\n  \"admin_id\": \"string\",\r\n  \"registration_id\": \"string\"\r\n}",
+							"raw": "{\r\n  \"activity_type\": \"in\",\r\n  \"admin_id\": \"1\",\r\n  \"registration_id\": \"22\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -76,9 +76,9 @@
 							}
 						},
 						"url": {
-							"raw": "{{host}}/room/activity",
+							"raw": "{{host_dev}}/room/activity",
 							"host": [
-								"{{host}}"
+								"{{host_dev}}"
 							],
 							"path": [
 								"room",
@@ -95,7 +95,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n  \"email\": \"chinh@gmail.com\",\r\n  \"end_day\": \"2020-08-05 18:19:00\",\r\n  \"first_name\": \"Chinh\",\r\n  \"last_name\": \"Lâm Điền\",\r\n  \"phone_number\": \"0123456789\",\r\n  \"registration_time\": \"7h-9h\",\r\n  \"room_id\": \"1\",\r\n  \"start_day\": \"2020-08-05 18:19:00\",\r\n  \"student_id\": \"2012734\",\r\n  \"supervisor\": \"hoang le hai thanh\"\r\n}",
+							"raw": "{\r\n  \"email\": \"iduchungho@gmail.com\",\r\n  \"end_day\": \"2020-08-05 18:19:00\",\r\n  \"first_name\": \"Hưng\",\r\n  \"last_name\": \"Lâm Điền\",\r\n  \"phone_number\": \"0865670184\",\r\n  \"registration_time\": \"7h-9h\",\r\n  \"room_id\": \"3\",\r\n  \"start_day\": \"2020-08-05 18:19:00\",\r\n  \"student_id\": \"2013381\",\r\n  \"supervisor\": \"hoang le hai thanh\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -131,6 +131,32 @@
 						}
 					},
 					"response": []
+				},
+				{
+					"name": "room",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"office_id\": \"1\",\r\n    \"name\": \"ist lab2\",\r\n    \"description\": \"...\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host_dev}}/room",
+							"host": [
+								"{{host_dev}}"
+							],
+							"path": [
+								"room"
+							]
+						}
+					},
+					"response": []
 				}
 			]
 		},
@@ -154,6 +180,155 @@
 								{
 									"key": "sid",
 									"value": "2012734"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "org",
+			"item": [
+				{
+					"name": "org",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\" : \"hpcc\",\r\n    \"email\": \"hpcc@hcmut.edu.vn\",\r\n    \"phone_number\": \"12345125125\",\r\n    \"website\" : \"hpcc.com\",\r\n    \"head\": \"hdh\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host_dev}}/admin/orgs",
+							"host": [
+								"{{host_dev}}"
+							],
+							"path": [
+								"admin",
+								"orgs"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "org-get",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\" : \"hpcc\",\r\n    \"email\": \"hpcc@hcmut.edu.vn\",\r\n    \"phone_number\": \"12345125125\",\r\n    \"website\" : \"hpcc.com\",\r\n    \"head\": \"hdh\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host_dev}}/admin/orgs",
+							"host": [
+								"{{host_dev}}"
+							],
+							"path": [
+								"admin",
+								"orgs"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "office",
+			"item": [
+				{
+					"name": "office",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{host_dev}}/admin/offices",
+							"host": [
+								"{{host_dev}}"
+							],
+							"path": [
+								"admin",
+								"offices"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "office",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"organization_id\": \"1\",\r\n    \"name\": \"ist\",\r\n    \"address\": \"268 LTK\",\r\n    \"manager\": \"HDH\",\r\n    \"phone_number\": \"124124124\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host_dev}}/admin/offices",
+							"host": [
+								"{{host_dev}}"
+							],
+							"path": [
+								"admin",
+								"offices"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "stat",
+			"item": [
+				{
+					"name": "chart",
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
+				},
+				{
+					"name": "rooms",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{host_dev}}/stat/rooms?room_id=1",
+							"host": [
+								"{{host_dev}}"
+							],
+							"path": [
+								"stat",
+								"rooms"
+							],
+							"query": [
+								{
+									"key": "room_id",
+									"value": "1"
 								}
 							]
 						}

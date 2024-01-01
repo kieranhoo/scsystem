@@ -11,7 +11,8 @@ const (
 		JOIN room ON room.id = room_id
 		JOIN office ON office.id = office_id
 		JOIN organization ON organization.id = organization_id
-	ORDER BY history.id DESC LIMIT ?;
+	WHERE room.id = ? AND DATE(time) = ?
+	ORDER BY history.id DESC;
 	`
 
 	RegistrationLatest string = `
@@ -19,7 +20,7 @@ const (
 	FROM registration 
 		JOIN users ON users.id = registration.user_id
     	JOIN (
-			SELECT organization.name AS org_name, office.name AS office_name, room.name AS room_name, office.id 
+			SELECT organization.name AS org_name, office.name AS office_name, room.name AS room_name, room.id 
 			FROM room 
 				JOIN office ON room.office_id=office.id 
 				JOIN organization ON organization.id=office.organization_id

@@ -52,3 +52,11 @@ type Room struct {
 	Name        string `json:"name" gorm:"column:name"`
 	Description string `json:"description" gorm:"column:description"`
 }
+
+type Chart struct {
+	Id       string `json:"id" gorm:"column:id"`
+	Time     string `json:"time" gorm:"column:time"`
+	RoomId   string `json:"room_id" gorm:"column:room_id"`
+	InCount  int    `json:"in_count" gorm:"column:in_count"`
+	OutCount int    `json:"out_count" gorm:"column:out_count"`
+}

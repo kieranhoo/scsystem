@@ -2,7 +2,9 @@ import React from "react";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { HomeContainer } from "@/screens/home";
 import { ScannerContainer } from "@/screens/scan";
+
 import { RoomsContainer } from "@/screens/rooms";
+import { ProfileContainer } from "@/screens/profile";
 
 const Tab = createBottomTabNavigator();
 
@@ -57,7 +59,7 @@ export const MainNavigator = () => {
       />
       <Tab.Screen
         name="Profile"
-        component={HomeContainer}
+        component={ProfileContainer}
         options={{
           tabBarIconStyle: { display: "none" },
           tabBarLabelPosition: "beside-icon",

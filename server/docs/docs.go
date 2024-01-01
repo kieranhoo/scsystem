@@ -206,8 +206,15 @@ const docTemplate = `{
                 "parameters": [
                     {
                         "type": "string",
-                        "description": "limit records",
-                        "name": "limit",
+                        "description": "room id",
+                        "name": "room_id",
+                        "in": "query",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "date only",
+                        "name": "date",
                         "in": "query",
                         "required": true
                     }
@@ -216,7 +223,7 @@ const docTemplate = `{
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/schema.DataResponse"
+                            "$ref": "#/definitions/schema.HistoryDataResponse"
                         }
                     }
                 }
@@ -255,6 +262,59 @@ const docTemplate = `{
                 }
             }
         },
+        "/stat/chart": {
+            "get": {
+                "description": "Get Chart Data IN/OUT.",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "stat"
+                ],
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "room id",
+                        "name": "room_id",
+                        "in": "query",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/schema.ChartMetadata"
+                        }
+                    }
+                }
+            }
+        },
+        "/stat/rooms": {
+            "get": {
+                "description": "Get Room Data IN/OUT.",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "stat"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/schema.RoomStat"
+                        }
+                    }
+                }
+            }
+        },
         "/user": {
             "get": {
                 "description": "Get information by student id",
@@ -288,6 +348,53 @@ const docTemplate = `{
         }
     },
     "definitions": {
+        "schema.ChartData": {
+            "type": "object",
+            "properties": {
+                "label": {
+                    "description": "day",
+                    "type": "string"
+                },
+                "value": {
+                    "description": "counter in/out",
+                    "type": "integer"
+                }
+            }
+        },
+        "schema.ChartDataValue": {
+            "type": "object",
+            "properties": {
+                "in": {
+                    "$ref": "#/definitions/schema.ChartData"
+                },
+                "out": {
+                    "$ref": "#/definitions/schema.ChartData"
+                }
+            }
+        },
+        "schema.ChartMetadata": {
+            "type": "object",
+            "properties": {
+                "data": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/schema.ChartDataValue"
+                    }
+                },
+                "month": {
+                    "type": "string"
+                },
+                "room_id": {
+                    "type": "string"
+                },
+                "room_name": {
+                    "type": "string"
+                },
+                "year": {
+                    "type": "string"
+                }
+            }
+        },
         "schema.CheckInRequest": {
             "type": "object",
             "required": [
@@ -317,6 +424,79 @@ const docTemplate = `{
                 "data": {},
                 "success": {
                     "type": "boolean"
+                }
+            }
+        },
+        "schema.HistoryData": {
+            "type": "object",
+            "properties": {
+                "activity_type": {
+                    "type": "string"
+                },
+                "admin_id": {
+                    "type": "string"
+                },
+                "email": {
+                    "type": "string"
+                },
+                "end_day": {
+                    "type": "string"
+                },
+                "first_name": {
+                    "type": "string"
+                },
+                "id": {
+                    "type": "integer"
+                },
+                "last_name": {
+                    "type": "string"
+                },
+                "office_name": {
+                    "type": "string"
+                },
+                "org_name": {
+                    "type": "string"
+                },
+                "phone_number": {
+                    "type": "string"
+                },
+                "registration_time": {
+                    "type": "string"
+                },
+                "room_name": {
+                    "type": "string"
+                },
+                "start_day": {
+                    "type": "string"
+                },
+                "supervisor": {
+                    "type": "string"
+                },
+                "time": {
+                    "type": "string"
+                },
+                "user_id": {
+                    "type": "string"
+                }
+            }
+        },
+        "schema.HistoryDataResponse": {
+            "type": "object",
+            "properties": {
+                "data": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/schema.HistoryData"
+                    }
+                },
+                "room_name": {
+                    "type": "string"
+                },
+                "total_in": {
+                    "type": "integer"
+                },
+                "total_out": {
+                    "type": "integer"
                 }
             }
         },
@@ -379,6 +559,40 @@ const docTemplate = `{
                 },
                 "success": {
                     "type": "boolean"
+                }
+            }
+        },
+        "schema.RoomStat": {
+            "type": "object",
+            "properties": {
+                "data": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/schema.RoomStatData"
+                    }
+                },
+                "total": {
+                    "type": "integer"
+                }
+            }
+        },
+        "schema.RoomStatData": {
+            "type": "object",
+            "properties": {
+                "in": {
+                    "type": "integer"
+                },
+                "out": {
+                    "type": "integer"
+                },
+                "room_id": {
+                    "type": "string"
+                },
+                "room_name": {
+                    "type": "string"
+                },
+                "total": {
+                    "type": "integer"
                 }
             }
         },

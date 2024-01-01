@@ -8,8 +8,6 @@ import (
 	"github.com/gofiber/fiber/v2"
 )
 
-var RoomService = service.NewRoom()
-
 // RegisterRoom
 // @Description Register Room.
 // @Tags room
@@ -19,6 +17,7 @@ var RoomService = service.NewRoom()
 // @Success 200 {object} schema.Response
 // @Router /room/register [POST]
 func RegisterRoom(c *fiber.Ctx) error {
+	var RoomService = service.NewRoom()
 	var req schema.RegistrationRoomRequest
 	if err := c.BodyParser(&req); err != nil {
 		return c.Status(fiber.StatusBadRequest).JSON(schema.Error{
@@ -53,6 +52,7 @@ func RegisterRoom(c *fiber.Ctx) error {
 // @Success 200 {object} schema.DataResponse
 // @Router /room/activity [GET]
 func GetActivity(c *fiber.Ctx) error {
+	var RoomService = service.NewRoom()
 	sid := c.Query("sid", "")
 	if sid == "" {
 		return c.Status(fiber.StatusBadRequest).JSON(schema.Error{
@@ -91,28 +91,34 @@ func GetActivity(c *fiber.Ctx) error {
 // @Tags room
 // @Accept json
 // @Produce json
-// @Param limit query string true "limit records"
-// @Success 200 {object} schema.DataResponse
+// @Param room_id query string true "room id"
+// @Param date query string true "date only"
+// @Success 200 {object} schema.HistoryDataResponse
 // @Router /room/history [GET]
 func Histories(c *fiber.Ctx) error {
-	limit := c.Query("limit", "")
-	if limit == "" {
+	var RoomService = service.NewRoom()
+	room_id := c.Query("room_id", "")
+	if room_id == "" {
 		return c.Status(fiber.StatusBadRequest).JSON(schema.Error{
 			Success: false,
-			Msg:     "missing query params limit",
+			Msg:     "missing query params room_id",
 		})
 	}
-	data, err := RoomService.GetHistoriesData(limit)
+	date := c.Query("date", "")
+	if date == "" {
+		return c.Status(fiber.StatusBadRequest).JSON(schema.Error{
+			Success: false,
+			Msg:     "missing query params date",
+		})
+	}
+	data, err := RoomService.GetHistoriesData(date, room_id)
 	if err != nil {
 		return c.Status(fiber.StatusBadRequest).JSON(schema.Error{
 			Success: false,
 			Msg:     err.Error(),
 		})
 	}
-	return c.JSON(schema.DataResponse{
-		Success: true,
-		Data:    data,
-	})
+	return c.JSON(data)
 }
 
 // SaveActivityType
@@ -124,6 +130,7 @@ func Histories(c *fiber.Ctx) error {
 // @Success 200 {object} schema.Response
 // @Router /room/activity [POST]
 func SaveActivityType(c *fiber.Ctx) error {
+	var RoomService = service.NewRoom()
 	var req schema.CheckInRequest
 	if err := c.BodyParser(&req); err != nil {
 		return c.Status(fiber.StatusBadRequest).JSON(schema.Error{
@@ -156,6 +163,7 @@ func SaveActivityType(c *fiber.Ctx) error {
 // @Success 200 {object} schema.DataResponse
 // @Router /room [GET]
 func Room(c *fiber.Ctx) error {
+	var RoomService = service.NewRoom()
 	data, err := RoomService.GetRoom()
 	if err != nil {
 		return c.Status(fiber.StatusBadRequest).JSON(schema.Error{
