@@ -23,6 +23,8 @@ type IRegistration interface {
 	Latest() (*model.Registration, error)
 	Empty() bool
 	RegistrationLatest(studentId, roomId string) (*schema.UserRoomData, error)
+	OneWeekBefore() ([]model.Registration, error)
+	DeleteById(id string) error
 }
 
 type IHistory interface {
