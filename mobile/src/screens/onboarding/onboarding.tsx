@@ -75,7 +75,7 @@ export const Onboarding = (props: { onNavigate: (string: RootScreens) => void })
   const checkOnboardingStatus = async () => {
     try {
       const checkonboardingShown = await AsyncStorage.getItem('onboardingShown');
-      if (checkonboardingShown === "true") {
+      if (checkonboardingShown === 'false' || checkonboardingShown === undefined || checkonboardingShown === null) {
         setOnboardingShown(true);
       }
       else {
@@ -111,7 +111,7 @@ export const Onboarding = (props: { onNavigate: (string: RootScreens) => void })
 
   const goToMainScreen = () => {
     // Lưu trạng thái vào AsyncStorage
-    AsyncStorage.setItem('onboardingShown', 'false')
+    AsyncStorage.setItem('onboardingShown', 'true')
       .then(() => {
         // Chuyển hướng đến trang MAIN
         props.onNavigate(RootScreens.MAIN);

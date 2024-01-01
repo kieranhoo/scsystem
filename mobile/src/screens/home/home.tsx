@@ -6,11 +6,21 @@ import { Colors } from "@/theme/variables";
 import { autoBatchEnhancer } from "@reduxjs/toolkit";
 import { rooms } from "@/services";
 import axios from "axios";
+import { BackHandler } from "react-native";
 
 const screenWidth = Dimensions.get("screen").width;
 const screenHeight = Dimensions.get("screen").height;
 
 export const Home = () => {
+  useEffect(() => {
+    const backHandler = BackHandler.addEventListener(
+      "hardwareBackPress",
+      () => {
+        return true;
+      }
+    );
+    return () => backHandler.remove();
+  }, []);
   const [bardata, setBardata] = useState({
     "month": "December",
     "year": "2023",
