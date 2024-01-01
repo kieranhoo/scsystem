@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { View, Text, StyleSheet, Dimensions, FlatList, ScrollView } from "react-native";
 import { Header } from "@/components/header";
-import {BarChart} from 'react-native-gifted-charts';
+import { BarChart } from 'react-native-gifted-charts';
 import { Colors } from "@/theme/variables";
 import { autoBatchEnhancer } from "@reduxjs/toolkit";
 import { rooms } from "@/services";
@@ -45,10 +45,10 @@ export const Home = () => {
       ),
     },
     {
-      value: item.out.value, 
+      value: item.out.value,
       frontColor: '#ED4A4A',
       topLabelComponent: () => (
-        <Text style={{color: 'gray', fontSize: 10, marginBottom: 2}}>
+        <Text style={{ color: 'gray', fontSize: 10, marginBottom: 2 }}>
           {item.out.value}
         </Text>
       ),
@@ -68,50 +68,50 @@ export const Home = () => {
       axios.get(`${process.env.BASE_URL}/stat/chart`, { params: { room_id: 1 } }).then(resp => {
         setBardata(resp.data);
       });
-      axios.get(`${process.env.BASE_URL}/stat/rooms`).then(resp => {
+      axios.get(`${process.env.BASE_URL}/stat/rooms`).then((resp: any) => {
         setGeneraldata(resp.data.data);
       });
-    }, generaldata==DATA?0:60000);
-  });
+    }, generaldata == DATA ? 0 : 60000);
+  }, []);
 
-  type RoomProps = {room_name: string, in: number, out: number, total: number};
+  type RoomProps = { room_name: string, in: number, out: number, total: number };
 
   const Room = (Room: RoomProps) => (
     <View style={styles.room}>
       <ScrollView horizontal>
         <Text style={styles.title}>{Room.room_name}</Text>
       </ScrollView>
-      <View style={{ flexDirection: 'column' ,alignItems: 'center'}}>
+      <View style={{ flexDirection: 'column', alignItems: 'center' }}>
         <View style={styles.total_card}>
-          <Text style={{fontWeight: 'bold', color: '#306fbb'}}>Total: {Room.total}</Text>
+          <Text style={{ fontWeight: 'bold', color: '#306fbb' }}>Total: {Room.total}</Text>
         </View >
         <View style={styles.in_card}>
-          <Text style={{fontWeight: 'bold', color: '#47b063'}}>In: {Room.in}</Text>
+          <Text style={{ fontWeight: 'bold', color: '#47b063' }}>In: {Room.in}</Text>
         </View>
         <View style={styles.out_card}>
-          <Text style={{fontWeight: 'bold', color: '#ef5e5e'}}>Out: {Room.out}</Text>
+          <Text style={{ fontWeight: 'bold', color: '#ef5e5e' }}>Out: {Room.out}</Text>
         </View>
       </View>
     </View>
   );
 
   const renderTitle = () => {
-    return(
+    return (
       <View style={styles.barchart_title}>
-        <View style={{flexDirection: 'row', alignItems: 'center'}}>
+        <View style={{ flexDirection: 'row', alignItems: 'center' }}>
           <Text style={styles.title}>
             Daily in {bardata.room_name}
           </Text>
         </View>
         <View style={{ flexDirection: 'row' }}>
-          <View style={{flexDirection: 'row', alignItems: 'center'}}>
-            <View style={styles.in_status}/>
+          <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+            <View style={styles.in_status} />
             <Text style={styles.text}>
               In
             </Text>
           </View>
-          <View style={{flexDirection: 'row', alignItems: 'center'}}>
-            <View style={styles.out_status}/>
+          <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+            <View style={styles.out_status} />
             <Text style={styles.text}>
               Out
             </Text>
@@ -139,7 +139,7 @@ export const Home = () => {
             hideRules
             xAxisThickness={0}
             yAxisThickness={-7}
-            yAxisTextStyle={{color: 'gray'}}
+            yAxisTextStyle={{ color: 'gray' }}
             noOfSections={5}
             maxValue={75}
           />
@@ -148,7 +148,7 @@ export const Home = () => {
           <FlatList
             data={generaldata}
             horizontal={true}
-            renderItem={({item}) => <Room room_name={item.room_name} in={item.in} out={item.out} total={item.total} />}
+            renderItem={({ item }) => <Room room_name={item.room_name} in={item.in} out={item.out} total={item.total} />}
             keyExtractor={item => item.room_id}
           />
         </View>
@@ -195,7 +195,7 @@ const styles = StyleSheet.create({
   },
   text: {
     width: 30,
-    height: 16,
+    height: 20,
     color: '#000000',
     marginBottom: 10,
   },
@@ -227,9 +227,9 @@ const styles = StyleSheet.create({
     borderColor: '#7c7c7c',
   },
   total_card: {
-    backgroundColor: '#d9e4f3', 
-    paddingTop: 10, 
-    paddingBottom: 10, 
+    backgroundColor: '#d9e4f3',
+    paddingTop: 10,
+    paddingBottom: 10,
     alignItems: 'center',
     width: 80,
     borderTopStartRadius: 10,
@@ -237,23 +237,23 @@ const styles = StyleSheet.create({
   },
   in_card: {
     width: 80,
-    backgroundColor: '#e0f2e5', 
-    paddingTop: 10, 
-    paddingBottom: 10, 
-    alignItems: 'center', 
+    backgroundColor: '#e0f2e5',
+    paddingTop: 10,
+    paddingBottom: 10,
+    alignItems: 'center',
   },
   out_card: {
-    backgroundColor: '#fde4e4', 
-    paddingTop: 10, 
-    paddingBottom: 10, 
-    alignItems: 'center', 
+    backgroundColor: '#fde4e4',
+    paddingTop: 10,
+    paddingBottom: 10,
+    alignItems: 'center',
     width: 80,
     borderBottomLeftRadius: 10,
     borderBottomRightRadius: 10,
   },
   title: {
     fontSize: 18,
-    height: 22,
+    height: 26,
     fontWeight: 'bold',
     color: '#000000',
     marginBottom: 10,
