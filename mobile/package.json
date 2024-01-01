@@ -24,7 +24,7 @@
     "expo-barcode-scanner": "~12.3.2",
     "expo-camera": "~13.2.1",
     "expo-device": "~5.2.1",
-    "expo-font": "~11.1.1",
+    "expo-font": "~11.6.0",
     "expo-image-picker": "~14.1.1",
     "expo-localization": "~14.1.1",
     "expo-splash-screen": "^0.22.0",
