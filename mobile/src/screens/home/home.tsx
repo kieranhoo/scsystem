@@ -183,6 +183,7 @@ const styles = StyleSheet.create({
     borderRadius: 6,
     backgroundColor: '#34A853',
     marginRight: 8,
+    marginBottom: 10,
   },
   out_status: {
     height: 12,
@@ -190,11 +191,13 @@ const styles = StyleSheet.create({
     borderRadius: 6,
     backgroundColor: '#ED4A4A',
     marginRight: 8,
+    marginBottom: 10,
   },
   text: {
     width: 30,
     height: 16,
     color: '#000000',
+    marginBottom: 10,
   },
   content_container: {
     paddingTop: 30,
@@ -217,7 +220,7 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.WHITE,
     alignItems: 'center',
     padding: 10,
-    width: 100,
+    width: 98,
     marginRight: 5,
     borderRadius: 10,
     borderWidth: 1,
@@ -253,5 +256,6 @@ const styles = StyleSheet.create({
     height: 22,
     fontWeight: 'bold',
     color: '#000000',
+    marginBottom: 10,
   },
 });
