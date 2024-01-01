@@ -4,7 +4,6 @@ export const rooms = {
   getgeneralstateallroom: async () => {
     try {
       await axios.get(`${process.env.BASE_URL}/stat/rooms`).then((resp) => {
-        console.log(resp.data);
         return resp.data;
       });
     } catch (err: any) {
@@ -28,7 +27,6 @@ export const rooms = {
   getroominform: async () => {
     try {
       const resp = await axios.get(`${process.env.BASE_URL}/room`);
-      console.log(resp.data)
       return resp.data;
     } catch (err: any) {
       return err;
