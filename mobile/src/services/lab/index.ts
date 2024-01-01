@@ -13,8 +13,7 @@ export const activity = {
             return true
         }
         catch (err: any) {
-            console.log(err)
-            return false
+            throw err
         }
     },
     checkout: async (registration_id: string) => {
@@ -29,8 +28,7 @@ export const activity = {
             return true
         }
         catch (err: any) {
-            console.log(err)
-            return false
+            throw err
         }
     }
 }
@@ -47,7 +45,7 @@ export const room = {
             return result.data
         }
         catch (err: any) {
-            console.log(err)
+            throw err
         }
     }
 }
