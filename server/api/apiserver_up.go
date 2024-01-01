@@ -27,7 +27,7 @@ func (w *Worker) Run() error {
 
 func (app *_App) Scheduler() {
 	newJob := job.New()
-	go newJob.Scheduler(cron.ScanInValidDate, time.Second)
+	go newJob.Scheduler(cron.ScanInValidDate, time.Hour*24*7)
 
 	newJob.Info()
 }
