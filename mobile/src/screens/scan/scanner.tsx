@@ -277,6 +277,7 @@ export const Scanner = () => {
   const handleBarCodeScanned = async ({ data }: { data: string }) => {
     try {
       setIsLoading(true)
+      setScanned(true)
       if (isNaN(parseInt(data))) {
         setScanState(false)
         setStateMes("Scan student ID fail")
