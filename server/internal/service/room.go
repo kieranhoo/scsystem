@@ -103,22 +103,22 @@ func (regis *Registration) SaveActivityType(req *schema.CheckInRequest) error {
 }
 
 func (regis *Registration) RegistrationLatest(studentId, roomId string) (*schema.UserRoomData, error) {
-	roomData, err := regis.repo.RegistrationLatest(studentId, roomId)
-	if err != nil || roomData.StartDay == "" {
-		return nil, errors.New("no data for registration")
-	}
-	day := time.Now().UTC()
-	startDay, err := time.Parse(time.DateTime, roomData.StartDay)
-	if err != nil {
-		return nil, errors.New("time format error: " + err.Error())
-	}
-	endDay, err := time.Parse(time.DateTime, roomData.EndDay)
-	if err != nil {
-		return nil, errors.New("time format error: " + err.Error())
-	}
-	if day.Before(startDay) || day.After(endDay) {
-		return nil, errors.New("no data available")
-	}
+	roomData, _ := regis.repo.RegistrationLatest(studentId, roomId)
+	// if err != nil || roomData.StartDay == "" {
+	// 	return nil, errors.New("no data for registration")
+	// }
+	// day := time.Now().UTC()
+	// startDay, err := time.Parse(time.DateTime, roomData.StartDay)
+	// if err != nil {
+	// 	return nil, errors.New("time format error: " + err.Error())
+	// }
+	// endDay, err := time.Parse(time.DateTime, roomData.EndDay)
+	// if err != nil {
+	// 	return nil, errors.New("time format error: " + err.Error())
+	// }
+	// if day.Before(startDay) || day.After(endDay) {
+	// 	return nil, errors.New("no data available")
+	// }
 	return roomData, nil
 }
 
