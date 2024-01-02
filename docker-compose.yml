@@ -29,19 +29,6 @@ services:
     ports:
       - 8000:8000
 
-  alert:
-    build:
-      context: .
-      dockerfile: Dockerfile.alert
-    environment:
-      - FLASK_ENV=${FLASK_ENV}
-      - FLASK_APP=${FLASK_APP}
-      - FLASK_RUN_HOST=${FLASK_RUN_HOST}
-      - FLASK_RUN_PORT=${FLASK_RUN_PORT}
-    restart: always
-    ports:
-      - 5100:5100
-
 networks:
   scsystem_api_network:
 volumes:
