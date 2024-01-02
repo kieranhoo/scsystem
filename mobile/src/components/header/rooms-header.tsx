@@ -12,7 +12,7 @@ import {
 import { Colors } from "@/theme/variables";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 import DropDownPicker from "react-native-dropdown-picker";
-import { rooms } from "@/services";
+import { history } from "@/services";
 
 interface RoomsHeaderProps {
   onSelectRoom: (roomId: string) => void;
@@ -76,7 +76,7 @@ export const RoomsHeader: React.FC<RoomsHeaderProps> = ({
 
   async function fetchData() {
     try {
-      const roomData = await rooms.getroominform();
+      const roomData = await history.getroominform();
       const roomNames = roomData.data.map((room: Room) => ({
         label: room.room_name,
         value: room.room_id,
@@ -153,7 +153,7 @@ export const RoomsHeader: React.FC<RoomsHeaderProps> = ({
         }}
         labelStyle={{
           paddingLeft: 5,
-          fontSize: 22,
+          fontSize: 20,
           fontFamily: "Poppins_400Regular",
           color: Colors.BLACK,
         }}

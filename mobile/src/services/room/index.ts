@@ -23,13 +23,4 @@ export const rooms = {
       return err;
     }
   },
-
-  getroominform: async () => {
-    try {
-      const resp = await axios.get(`${process.env.BASE_URL}/room`);
-      return resp.data;
-    } catch (err: any) {
-      return err;
-    }
-  },
 };

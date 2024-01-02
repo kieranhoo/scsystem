@@ -8,7 +8,6 @@ import {
   FlatList,
   Modal,
   TouchableWithoutFeedback,
-  TextInput,
 } from "react-native";
 import { RoomsHeader } from "@/components/header/rooms-header";
 import CalendarStrip from "react-native-calendar-strip";
@@ -42,10 +41,14 @@ interface Item {
 interface InputPopupProps {
   isVisible: boolean;
   onClose: () => void;
+  selectedItem: Item | null;
 }
 
-const InputPopup: React.FC<InputPopupProps> = ({ isVisible, onClose }) => {
-  const [value, setValue] = useState("");
+const InputPopup: React.FC<InputPopupProps> = ({ isVisible, onClose, selectedItem }) => {
+  const formattedDateTime = selectedItem?.time
+  ? moment(selectedItem.time).format('DD/MM/YYYY - HH:mm:ss')
+  : '';
+  // const [value, setValue] = useState("");
   const handleClick = () => {
     onClose();
   };
@@ -59,15 +62,13 @@ const InputPopup: React.FC<InputPopupProps> = ({ isVisible, onClose }) => {
       <TouchableWithoutFeedback onPress={onClose}>
         <View style={styles.modalContainer}>
           <View style={styles.modalContent}>
-            <Text style={styles.label}>Student ID:</Text>
-            <TextInput
-              placeholder="Type Student ID to check in/out"
-              placeholderTextColor={"rgba(0, 0, 0, 0.5)"}
-              value={value}
-              onChangeText={setValue}
-              style={styles.input}
-              keyboardType="numeric"
-            />
+            <Text style={styles.label}>{selectedItem?.last_name} {selectedItem?.first_name}</Text>
+            <Text style={styles.content}>{selectedItem?.user_id}</Text>
+            <Text style={styles.content}>{selectedItem?.email}</Text>
+            <Text style={styles.inform}>Room: {selectedItem?.room_name}</Text>
+            <Text style={styles.inform}>Supervisor: {selectedItem?.supervisor}</Text>
+            <View style={styles.horizontalLine}></View>
+            <Text style={styles.inform}>{selectedItem?.activity_type === 'in' ? 'Check in: ' : 'Check out: '} {formattedDateTime}</Text>
             <TouchableOpacity onPress={handleClick} style={styles.button}>
               <Text style={styles.buttontext}>OK</Text>
             </TouchableOpacity>
@@ -85,6 +86,7 @@ export const Rooms = () => {
   const [events, setEvents] = useState<Item[]>([]);
   const [totalIn, setTotalIn] = useState<number>(0);
   const [totalOut, setTotalOut] = useState<number>(0);
+  const [modalItem, setModalItem] = useState<Item | null>(null);
 
   const handleDateSelected = (date: Moment) => {
     setSelectedDate(date);
@@ -101,7 +103,6 @@ export const Rooms = () => {
           date: date,
         },
       });
-      // console.log(result.data)
       return result.data;
     } catch (err: any) {
       return [];
@@ -143,8 +144,9 @@ export const Rooms = () => {
     }
   };
 
-  const handleAddRecordPress = () => {
+  const handleCheckStudentPress = (selectedItem: Item) => {
     setIsModalVisible(true);
+    setModalItem(selectedItem);
   };
 
   useEffect(() => {
@@ -156,7 +158,10 @@ export const Rooms = () => {
   const renderItem = ({ item }: { item: Item }) => {
     const formattedTime = moment(item.time).format("HH : mm");
     return (
-      <TouchableOpacity style={styles.informContainer}>
+      <TouchableOpacity
+        style={styles.informContainer}
+        onPress={() => handleCheckStudentPress(item)}
+      >
         <View style={styles.informTextContainer}>
           <View style={styles.textNameContainer}>
             <Text style={styles.textName}>
@@ -207,8 +212,10 @@ export const Rooms = () => {
 
   return (
     <View style={styles.container}>
-      {/* <RoomsHeader onSelectRoom={(roomId) => setSelectedRoomId(roomId)} /> */}
-      <RoomsHeader onSelectRoom={(roomId) => setSelectedRoomId(roomId)} supervisor={events.length > 0 ? events[0].supervisor : ""} />
+      <RoomsHeader
+        onSelectRoom={(roomId) => setSelectedRoomId(roomId)}
+        supervisor={events.length > 0 ? events[0].supervisor : ""}
+      />
 
       <View style={styles.content_container}>
         <View style={styles.calendarContainer}>
@@ -279,6 +286,7 @@ export const Rooms = () => {
         <InputPopup
           isVisible={isModalVisible}
           onClose={() => setIsModalVisible(false)}
+          selectedItem={modalItem}
         />
       )}
     </View>
@@ -462,10 +470,11 @@ const styles = StyleSheet.create({
     padding: 16,
     borderRadius: 10,
     elevation: 5,
-    width: 0.8 * screenWidth,
+    width: 0.85 * screenWidth,
     backgroundColor: Colors.WHITE,
   },
   button: {
+    marginTop: 5,
     paddingHorizontal: 10,
     paddingVertical: 4,
     borderRadius: 10,
@@ -487,6 +496,30 @@ const styles = StyleSheet.create({
     borderRadius: 10,
   },
   label: {
+    fontSize: 22,
     fontFamily: "Poppins_600SemiBold",
+    textAlign: "center",
+    marginBottom: 5,
+  },
+  content: {
+    fontSize: 15,
+    color: "rgba(27, 97, 181, 0.89)",
+    fontFamily: "Poppins_600SemiBold",
+    textAlign: "center",
+    marginBottom: 5,
+  },
+  inform: {
+    fontSize: 15,
+    color: "rgba(108, 108, 108, 0.89)",
+    fontFamily: "Poppins_400Regular",
+    textAlign: "center",
+    marginBottom: 5,
+  },
+  horizontalLine: {
+    height: 1,
+    width: "95%",
+    alignSelf: "center",
+    backgroundColor: "rgba(217, 217, 217, 0.89)",
+    marginBottom: 10,
   },
 });
