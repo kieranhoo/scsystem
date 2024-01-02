@@ -181,10 +181,10 @@ export const Rooms = () => {
                   item.activity_type === "out"
                     ? "rgba(237, 74, 74, 0.15)"
                     : "rgba(52, 168, 83, 0.15)",
-                borderColor:
-                  item.activity_type === "out"
-                    ? "rgba(237, 74, 74, 0.87)"
-                    : "rgba(52, 168, 83, 0.89)",
+                // borderColor:
+                //   item.activity_type === "out"
+                //     ? "rgba(237, 74, 74, 0.87)"
+                //     : "rgba(52, 168, 83, 0.89)",
               },
             ]}
           >
@@ -421,7 +421,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 10,
     justifyContent: "center",
     borderRadius: 10,
-    borderWidth: 1.5,
+    // borderWidth: 1.5,
   },
   textTimeContainer: {
     flex: 0.5,
