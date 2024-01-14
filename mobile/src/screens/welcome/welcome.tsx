@@ -1,9 +1,11 @@
-import React from "react";
-import { i18n, LocalizationKey } from "@/localization";
-import { View, Text, StyleSheet } from "react-native";
 import { StatusBar } from "expo-status-bar";
 import { Button } from "native-base";
+import React from "react";
+import { View, Text, StyleSheet } from "react-native";
+
 import { RootScreens } from "..";
+
+import { i18n, LocalizationKey } from "@/localization";
 
 export const Welcome = (props: {
   onNavigate: (string: RootScreens) => void;

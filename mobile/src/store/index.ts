@@ -1,4 +1,3 @@
-import { API } from "@/services/base";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { configureStore, combineReducers } from "@reduxjs/toolkit";
 import { setupListeners } from "@reduxjs/toolkit/query";
@@ -12,7 +11,10 @@ import {
   PURGE,
   REGISTER,
 } from "redux-persist";
+
 import { homeReducers, themeReducers } from "./reducers";
+
+import { API } from "@/services/base";
 
 const reducers = combineReducers({
   api: API.reducer,

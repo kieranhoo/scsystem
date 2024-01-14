@@ -1,9 +1,12 @@
 
-import React from "react";
-import { Onboarding } from "./onboarding";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
-import { RootStackParamList } from '@/components/navigation';
+import React from "react";
+
+import { Onboarding } from "./onboarding";
 import { RootScreens } from "..";
+
+import { RootStackParamList } from '@/components/navigation';
+
 
 type OnboardingScreenNavigatorProps = NativeStackScreenProps<
   RootStackParamList,

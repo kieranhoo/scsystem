@@ -7,7 +7,7 @@ export const activity = {
                 {
                     activity_type: "in",
                     admin_id: "1",
-                    registration_id: registration_id
+                    registration_id
                 }
             )
             return true
@@ -22,7 +22,7 @@ export const activity = {
                 {
                     activity_type: "out",
                     admin_id: "1",
-                    registration_id: registration_id
+                    registration_id
                 }
             )
             return true
@@ -38,7 +38,7 @@ export const room = {
         try {
             const result = await axios.get(`${process.env.BASE_URL}/room/activity`, {
                 params: {
-                    sid: sid,
+                    sid,
                     room: room_id,
                 }
             })

@@ -1,3 +1,5 @@
+import { useFocusEffect } from "@react-navigation/native";
+import { BarCodeScanner } from "expo-barcode-scanner";
 import React, { useState } from "react";
 import {
   Dimensions,
@@ -11,12 +13,12 @@ import {
   TouchableWithoutFeedback,
   ActivityIndicator,
 } from "react-native";
-import { BarCodeScanner } from "expo-barcode-scanner";
 import BarcodeMask from "react-native-barcode-mask";
-import { Colors } from "@/theme/variables";
+
 import { Header } from "@/components/header";
 import { activity, room } from "@/services";
-import { useFocusEffect } from "@react-navigation/native";
+import { Colors } from "@/theme/variables";
+
 
 const screenWidth = Dimensions.get("screen").width;
 const screenHeight = Dimensions.get("screen").height;
@@ -96,7 +98,7 @@ const ResultPopup: React.FC<ResultPopupProps> = ({
   return (
     <Modal
       animationType="fade"
-      transparent={true}
+      transparent
       visible={isVisible}
       onRequestClose={onClose}
     >
@@ -182,7 +184,7 @@ const StatePopup: React.FC<StatePopupProps> = ({
   return (
     <Modal
       animationType="fade"
-      transparent={true}
+      transparent
       visible={isVisible}
       onRequestClose={onClose}
     >
@@ -232,7 +234,7 @@ const InputPopup: React.FC<InputPopupProps> = ({ isVisible, onClose, check }) =>
   return (
     <Modal
       animationType="fade"
-      transparent={true}
+      transparent
       visible={isVisible}
       onRequestClose={onClose}
     >
@@ -359,8 +361,7 @@ export const Scanner = () => {
         <Header title="Scan" />
       </View>
       {requestingPermission && (
-        <View>
-        </View>
+        <View />
         // <Modal transparent={true} visible={true}>
         //   <View style={styles.modalContainer}>
         //     <View style={styles.modalContent}>

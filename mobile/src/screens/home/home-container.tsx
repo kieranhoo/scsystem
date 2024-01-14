@@ -1,7 +1,9 @@
 
-import { rooms, useLazyGetUserQuery } from "@/services";
 import React, { useEffect, useState } from "react";
+
 import { Home } from "./home";
+
+import { rooms, useLazyGetUserQuery } from "@/services";
 
 export const HomeContainer = () => {
   // const [generalStateOfAllRooms, setGeneralStateOfAllRooms] = useState(null);
