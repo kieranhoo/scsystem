@@ -1,6 +1,7 @@
-import React from "react";
 import { View, Text } from "native-base";
+import React from "react";
 import { SafeAreaView, StyleSheet, Dimensions } from "react-native";
+
 import { Colors } from "@/theme/variables";
 
 interface HeaderProps {

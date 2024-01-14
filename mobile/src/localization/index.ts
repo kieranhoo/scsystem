@@ -1,4 +1,5 @@
 import { I18n } from "i18n-js";
+
 import { en, vi } from "./languages";
 
 export enum Language {

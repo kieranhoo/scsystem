@@ -1,3 +1,5 @@
+import axios from "axios";
+import moment, { Moment } from "moment";
 import React, { useState, useEffect } from "react";
 import {
   View,
@@ -9,13 +11,14 @@ import {
   Modal,
   TouchableWithoutFeedback,
 } from "react-native";
-import { RoomsHeader } from "@/components/header/rooms-header";
 import CalendarStrip from "react-native-calendar-strip";
-import moment, { Moment } from "moment";
 import Ionicons from "react-native-vector-icons/Ionicons";
 import Octicons from "react-native-vector-icons/Octicons";
+
 import { Colors } from "../../theme/variables";
-import axios from "axios";
+
+import { RoomsHeader } from "@/components/header/rooms-header";
+
 
 const screenWidth = Dimensions.get("screen").width;
 const screenHeight = Dimensions.get("screen").height;
@@ -55,7 +58,7 @@ const InputPopup: React.FC<InputPopupProps> = ({ isVisible, onClose, selectedIte
   return (
     <Modal
       animationType="none"
-      transparent={true}
+      transparent
       visible={isVisible}
       onRequestClose={onClose}
     >
@@ -67,7 +70,7 @@ const InputPopup: React.FC<InputPopupProps> = ({ isVisible, onClose, selectedIte
             <Text style={styles.content}>{selectedItem?.email}</Text>
             <Text style={styles.inform}>Room: {selectedItem?.room_name}</Text>
             <Text style={styles.inform}>Supervisor: {selectedItem?.supervisor}</Text>
-            <View style={styles.horizontalLine}></View>
+            <View style={styles.horizontalLine} />
             <Text style={styles.inform}>{selectedItem?.activity_type === 'in' ? 'Check in: ' : 'Check out: '} {formattedDateTime}</Text>
             <TouchableOpacity onPress={handleClick} style={styles.button}>
               <Text style={styles.buttontext}>OK</Text>
@@ -99,8 +102,8 @@ export const Rooms = () => {
     try {
       const result = await axios.get(`${process.env.BASE_URL}/room/history`, {
         params: {
-          room_id: room_id,
-          date: date,
+          room_id,
+          date,
         },
       });
       return result.data;
@@ -248,7 +251,7 @@ export const Rooms = () => {
               </View>
               <Text style={styles.regular14}>check in</Text>
             </View>
-            <View style={styles.verticalLine}></View>
+            <View style={styles.verticalLine} />
             <View style={styles.checkOut}>
               <View style={styles.checkNum}>
                 <Octicons

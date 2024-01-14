@@ -1,10 +1,11 @@
-import React, { useEffect, useState } from "react";
-import { View, Text, StyleSheet, Dimensions, FlatList, ScrollView } from "react-native";
-import { Header } from "@/components/header";
-import { BarChart } from 'react-native-gifted-charts';
-import { Colors } from "@/theme/variables";
 import axios from "axios";
-import { BackHandler } from "react-native";
+import React, { useEffect, useState } from "react";
+import { View, Text, StyleSheet, Dimensions, FlatList, ScrollView , BackHandler } from "react-native";
+import { BarChart } from 'react-native-gifted-charts';
+
+import { Header } from "@/components/header";
+import { Colors } from "@/theme/variables";
+
 
 const screenWidth = Dimensions.get("screen").width;
 const screenHeight = Dimensions.get("screen").height;
@@ -155,7 +156,7 @@ export const Home = () => {
         <View style={styles.component_content}>
           <FlatList
             data={generaldata}
-            horizontal={true}
+            horizontal
             renderItem={({ item }) => <Room room_name={item.room_name} in={item.in} out={item.out} total={item.total} />}
             keyExtractor={item => item.room_id}
           />
