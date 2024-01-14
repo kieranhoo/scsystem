@@ -2,8 +2,6 @@ package queue
 
 import (
 	"scsystem/internal/config"
-	"scsystem/internal/messaging/handler"
-	"scsystem/pkg/worker"
 )
 
 var (
@@ -23,7 +21,3 @@ func init() {
 const (
 	WorkerHealthCheck string = "Worker.HealthCheck"
 )
-
-func Common(eng *worker.Engine) {
-	eng.Queue(WorkerHealthCheck, handler.HandleHealthCheck)
-}

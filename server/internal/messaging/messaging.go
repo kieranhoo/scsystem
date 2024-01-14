@@ -2,6 +2,7 @@ package messaging
 
 import (
 	"scsystem/internal/messaging/queue"
+	"scsystem/internal/messaging/router"
 	"scsystem/pkg/worker"
 )
 
@@ -19,14 +20,14 @@ func NewMessaging() *Messaging {
 	}
 }
 
-func (msg *Messaging) Queue(queue ...func(eng *worker.Engine)) {
+func (msg *Messaging) Router(queue ...func(eng *worker.Engine)) {
 	for _, q := range queue {
 		q(msg.engine)
 	}
 }
 
 func (msg *Messaging) Run(concurrency int) error {
-	msg.Queue(queue.Common)
-	
+	msg.Queue(router.Common)
+
 	return msg.engine.Run(concurrency)
 }
