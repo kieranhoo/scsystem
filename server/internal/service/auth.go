@@ -2,30 +2,29 @@ package service
 
 import (
 	"errors"
-	"scsystem/internal/model"
+	"scsystem/internal/domain"
 	"scsystem/internal/repo"
-	"scsystem/internal/schema"
 	"scsystem/pkg/jwt"
 )
 
 type Auth struct {
-	repo repo.IUsers
+	repo domain.IUsers
 }
 
-func NewAuth() IAuthService {
+func NewAuth() domain.IAuthService {
 	return &Auth{
 		repo: repo.NewUser(),
 	}
 }
 
-func (auth *Auth) SignUp(req schema.SignUpRequest) error {
+func (auth *Auth) SignUp(req domain.SignUpRequest) error {
 	_pass, err := jwt.GenPassword(req.Password)
 	if err != nil {
 		return err
 	}
 	_user, err := auth.repo.GetByID(req.Id)
 	if err != nil || _user == nil {
-		return auth.repo.Insert(&model.Users{
+		return auth.repo.Insert(&domain.Users{
 			Id:          req.Id,
 			FirstName:   req.FirstName,
 			LastName:    req.LastName,
@@ -40,7 +39,7 @@ func (auth *Auth) SignUp(req schema.SignUpRequest) error {
 	return errors.New("user already exists")
 }
 
-func (auth *Auth) SignIn(req schema.SignInRequest) (string, error) {
+func (auth *Auth) SignIn(req domain.SignInRequest) (string, error) {
 	_user, err := auth.repo.GetByEmail(req.Email)
 	if err != nil {
 		return "", err
@@ -54,12 +53,12 @@ func (auth *Auth) SignIn(req schema.SignInRequest) (string, error) {
 	}
 	return token, nil
 }
-func (auth *Auth) GetMe(id string) (*schema.UserResponse, error) {
+func (auth *Auth) GetMe(id string) (*domain.UserResponse, error) {
 	users, err := auth.repo.GetByID(id)
 	if err != nil {
 		return nil, err
 	}
-	return &schema.UserResponse{
+	return &domain.UserResponse{
 		Id:          users.Id,
 		FirstName:   users.FirstName,
 		LastName:    users.LastName,

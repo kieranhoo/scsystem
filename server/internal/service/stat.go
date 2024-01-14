@@ -1,22 +1,22 @@
 package service
 
 import (
+	"scsystem/internal/domain"
 	"scsystem/internal/repo"
-	"scsystem/internal/schema"
 	"strconv"
 )
 
 type Stat struct {
-	repo repo.IChart
+	repo domain.IChart
 }
 
-func NewStat() IStat {
+func NewStat() domain.IStatService {
 	return &Stat{
 		repo: repo.NewChart(),
 	}
 }
 
-func (s *Stat) GetChartData(roomId string) (*schema.ChartMetadata, error) {
+func (s *Stat) GetChartData(roomId string) (*domain.ChartMetadata, error) {
 	in, out, m, y, err := s.repo.GetData7Day(roomId)
 	if err != nil {
 		return nil, err
@@ -25,22 +25,22 @@ func (s *Stat) GetChartData(roomId string) (*schema.ChartMetadata, error) {
 	if err != nil {
 		return nil, err
 	}
-	var data []schema.ChartDataValue
+	var data []domain.ChartDataValue
 	for i, v := range in {
 		data = append(data,
-			schema.ChartDataValue{
-				In: schema.ChartData{
+			domain.ChartDataValue{
+				In: domain.ChartData{
 					Value: v.Value,
 					Label: v.Label,
 				},
-				Out: schema.ChartData{
+				Out: domain.ChartData{
 					Value: out[i].Value,
 					Label: out[i].Label,
 				},
 			},
 		)
 	}
-	return &schema.ChartMetadata{
+	return &domain.ChartMetadata{
 		Month:    m,
 		Year:     strconv.Itoa(y),
 		RoomID:   room.Id,
@@ -50,8 +50,8 @@ func (s *Stat) GetChartData(roomId string) (*schema.ChartMetadata, error) {
 
 }
 
-func (s *Stat) GetRoomData() (*schema.RoomStat, error) {
-	var data []schema.RoomStatData
+func (s *Stat) GetRoomData() (*domain.RoomStat, error) {
+	var data []domain.RoomStatData
 	room, err := repo.NewRoom().Get()
 	if err != nil {
 		return nil, err
@@ -69,7 +69,7 @@ func (s *Stat) GetRoomData() (*schema.RoomStat, error) {
 		if len(out) != 0 {
 			outCount = out[0].Value
 		}
-		data = append(data, schema.RoomStatData{
+		data = append(data, domain.RoomStatData{
 			RoomName: r.RoomName,
 			RoomID:   r.RoomID,
 			In:       inCount,
@@ -77,7 +77,7 @@ func (s *Stat) GetRoomData() (*schema.RoomStat, error) {
 			Total:    inCount + outCount,
 		})
 	}
-	return &schema.RoomStat{
+	return &domain.RoomStat{
 		Total: len(room),
 		Data:  data,
 	}, nil

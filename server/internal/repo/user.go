@@ -1,36 +1,36 @@
 package repo
 
 import (
-	"scsystem/internal/model"
+	"scsystem/internal/domain"
 	"scsystem/pkg/database"
 
 	"gorm.io/gorm"
 )
 
 type Users struct {
-	data *model.Users
+	data *domain.Users
 	conn *gorm.DB
 }
 
-func NewUser() IUsers {
+func NewUser() domain.IUsers {
 	conn, err := database.Connection()
 	if err != nil {
 		panic(err)
 	}
 	return &Users{
-		data: &model.Users{},
+		data: &domain.Users{},
 		conn: conn,
 	}
 }
 
-func (user *Users) GetByEmail(email string) (*model.Users, error) {
+func (user *Users) GetByEmail(email string) (*domain.Users, error) {
 	if err := user.conn.Raw("SELECT * FROM users WHERE email = ?", email).Scan(user.data).Error; err != nil {
 		return nil, err
 	}
 	return user.data, nil
 }
 
-func (user *Users) GetByID(Id string) (*model.Users, error) {
+func (user *Users) GetByID(Id string) (*domain.Users, error) {
 	// if err := conn.Raw("SELECT * FROM users WHERE id = ?", Id).Scan(_user).Error; err != nil {
 	// 	return nil, err
 	// }
@@ -40,7 +40,7 @@ func (user *Users) GetByID(Id string) (*model.Users, error) {
 	return user.data, nil
 }
 
-func (user *Users) Insert(_user *model.Users) error {
+func (user *Users) Insert(_user *domain.Users) error {
 	if err := user.conn.Exec(
 		"INSERT INTO users (id, first_name, last_name, email, phone_number, role, title, password) VALUES (?, ?, ?, ?, ?, ?, ?, ?);",
 		_user.Id, _user.FirstName, _user.LastName, _user.Email, _user.PhoneNumber, _user.Role, _user.Title, _user.Password).Error; err != nil {

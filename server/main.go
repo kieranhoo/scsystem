@@ -7,8 +7,8 @@ import (
 	"log"
 	"os"
 	"os/signal"
-	"scsystem/api"
 	_ "scsystem/docs"
+	"scsystem/internal/api"
 	"syscall"
 )
 

@@ -2,12 +2,12 @@ package main
 
 import (
 	"log"
-	"scsystem/api"
+	"scsystem/internal/messaging"
 )
 
 func main() {
-	w := api.NewWorker(10)
-	if err := w.Run(); err != nil {
+	worker := messaging.NewMessaging()
+	if err := worker.Run(10); err != nil {
 		log.Fatal(err)
 	}
 }
