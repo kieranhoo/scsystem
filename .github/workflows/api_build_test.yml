@@ -22,6 +22,8 @@ jobs:
 
       - name: Build the Go application
         run: go build -ldflags="-s -w" -o ./bin/exe ./cmd
+        working-directory: ./server
 
       - name: Remove binaries
         run: rm -rf bin
+        working-directory: ./server
