@@ -1,13 +1,15 @@
-import React, { useState, useEffect } from "react";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import { HomeContainer } from "@/screens/home";
-import { ScannerContainer } from "@/screens/scan";
+import React, { useState, useEffect } from "react";
+import { Colors } from "react-native/Libraries/NewAppScreen";
 import Ionicons from "react-native-vector-icons/Ionicons";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 
-import { RoomsContainer } from "@/screens/rooms";
+import { HomeContainer } from "@/screens/home";
 import { ProfileContainer } from "@/screens/profile";
-import { Colors } from "react-native/Libraries/NewAppScreen";
+import { RoomsContainer } from "@/screens/rooms";
+import { ScannerContainer } from "@/screens/scan";
+
+
 
 const Tab = createBottomTabNavigator();
 

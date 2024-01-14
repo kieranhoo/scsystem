@@ -9,10 +9,11 @@ import {
   FlatList,
   TouchableWithoutFeedback,
 } from "react-native";
-import { Colors } from "@/theme/variables";
-import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 import DropDownPicker from "react-native-dropdown-picker";
+import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
+
 import { rooms } from "@/services";
+import { Colors } from "@/theme/variables";
 
 interface RoomsHeaderProps {
   onSelectRoom: (roomId: string) => void;
@@ -39,7 +40,7 @@ const Popup: React.FC<
   return (
     <Modal
       animationType="none"
-      transparent={true}
+      transparent
       visible={isVisible}
       onRequestClose={onClose}
     >
@@ -166,7 +167,7 @@ export const RoomsHeader: React.FC<RoomsHeaderProps> = ({
         <MaterialCommunityIcons
           name="account-box"
           size={50}
-          color={"rgba(27, 97, 181, 0.89)"}
+          color="rgba(27, 97, 181, 0.89)"
         />
       </TouchableOpacity>
 

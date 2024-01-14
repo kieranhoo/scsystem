@@ -1,3 +1,5 @@
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import { StatusBar } from "expo-status-bar";
 import React, { useEffect } from "react";
 import {
   BackHandler,
@@ -10,10 +12,10 @@ import {
   TouchableOpacity,
   FlatList,
 } from "react-native";
-import { StatusBar } from "expo-status-bar";
-import { Colors } from "../../theme/variables";
+
 import { RootScreens } from "..";
-import AsyncStorage from "@react-native-async-storage/async-storage";
+import { Colors } from "../../theme/variables";
+
 
 const screenWidth = Dimensions.get("screen").width;
 const screenHeight = Dimensions.get("screen").height;
@@ -142,7 +144,7 @@ export const Onboarding = (props: { onNavigate: (string: RootScreens) => void })
                   backgroundColor: Colors.DISPLAY,
                 },
               ]}
-            ></View>
+             />
           ))}
         </View>
         <View style={styles.buttonContainer}>

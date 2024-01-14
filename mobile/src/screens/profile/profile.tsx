@@ -7,7 +7,9 @@ import {
   TouchableOpacity,
   SafeAreaView,
 } from "react-native";
+
 import { Colors, FontSize } from "../../theme/variables";
+
 import { Header } from "@/components/header";
 
 const screenWidth = Dimensions.get("screen").width;

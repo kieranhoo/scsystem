@@ -1,3 +1,5 @@
+import axios from "axios";
+import moment, { Moment } from "moment";
 import React, { useState, useEffect } from "react";
 import {
   View,
@@ -10,13 +12,14 @@ import {
   TouchableWithoutFeedback,
   TextInput,
 } from "react-native";
-import { RoomsHeader } from "@/components/header/rooms-header";
 import CalendarStrip from "react-native-calendar-strip";
-import moment, { Moment } from "moment";
 import Ionicons from "react-native-vector-icons/Ionicons";
 import Octicons from "react-native-vector-icons/Octicons";
+
 import { Colors } from "../../theme/variables";
-import axios from "axios";
+
+import { RoomsHeader } from "@/components/header/rooms-header";
+
 
 const screenWidth = Dimensions.get("screen").width;
 const screenHeight = Dimensions.get("screen").height;
@@ -52,7 +55,7 @@ const InputPopup: React.FC<InputPopupProps> = ({ isVisible, onClose }) => {
   return (
     <Modal
       animationType="none"
-      transparent={true}
+      transparent
       visible={isVisible}
       onRequestClose={onClose}
     >
@@ -62,7 +65,7 @@ const InputPopup: React.FC<InputPopupProps> = ({ isVisible, onClose }) => {
             <Text style={styles.label}>Student ID:</Text>
             <TextInput
               placeholder="Type Student ID to check in/out"
-              placeholderTextColor={"rgba(0, 0, 0, 0.5)"}
+              placeholderTextColor="rgba(0, 0, 0, 0.5)"
               value={value}
               onChangeText={setValue}
               style={styles.input}
@@ -97,8 +100,8 @@ export const Rooms = () => {
     try {
       const result = await axios.get(`${process.env.BASE_URL}/room/history`, {
         params: {
-          room_id: room_id,
-          date: date,
+          room_id,
+          date,
         },
       });
       // console.log(result.data)
@@ -241,7 +244,7 @@ export const Rooms = () => {
               </View>
               <Text style={styles.regular14}>check in</Text>
             </View>
-            <View style={styles.verticalLine}></View>
+            <View style={styles.verticalLine} />
             <View style={styles.checkOut}>
               <View style={styles.checkNum}>
                 <Octicons

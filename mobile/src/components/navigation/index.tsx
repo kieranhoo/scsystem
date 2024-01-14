@@ -1,13 +1,15 @@
+import { NavigationContainer } from "@react-navigation/native";
+import { createStackNavigator } from '@react-navigation/stack';
 import React from "react";
 import { StatusBar } from "react-native";
-import { createStackNavigator } from '@react-navigation/stack';
-import { NavigationContainer } from "@react-navigation/native";
+
 import { MainNavigator } from "./main";
-import { WelcomeContainer } from "@/screens/welcome";
+
 import { RootScreens } from "@/screens";
 import { OnboardingContainer } from "@/screens/onboarding";
-import { ScannerContainer } from "@/screens/scan/scanner-container";
 import { ProfileContainer } from "@/screens/profile";
+import { ScannerContainer } from "@/screens/scan/scanner-container";
+import { WelcomeContainer } from "@/screens/welcome";
 
 export type RootStackParamList = {
   [RootScreens.MAIN]: undefined;
@@ -26,7 +28,7 @@ const ApplicationNavigator = () => {
     <NavigationContainer>
       <StatusBar />
       <RootStack.Navigator
-        detachInactiveScreens={true}
+        detachInactiveScreens
         screenOptions={{
           headerShown: false,
         }}

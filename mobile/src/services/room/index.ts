@@ -15,7 +15,7 @@ export const rooms = {
     try {
       const result = await axios.get(`${process.env.BASE_URL}/stat/chart`, {
         params: {
-          room_id: room_id,
+          room_id,
         },
       });
       return result.data;
