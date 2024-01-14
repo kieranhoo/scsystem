@@ -3,8 +3,6 @@ import { View, Text, StyleSheet, Dimensions, FlatList, ScrollView } from "react-
 import { Header } from "@/components/header";
 import { BarChart } from 'react-native-gifted-charts';
 import { Colors } from "@/theme/variables";
-import { autoBatchEnhancer } from "@reduxjs/toolkit";
-import { rooms } from "@/services";
 import axios from "axios";
 import { BackHandler } from "react-native";
 

@@ -2,29 +2,27 @@ package service
 
 import (
 	"errors"
-	"scsystem/internal/model"
+	"scsystem/internal/domain"
 	"scsystem/internal/repo"
-	"scsystem/internal/schema"
-	"scsystem/internal/tasks"
 	"scsystem/pkg/mailers"
 	"time"
 )
 
 type Registration struct {
-	repo repo.IRegistration
+	repo domain.IRegistration
 }
 
-func NewRoom() IRoomService {
+func NewRoom() domain.IRoomService {
 	return &Registration{
 		repo: repo.NewRegistration(),
 	}
 }
 
-func (regis *Registration) RegisterRoom(req *schema.RegistrationRoomRequest) error {
+func (regis *Registration) RegisterRoom(req *domain.RegistrationRoomRequest) error {
 	_user, err := regis.repo.GetByUserIdAndRoom(req.StudentId, req.RoomId)
 	// log.Fatal(_user)
 	if err != nil || _user.Id == "" {
-		if err := tasks.SaveUser(&model.Users{
+		if err := repo.NewUser().Insert(&domain.Users{
 			Id:          req.StudentId,
 			FirstName:   req.FirstName,
 			LastName:    req.LastName,
@@ -33,18 +31,6 @@ func (regis *Registration) RegisterRoom(req *schema.RegistrationRoomRequest) err
 		}); err != nil {
 			return err
 		}
-		// if err := worker.Exec(tasks.CriticalQueue, worker.NewTask(
-		// 	tasks.WorkerSaveUser,
-		// 	model.Users{
-		// 		Id:          req.StudentId,
-		// 		FirstName:   req.FirstName,
-		// 		LastName:    req.LastName,
-		// 		PhoneNumber: req.PhoneNumber,
-		// 		Email:       req.Email,
-		// 	}),
-		// ); err != nil {
-		// 	return err
-		// }
 	}
 
 	room, err := repo.NewRoom().GetByID(req.RoomId)
@@ -65,7 +51,7 @@ func (regis *Registration) RegisterRoom(req *schema.RegistrationRoomRequest) err
 		Information: "ist Director",
 	})
 
-	return tasks.SaveRegistration(&model.Registration{
+	return repo.NewRegistration().Insert(&domain.Registration{
 		RegistrationTime: req.RegistrationTime,
 		Supervisor:       req.Supervisor,
 		StartDay:         req.StartDay,
@@ -73,36 +59,24 @@ func (regis *Registration) RegisterRoom(req *schema.RegistrationRoomRequest) err
 		UserID:           req.StudentId,
 		RoomId:           req.RoomId,
 	})
-	// return worker.Exec(tasks.CriticalQueue, worker.NewTask(
-	// 	tasks.WorkerSaveRegistration,
-	// 	model.Registration{
-	// 		RegistrationTime: req.RegistrationTime,
-	// 		Supervisor:       req.Supervisor,
-	// 		StartDay:         req.StartDay,
-	// 		EndDay:           req.EndDay,
-	// 		UserID:           req.StudentId,
-	// 		RoomId:           req.RoomId,
-	// 	},
-	// ))
 }
 
-func (regis *Registration) SaveActivityType(req *schema.CheckInRequest) error {
-	return tasks.SaveActivityType(&model.History{
+func (regis *Registration) SaveActivityType(req *domain.CheckInRequest) error {
+	_history, err := repo.NewHistory().Latest(req.RegistrationId)
+	if err != nil {
+		return err
+	}
+	if _history.ActivityType == req.ActivityType {
+		return nil
+	}
+	return repo.NewHistory().Insert(&domain.History{
 		RegistrationId: req.RegistrationId,
 		AdminId:        req.AdminId,
 		ActivityType:   req.ActivityType,
 	})
-	// return worker.Exec(tasks.CriticalQueue, worker.NewTask(
-	// 	tasks.WorkerSaveActivityType,
-	// 	model.History{
-	// 		RegistrationId: req.RegistrationId,
-	// 		AdminId:        req.AdminId,
-	// 		ActivityType:   req.ActivityType,
-	// 	},
-	// ))
 }
 
-func (regis *Registration) RegistrationLatest(studentId, roomId string) (*schema.UserRoomData, error) {
+func (regis *Registration) RegistrationLatest(studentId, roomId string) (*domain.UserRoomData, error) {
 	roomData, _ := regis.repo.RegistrationLatest(studentId, roomId)
 	// if err != nil || roomData.StartDay == "" {
 	// 	return nil, errors.New("no data for registration")
@@ -122,16 +96,16 @@ func (regis *Registration) RegistrationLatest(studentId, roomId string) (*schema
 	return roomData, nil
 }
 
-func (regis *Registration) GetHistories(limit string) ([]model.History, error) {
+func (regis *Registration) GetHistories(limit string) ([]domain.History, error) {
 	return repo.NewHistory().GetList(limit)
 }
 
-func (regis *Registration) GetHistoriesData(date, roomId string) (*schema.HistoryDataResponse, error) {
+func (regis *Registration) GetHistoriesData(date, roomId string) (*domain.HistoryDataResponse, error) {
 	data, err := repo.NewHistory().GetHistory(date, roomId)
 	if err != nil {
 		return nil, err
 	}
-	var response = schema.HistoryDataResponse{
+	var response = domain.HistoryDataResponse{
 		Data: data,
 	}
 	if len(data) > 0 {
@@ -148,6 +122,6 @@ func (regis *Registration) GetHistoriesData(date, roomId string) (*schema.Histor
 	return &response, nil
 }
 
-func (regis *Registration) GetRoom() ([]schema.RoomData, error) {
+func (regis *Registration) GetRoom() ([]domain.RoomData, error) {
 	return repo.NewRoom().Get()
 }

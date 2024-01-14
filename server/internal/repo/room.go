@@ -1,8 +1,7 @@
 package repo
 
 import (
-	"scsystem/internal/model"
-	"scsystem/internal/schema"
+	"scsystem/internal/domain"
 	"scsystem/pkg/database"
 	"scsystem/pkg/database/queries"
 
@@ -10,22 +9,22 @@ import (
 )
 
 type Room struct {
-	data *model.Room
+	data *domain.Room
 	conn *gorm.DB
 }
 
-func NewRoom() IRoom {
+func NewRoom() domain.IRoom {
 	conn, err := database.Connection()
 	if err != nil {
 		panic(err)
 	}
 	return &Room{
-		data: &model.Room{},
+		data: &domain.Room{},
 		conn: conn,
 	}
 }
 
-func (r *Room) Insert(room *model.Room) error {
+func (r *Room) Insert(room *domain.Room) error {
 	if err := r.conn.Exec(
 		"INSERT INTO room (office_id, name, description) VALUES (?, ?, ?);",
 		room.OfficeID,
@@ -37,15 +36,15 @@ func (r *Room) Insert(room *model.Room) error {
 	return nil
 }
 
-func (r *Room) Get() ([]schema.RoomData, error) {
-	var roomData []schema.RoomData
+func (r *Room) Get() ([]domain.RoomData, error) {
+	var roomData []domain.RoomData
 	if err := r.conn.Raw(queries.RoomData).Scan(&roomData).Error; err != nil {
 		return nil, err
 	}
 	return roomData, nil
 }
 
-func (r *Room) GetByID(roomId string) (*model.Room, error) {
+func (r *Room) GetByID(roomId string) (*domain.Room, error) {
 	if err := r.conn.Raw(
 		"SELECT * FROM room WHERE id = ?", roomId,
 	).Scan(r.data).Error; err != nil {

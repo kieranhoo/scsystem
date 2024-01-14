@@ -1,8 +1,7 @@
 package repo
 
 import (
-	"scsystem/internal/model"
-	"scsystem/internal/schema"
+	"scsystem/internal/domain"
 	"scsystem/pkg/database"
 	"scsystem/pkg/database/queries"
 
@@ -10,22 +9,22 @@ import (
 )
 
 type Office struct {
-	data *model.Office
+	data *domain.Office
 	conn *gorm.DB
 }
 
-func NewOffice() IOffice {
+func NewOffice() domain.IOffice {
 	conn, err := database.Connection()
 	if err != nil {
 		panic(err)
 	}
 	return &Office{
-		data: &model.Office{},
+		data: &domain.Office{},
 		conn: conn,
 	}
 }
 
-func (o *Office) Insert(office *model.Office) error {
+func (o *Office) Insert(office *domain.Office) error {
 	if err := o.conn.Exec(
 		"INSERT INTO office (address, manager, name,organization_id, phone_number) VALUES (?, ?, ?, ?, ?);",
 		office.Address,
@@ -39,8 +38,8 @@ func (o *Office) Insert(office *model.Office) error {
 	return nil
 }
 
-func (o *Office) Get() ([]schema.OfficeData, error) {
-	var data []schema.OfficeData
+func (o *Office) Get() ([]domain.OfficeData, error) {
+	var data []domain.OfficeData
 	if err := o.conn.Raw(queries.OfficeData).Scan(&data).Error; err != nil {
 		return nil, err
 	}

@@ -3,8 +3,7 @@ package repo
 import (
 	"errors"
 	"log"
-	"scsystem/internal/model"
-	"scsystem/internal/schema"
+	"scsystem/internal/domain"
 	"scsystem/pkg/database"
 	"strconv"
 	"time"
@@ -13,17 +12,17 @@ import (
 )
 
 type Chart struct {
-	data *model.Chart
+	data *domain.Chart
 	conn *gorm.DB
 }
 
-func NewChart() IChart {
+func NewChart() domain.IChart {
 	conn, err := database.Connection()
 	if err != nil {
 		panic(err)
 	}
 	return &Chart{
-		data: &model.Chart{},
+		data: &domain.Chart{},
 		conn: conn,
 	}
 }
@@ -68,10 +67,10 @@ func (chart *Chart) UpdateChartData(roomId, activityType string) error {
 	return nil
 }
 
-func (chart *Chart) GetData7Day(roomId string) (_in []schema.ChartData, _out []schema.ChartData, month string, year int, err error) {
-	var chartData []model.Chart
-	_in = []schema.ChartData{}
-	_out = []schema.ChartData{}
+func (chart *Chart) GetData7Day(roomId string) (_in []domain.ChartData, _out []domain.ChartData, month string, year int, err error) {
+	var chartData []domain.Chart
+	_in = []domain.ChartData{}
+	_out = []domain.ChartData{}
 	if err = chart.conn.Raw(
 		"SELECT * FROM chart WHERE room_id = ? ORDER BY id DESC LIMIT 7",
 		roomId,
@@ -85,11 +84,11 @@ func (chart *Chart) GetData7Day(roomId string) (_in []schema.ChartData, _out []s
 		if err != nil {
 			log.Fatal(err)
 		}
-		_in = append(_in, schema.ChartData{
+		_in = append(_in, domain.ChartData{
 			Label: strconv.Itoa(date.Day()),
 			Value: v.InCount,
 		})
-		_out = append(_out, schema.ChartData{
+		_out = append(_out, domain.ChartData{
 			Label: strconv.Itoa(date.Day()),
 			Value: v.OutCount,
 		})

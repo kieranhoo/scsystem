@@ -4,7 +4,7 @@ import (
 	"log"
 	"os"
 	"os/signal"
-	"scsystem/api"
+	"scsystem/internal/api"
 	"syscall"
 )
 

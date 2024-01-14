@@ -8,7 +8,8 @@ import (
 	"log"
 	"os"
 	"os/signal"
-	"scsystem/api"
+	"scsystem/internal/api"
+	"scsystem/internal/messaging"
 	"sort"
 	"syscall"
 
@@ -23,8 +24,8 @@ var Command = []*cli.Command{
 		Aliases: []string{"w"},
 		Usage:   "run worker handle tasks in queue",
 		Action: func(c *cli.Context) error {
-			w := api.NewWorker(10)
-			return w.Run()
+			worker := messaging.NewMessaging()
+			return worker.Run(10)
 		},
 	},
 	{

@@ -1,8 +1,7 @@
 package repo
 
 import (
-	"scsystem/internal/model"
-	"scsystem/internal/schema"
+	"scsystem/internal/domain"
 	"scsystem/pkg/database"
 	"scsystem/pkg/database/queries"
 
@@ -10,22 +9,22 @@ import (
 )
 
 type Registration struct {
-	data *model.Registration
+	data *domain.Registration
 	conn *gorm.DB
 }
 
-func NewRegistration() IRegistration {
+func NewRegistration() domain.IRegistration {
 	conn, err := database.Connection()
 	if err != nil {
 		panic(err)
 	}
 	return &Registration{
-		data: &model.Registration{},
+		data: &domain.Registration{},
 		conn: conn,
 	}
 }
 
-func (res *Registration) Insert(_res *model.Registration) error {
+func (res *Registration) Insert(_res *domain.Registration) error {
 	if err := res.conn.Exec(
 		"INSERT INTO registration (registration_time, supervisor, user_id, room_id, start_day, end_day) VALUES (?, ?, ?, ?, ?, ?);",
 		_res.RegistrationTime, _res.Supervisor, _res.UserID, _res.RoomId, _res.StartDay, _res.EndDay).Error; err != nil {
@@ -34,14 +33,14 @@ func (res *Registration) Insert(_res *model.Registration) error {
 	return nil
 }
 
-func (res *Registration) GetByID(id string) (*model.Registration, error) {
+func (res *Registration) GetByID(id string) (*domain.Registration, error) {
 	if err := res.conn.Raw("SELECT * FROM registration WHERE id = ?", id).Scan(res.data).Error; err != nil {
 		return nil, err
 	}
 	return res.data, nil
 }
 
-func (res *Registration) GetByUserIdAndRoom(userId, roomId string) (*model.Registration, error) {
+func (res *Registration) GetByUserIdAndRoom(userId, roomId string) (*domain.Registration, error) {
 	if err := res.conn.Raw(
 		"SELECT * FROM registration WHERE user_id = ? AND room_id = ?",
 		userId, roomId,
@@ -51,7 +50,7 @@ func (res *Registration) GetByUserIdAndRoom(userId, roomId string) (*model.Regis
 	return res.data, nil
 }
 
-func (res *Registration) UpdateByIDAndRoom(_res *model.Registration) error {
+func (res *Registration) UpdateByIDAndRoom(_res *domain.Registration) error {
 	if err := res.conn.Exec(
 		"UPDATE registration SET registration_time = ?, supervisor = ?, start_day = ?, end_day = ? WHERE user_id = ? AND room_id = ? AND id = ?;",
 		_res.RegistrationTime, _res.Supervisor, _res.StartDay, _res.EndDay, _res.UserID, _res.RoomId, _res.Id).Error; err != nil {
@@ -60,7 +59,7 @@ func (res *Registration) UpdateByIDAndRoom(_res *model.Registration) error {
 	return nil
 }
 
-func (res *Registration) Latest() (*model.Registration, error) {
+func (res *Registration) Latest() (*domain.Registration, error) {
 	if err := res.conn.Raw("SELECT * FROM registration ORDER BY id desc LIMIT 1;").Scan(res.data).Error; err != nil {
 		return nil, err
 	}
@@ -71,8 +70,8 @@ func (res *Registration) Empty() bool {
 	return res.data.UserID == ""
 }
 
-func (res *Registration) RegistrationLatest(studentId, roomId string) (*schema.UserRoomData, error) {
-	RoomData := new(schema.UserRoomData)
+func (res *Registration) RegistrationLatest(studentId, roomId string) (*domain.UserRoomData, error) {
+	RoomData := new(domain.UserRoomData)
 	if err := res.conn.Raw(queries.RegistrationLatest, studentId, roomId).Scan(RoomData).Error; err != nil {
 		return nil, err
 	}
@@ -93,8 +92,8 @@ func (res *Registration) RegistrationLatest(studentId, roomId string) (*schema.U
 	return RoomData, nil
 }
 
-func (res *Registration) OneWeekBefore() ([]model.Registration, error) {
-	var registration []model.Registration
+func (res *Registration) OneWeekBefore() ([]domain.Registration, error) {
+	var registration []domain.Registration
 	if err := res.conn.Raw(queries.RegistrationBefore1Week).Scan(&registration).Error; err != nil {
 		return nil, err
 	}
