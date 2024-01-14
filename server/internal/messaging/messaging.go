@@ -20,14 +20,14 @@ func NewMessaging() *Messaging {
 	}
 }
 
-func (msg *Messaging) Router(queue ...func(eng *worker.Engine)) {
+func (msg *Messaging) router(queue ...func(eng *worker.Engine)) {
 	for _, q := range queue {
 		q(msg.engine)
 	}
 }
 
 func (msg *Messaging) Run(concurrency int) error {
-	msg.Queue(router.Common)
+	msg.router(router.Common)
 
 	return msg.engine.Run(concurrency)
 }
