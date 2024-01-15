@@ -5,7 +5,7 @@ go 1.20
 require (
 	github.com/charmbracelet/log v0.3.0
 	github.com/getsentry/sentry-go v0.25.0
-	github.com/go-playground/validator/v10 v10.16.0
+	github.com/go-playground/validator/v10 v10.17.0
 	github.com/gofiber/contrib/fibersentry v1.0.4
 	github.com/gofiber/fiber/v2 v2.50.0
 	github.com/gofiber/swagger v0.1.14
