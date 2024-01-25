@@ -9,7 +9,7 @@ import (
 	"os"
 	"os/signal"
 	"scsystem/internal/api"
-	"scsystem/internal/messaging"
+	"scsystem/internal/broker"
 	"sort"
 	"syscall"
 
@@ -24,7 +24,7 @@ var Command = []*cli.Command{
 		Aliases: []string{"w"},
 		Usage:   "run worker handle tasks in queue",
 		Action: func(c *cli.Context) error {
-			worker := messaging.NewMessaging()
+			worker := broker.Newbroker()
 			return worker.Run(10)
 		},
 	},

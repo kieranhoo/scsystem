@@ -27,7 +27,7 @@
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/schema.SignInRequest"
+                            "$ref": "#/definitions/domain.SignInRequest"
                         }
                     }
                 ],
@@ -35,7 +35,7 @@
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/schema.SignInResponse"
+                            "$ref": "#/definitions/domain.SignInResponse"
                         }
                     }
                 }
@@ -60,7 +60,7 @@
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/schema.SignUpRequest"
+                            "$ref": "#/definitions/domain.SignUpRequest"
                         }
                     }
                 ],
@@ -68,7 +68,7 @@
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/schema.SignUpResponse"
+                            "$ref": "#/definitions/domain.SignUpResponse"
                         }
                     }
                 }
@@ -109,7 +109,7 @@
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/schema.DataResponse"
+                            "$ref": "#/definitions/domain.DataResponse"
                         }
                     }
                 }
@@ -147,7 +147,7 @@
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/schema.DataResponse"
+                            "$ref": "#/definitions/domain.DataResponse"
                         }
                     }
                 }
@@ -170,7 +170,7 @@
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/schema.CheckInRequest"
+                            "$ref": "#/definitions/domain.CheckInRequest"
                         }
                     }
                 ],
@@ -178,7 +178,7 @@
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/schema.Response"
+                            "$ref": "#/definitions/domain.Response"
                         }
                     }
                 }
@@ -216,7 +216,7 @@
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/schema.HistoryDataResponse"
+                            "$ref": "#/definitions/domain.HistoryDataResponse"
                         }
                     }
                 }
@@ -241,7 +241,7 @@
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/schema.RegistrationRoomRequest"
+                            "$ref": "#/definitions/domain.RegistrationRoomRequest"
                         }
                     }
                 ],
@@ -249,7 +249,7 @@
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/schema.Response"
+                            "$ref": "#/definitions/domain.Response"
                         }
                     }
                 }
@@ -280,7 +280,7 @@
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/schema.ChartMetadata"
+                            "$ref": "#/definitions/domain.ChartMetadata"
                         }
                     }
                 }
@@ -302,7 +302,7 @@
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/schema.RoomStat"
+                            "$ref": "#/definitions/domain.RoomStat"
                         }
                     }
                 }
@@ -333,7 +333,7 @@
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/schema.SignInResponse"
+                            "$ref": "#/definitions/domain.SignInResponse"
                         }
                     }
                 }
@@ -341,7 +341,7 @@
         }
     },
     "definitions": {
-        "schema.ChartData": {
+        "domain.ChartData": {
             "type": "object",
             "properties": {
                 "label": {
@@ -354,24 +354,24 @@
                 }
             }
         },
-        "schema.ChartDataValue": {
+        "domain.ChartDataValue": {
             "type": "object",
             "properties": {
                 "in": {
-                    "$ref": "#/definitions/schema.ChartData"
+                    "$ref": "#/definitions/domain.ChartData"
                 },
                 "out": {
-                    "$ref": "#/definitions/schema.ChartData"
+                    "$ref": "#/definitions/domain.ChartData"
                 }
             }
         },
-        "schema.ChartMetadata": {
+        "domain.ChartMetadata": {
             "type": "object",
             "properties": {
                 "data": {
                     "type": "array",
                     "items": {
-                        "$ref": "#/definitions/schema.ChartDataValue"
+                        "$ref": "#/definitions/domain.ChartDataValue"
                     }
                 },
                 "month": {
@@ -388,7 +388,7 @@
                 }
             }
         },
-        "schema.CheckInRequest": {
+        "domain.CheckInRequest": {
             "type": "object",
             "required": [
                 "activity_type",
@@ -407,7 +407,7 @@
                 }
             }
         },
-        "schema.DataResponse": {
+        "domain.DataResponse": {
             "type": "object",
             "required": [
                 "data",
@@ -420,7 +420,7 @@
                 }
             }
         },
-        "schema.HistoryData": {
+        "domain.HistoryData": {
             "type": "object",
             "properties": {
                 "activity_type": {
@@ -473,13 +473,13 @@
                 }
             }
         },
-        "schema.HistoryDataResponse": {
+        "domain.HistoryDataResponse": {
             "type": "object",
             "properties": {
                 "data": {
                     "type": "array",
                     "items": {
-                        "$ref": "#/definitions/schema.HistoryData"
+                        "$ref": "#/definitions/domain.HistoryData"
                     }
                 },
                 "room_name": {
@@ -493,7 +493,7 @@
                 }
             }
         },
-        "schema.RegistrationRoomRequest": {
+        "domain.RegistrationRoomRequest": {
             "type": "object",
             "required": [
                 "email",
@@ -540,7 +540,7 @@
                 }
             }
         },
-        "schema.Response": {
+        "domain.Response": {
             "type": "object",
             "required": [
                 "msg",
@@ -555,13 +555,13 @@
                 }
             }
         },
-        "schema.RoomStat": {
+        "domain.RoomStat": {
             "type": "object",
             "properties": {
                 "data": {
                     "type": "array",
                     "items": {
-                        "$ref": "#/definitions/schema.RoomStatData"
+                        "$ref": "#/definitions/domain.RoomStatData"
                     }
                 },
                 "total": {
@@ -569,7 +569,7 @@
                 }
             }
         },
-        "schema.RoomStatData": {
+        "domain.RoomStatData": {
             "type": "object",
             "properties": {
                 "in": {
@@ -589,7 +589,7 @@
                 }
             }
         },
-        "schema.SignInRequest": {
+        "domain.SignInRequest": {
             "type": "object",
             "required": [
                 "email",
@@ -604,7 +604,7 @@
                 }
             }
         },
-        "schema.SignInResponse": {
+        "domain.SignInResponse": {
             "type": "object",
             "required": [
                 "email",
@@ -623,7 +623,7 @@
                 }
             }
         },
-        "schema.SignUpRequest": {
+        "domain.SignUpRequest": {
             "type": "object",
             "required": [
                 "email",
@@ -654,7 +654,7 @@
                 }
             }
         },
-        "schema.SignUpResponse": {
+        "domain.SignUpResponse": {
             "type": "object",
             "required": [
                 "msg",

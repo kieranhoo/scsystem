@@ -1,8 +1,8 @@
 package router
 
 import (
-	"scsystem/internal/messaging/handler"
-	"scsystem/internal/messaging/queue"
+	"scsystem/internal/broker/handler"
+	"scsystem/internal/broker/queue"
 	"scsystem/pkg/worker"
 )
 

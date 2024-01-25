@@ -1,6 +1,6 @@
 basePath: /
 definitions:
-  schema.ChartData:
+  domain.ChartData:
     properties:
       label:
         description: day
@@ -9,18 +9,18 @@ definitions:
         description: counter in/out
         type: integer
     type: object
-  schema.ChartDataValue:
+  domain.ChartDataValue:
     properties:
       in:
-        $ref: '#/definitions/schema.ChartData'
+        $ref: '#/definitions/domain.ChartData'
       out:
-        $ref: '#/definitions/schema.ChartData'
+        $ref: '#/definitions/domain.ChartData'
     type: object
-  schema.ChartMetadata:
+  domain.ChartMetadata:
     properties:
       data:
         items:
-          $ref: '#/definitions/schema.ChartDataValue'
+          $ref: '#/definitions/domain.ChartDataValue'
         type: array
       month:
         type: string
@@ -31,7 +31,7 @@ definitions:
       year:
         type: string
     type: object
-  schema.CheckInRequest:
+  domain.CheckInRequest:
     properties:
       activity_type:
         type: string
@@ -44,7 +44,7 @@ definitions:
     - admin_id
     - registration_id
     type: object
-  schema.DataResponse:
+  domain.DataResponse:
     properties:
       data: {}
       success:
@@ -53,7 +53,7 @@ definitions:
     - data
     - success
     type: object
-  schema.HistoryData:
+  domain.HistoryData:
     properties:
       activity_type:
         type: string
@@ -88,11 +88,11 @@ definitions:
       user_id:
         type: string
     type: object
-  schema.HistoryDataResponse:
+  domain.HistoryDataResponse:
     properties:
       data:
         items:
-          $ref: '#/definitions/schema.HistoryData'
+          $ref: '#/definitions/domain.HistoryData'
         type: array
       room_name:
         type: string
@@ -101,7 +101,7 @@ definitions:
       total_out:
         type: integer
     type: object
-  schema.RegistrationRoomRequest:
+  domain.RegistrationRoomRequest:
     properties:
       email:
         type: string
@@ -135,7 +135,7 @@ definitions:
     - student_id
     - supervisor
     type: object
-  schema.Response:
+  domain.Response:
     properties:
       msg:
         type: string
@@ -145,16 +145,16 @@ definitions:
     - msg
     - success
     type: object
-  schema.RoomStat:
+  domain.RoomStat:
     properties:
       data:
         items:
-          $ref: '#/definitions/schema.RoomStatData'
+          $ref: '#/definitions/domain.RoomStatData'
         type: array
       total:
         type: integer
     type: object
-  schema.RoomStatData:
+  domain.RoomStatData:
     properties:
       in:
         type: integer
@@ -167,7 +167,7 @@ definitions:
       total:
         type: integer
     type: object
-  schema.SignInRequest:
+  domain.SignInRequest:
     properties:
       email:
         type: string
@@ -177,7 +177,7 @@ definitions:
     - email
     - password
     type: object
-  schema.SignInResponse:
+  domain.SignInResponse:
     properties:
       email:
         type: string
@@ -190,7 +190,7 @@ definitions:
     - success
     - token
     type: object
-  schema.SignUpRequest:
+  domain.SignUpRequest:
     properties:
       email:
         type: string
@@ -212,7 +212,7 @@ definitions:
     - password
     - phone_number
     type: object
-  schema.SignUpResponse:
+  domain.SignUpResponse:
     properties:
       msg:
         type: string
@@ -239,14 +239,14 @@ paths:
         name: sign_in
         required: true
         schema:
-          $ref: '#/definitions/schema.SignInRequest'
+          $ref: '#/definitions/domain.SignInRequest'
       produces:
       - application/json
       responses:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/schema.SignInResponse'
+            $ref: '#/definitions/domain.SignInResponse'
       tags:
       - auth
   /auth/signup:
@@ -260,14 +260,14 @@ paths:
         name: sign_up
         required: true
         schema:
-          $ref: '#/definitions/schema.SignUpRequest'
+          $ref: '#/definitions/domain.SignUpRequest'
       produces:
       - application/json
       responses:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/schema.SignUpResponse'
+            $ref: '#/definitions/domain.SignUpResponse'
       tags:
       - auth
   /common/healthcheck:
@@ -293,7 +293,7 @@ paths:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/schema.DataResponse'
+            $ref: '#/definitions/domain.DataResponse'
       tags:
       - room
   /room/activity:
@@ -318,7 +318,7 @@ paths:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/schema.DataResponse'
+            $ref: '#/definitions/domain.DataResponse'
       tags:
       - room
     post:
@@ -331,14 +331,14 @@ paths:
         name: activity_param
         required: true
         schema:
-          $ref: '#/definitions/schema.CheckInRequest'
+          $ref: '#/definitions/domain.CheckInRequest'
       produces:
       - application/json
       responses:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/schema.Response'
+            $ref: '#/definitions/domain.Response'
       tags:
       - room
   /room/history:
@@ -363,7 +363,7 @@ paths:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/schema.HistoryDataResponse'
+            $ref: '#/definitions/domain.HistoryDataResponse'
       tags:
       - room
   /room/register:
@@ -377,14 +377,14 @@ paths:
         name: sign_in
         required: true
         schema:
-          $ref: '#/definitions/schema.RegistrationRoomRequest'
+          $ref: '#/definitions/domain.RegistrationRoomRequest'
       produces:
       - application/json
       responses:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/schema.Response'
+            $ref: '#/definitions/domain.Response'
       tags:
       - room
   /stat/chart:
@@ -404,7 +404,7 @@ paths:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/schema.ChartMetadata'
+            $ref: '#/definitions/domain.ChartMetadata'
       tags:
       - stat
   /stat/rooms:
@@ -418,7 +418,7 @@ paths:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/schema.RoomStat'
+            $ref: '#/definitions/domain.RoomStat'
       tags:
       - stat
   /user:
@@ -438,7 +438,7 @@ paths:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/schema.SignInResponse'
+            $ref: '#/definitions/domain.SignInResponse'
       tags:
       - user
 swagger: "2.0"

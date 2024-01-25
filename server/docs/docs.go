@@ -34,7 +34,7 @@ const docTemplate = `{
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/schema.SignInRequest"
+                            "$ref": "#/definitions/domain.SignInRequest"
                         }
                     }
                 ],
@@ -42,7 +42,7 @@ const docTemplate = `{
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/schema.SignInResponse"
+                            "$ref": "#/definitions/domain.SignInResponse"
                         }
                     }
                 }
@@ -67,7 +67,7 @@ const docTemplate = `{
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/schema.SignUpRequest"
+                            "$ref": "#/definitions/domain.SignUpRequest"
                         }
                     }
                 ],
@@ -75,7 +75,7 @@ const docTemplate = `{
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/schema.SignUpResponse"
+                            "$ref": "#/definitions/domain.SignUpResponse"
                         }
                     }
                 }
@@ -116,7 +116,7 @@ const docTemplate = `{
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/schema.DataResponse"
+                            "$ref": "#/definitions/domain.DataResponse"
                         }
                     }
                 }
@@ -154,7 +154,7 @@ const docTemplate = `{
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/schema.DataResponse"
+                            "$ref": "#/definitions/domain.DataResponse"
                         }
                     }
                 }
@@ -177,7 +177,7 @@ const docTemplate = `{
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/schema.CheckInRequest"
+                            "$ref": "#/definitions/domain.CheckInRequest"
                         }
                     }
                 ],
@@ -185,7 +185,7 @@ const docTemplate = `{
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/schema.Response"
+                            "$ref": "#/definitions/domain.Response"
                         }
                     }
                 }
@@ -223,7 +223,7 @@ const docTemplate = `{
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/schema.HistoryDataResponse"
+                            "$ref": "#/definitions/domain.HistoryDataResponse"
                         }
                     }
                 }
@@ -248,7 +248,7 @@ const docTemplate = `{
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/schema.RegistrationRoomRequest"
+                            "$ref": "#/definitions/domain.RegistrationRoomRequest"
                         }
                     }
                 ],
@@ -256,7 +256,7 @@ const docTemplate = `{
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/schema.Response"
+                            "$ref": "#/definitions/domain.Response"
                         }
                     }
                 }
@@ -287,7 +287,7 @@ const docTemplate = `{
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/schema.ChartMetadata"
+                            "$ref": "#/definitions/domain.ChartMetadata"
                         }
                     }
                 }
@@ -309,7 +309,7 @@ const docTemplate = `{
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/schema.RoomStat"
+                            "$ref": "#/definitions/domain.RoomStat"
                         }
                     }
                 }
@@ -340,7 +340,7 @@ const docTemplate = `{
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/schema.SignInResponse"
+                            "$ref": "#/definitions/domain.SignInResponse"
                         }
                     }
                 }
@@ -348,7 +348,7 @@ const docTemplate = `{
         }
     },
     "definitions": {
-        "schema.ChartData": {
+        "domain.ChartData": {
             "type": "object",
             "properties": {
                 "label": {
@@ -361,24 +361,24 @@ const docTemplate = `{
                 }
             }
         },
-        "schema.ChartDataValue": {
+        "domain.ChartDataValue": {
             "type": "object",
             "properties": {
                 "in": {
-                    "$ref": "#/definitions/schema.ChartData"
+                    "$ref": "#/definitions/domain.ChartData"
                 },
                 "out": {
-                    "$ref": "#/definitions/schema.ChartData"
+                    "$ref": "#/definitions/domain.ChartData"
                 }
             }
         },
-        "schema.ChartMetadata": {
+        "domain.ChartMetadata": {
             "type": "object",
             "properties": {
                 "data": {
                     "type": "array",
                     "items": {
-                        "$ref": "#/definitions/schema.ChartDataValue"
+                        "$ref": "#/definitions/domain.ChartDataValue"
                     }
                 },
                 "month": {
@@ -395,7 +395,7 @@ const docTemplate = `{
                 }
             }
         },
-        "schema.CheckInRequest": {
+        "domain.CheckInRequest": {
             "type": "object",
             "required": [
                 "activity_type",
@@ -414,7 +414,7 @@ const docTemplate = `{
                 }
             }
         },
-        "schema.DataResponse": {
+        "domain.DataResponse": {
             "type": "object",
             "required": [
                 "data",
@@ -427,7 +427,7 @@ const docTemplate = `{
                 }
             }
         },
-        "schema.HistoryData": {
+        "domain.HistoryData": {
             "type": "object",
             "properties": {
                 "activity_type": {
@@ -480,13 +480,13 @@ const docTemplate = `{
                 }
             }
         },
-        "schema.HistoryDataResponse": {
+        "domain.HistoryDataResponse": {
             "type": "object",
             "properties": {
                 "data": {
                     "type": "array",
                     "items": {
-                        "$ref": "#/definitions/schema.HistoryData"
+                        "$ref": "#/definitions/domain.HistoryData"
                     }
                 },
                 "room_name": {
@@ -500,7 +500,7 @@ const docTemplate = `{
                 }
             }
         },
-        "schema.RegistrationRoomRequest": {
+        "domain.RegistrationRoomRequest": {
             "type": "object",
             "required": [
                 "email",
@@ -547,7 +547,7 @@ const docTemplate = `{
                 }
             }
         },
-        "schema.Response": {
+        "domain.Response": {
             "type": "object",
             "required": [
                 "msg",
@@ -562,13 +562,13 @@ const docTemplate = `{
                 }
             }
         },
-        "schema.RoomStat": {
+        "domain.RoomStat": {
             "type": "object",
             "properties": {
                 "data": {
                     "type": "array",
                     "items": {
-                        "$ref": "#/definitions/schema.RoomStatData"
+                        "$ref": "#/definitions/domain.RoomStatData"
                     }
                 },
                 "total": {
@@ -576,7 +576,7 @@ const docTemplate = `{
                 }
             }
         },
-        "schema.RoomStatData": {
+        "domain.RoomStatData": {
             "type": "object",
             "properties": {
                 "in": {
@@ -596,7 +596,7 @@ const docTemplate = `{
                 }
             }
         },
-        "schema.SignInRequest": {
+        "domain.SignInRequest": {
             "type": "object",
             "required": [
                 "email",
@@ -611,7 +611,7 @@ const docTemplate = `{
                 }
             }
         },
-        "schema.SignInResponse": {
+        "domain.SignInResponse": {
             "type": "object",
             "required": [
                 "email",
@@ -630,7 +630,7 @@ const docTemplate = `{
                 }
             }
         },
-        "schema.SignUpRequest": {
+        "domain.SignUpRequest": {
             "type": "object",
             "required": [
                 "email",
@@ -661,7 +661,7 @@ const docTemplate = `{
                 }
             }
         },
-        "schema.SignUpResponse": {
+        "domain.SignUpResponse": {
             "type": "object",
             "required": [
                 "msg",
