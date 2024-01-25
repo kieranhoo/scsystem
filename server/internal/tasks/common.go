@@ -1,7 +1,7 @@
 package tasks
 
 import (
-	"scsystem/internal/messaging/queue"
+	"scsystem/internal/broker/queue"
 	"scsystem/pkg/worker"
 )
 

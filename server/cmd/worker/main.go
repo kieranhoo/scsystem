@@ -2,11 +2,11 @@ package main
 
 import (
 	"log"
-	"scsystem/internal/messaging"
+	broker "scsystem/internal/broker"
 )
 
 func main() {
-	worker := messaging.NewMessaging()
+	worker := broker.Newbroker()
 	if err := worker.Run(10); err != nil {
 		log.Fatal(err)
 	}
